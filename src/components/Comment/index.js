@@ -43,12 +43,15 @@ const Comment = ({ postId }) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  if (comments.length !== 0) {
-    comments.forEach(comment => {
+  if (comments.comments.length !== 0) {
+    comments.comments.forEach(comment => {
       if (comment.author && comment.author.profilePictureUrl === "") {
         comment.author.profilePictureUrl = imagePath;
       }
     });
+  }
+  else {
+    <h4>ERROR</h4>
   }
   return (
     <>
@@ -78,7 +81,7 @@ const Comment = ({ postId }) => {
             </button>
           </div>
           <div>
-            {comments.map((comment) => (
+            {comments.comments.map((comment) => (
               <div className="comment-item" key={comment._id}>
                 <div className="d-flex">
                   <img

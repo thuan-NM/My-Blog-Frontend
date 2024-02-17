@@ -7,6 +7,7 @@ import { usePost } from '../../contexts/PostContext';
 import Comment from '../../components/Comment';
 import ReactionItem from '../../components/Reaction';
 import { useAuth } from '../../contexts/AuthContext';
+import "./style.css"
 
 function PostDetail() {
   const imagePath = process.env.PUBLIC_URL + '/images/userava.jpg';
@@ -75,16 +76,22 @@ function PostDetail() {
             </div>
             <div className="detail-content-container">
               <h3>{post.title}</h3>
-              <p className="detail-hashtag">Hashtag: {post.hashtags ? `#${post.hashtags.join("#")}` : ""}</p> 
               <hr></hr>
               <div>
-                <p className="detail-content ms-4" dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g,'<br>') }}></p>
+                <p className="detail-content ms-4" dangerouslySetInnerHTML={{ __html: post.description.replace(/\n/g,'<br>') }}></p>
               </div>
             </div>   
             <Modal className="modal-container" title="Update Form" open={isModalOpen} footer={null} onCancel={()=>setIsModalOpen(false)}>
               <PostEditing post={post} closeModal={handleOk}/>
             </Modal>
             <ReactionItem postId={post._id}/>
+            <ul className="skill-tags">
+                {post.skills.map((item) => (
+                    <li onClick={() => handleHashtags(item)} key={item}>
+                      <a>{item}</a>
+                    </li>
+                  ))}
+              </ul>
           </div>
           {/* <button onClick={console.log(1)}>Delete</button> */}
           <Comment postId={post._id}/>

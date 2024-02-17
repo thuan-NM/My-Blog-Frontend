@@ -16,12 +16,19 @@ const AuthProvider = ({ children }) => {
   
         if (storedToken) {
           const decodedToken = jwtDecode(storedToken);
+          console.log(decodedToken)
+          if(!decodedToken.companyId){
           const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
             headers: { Authorization: `Bearer ${storedToken}` }
           });
-  
           const userData = response.data.data;
-          setUser(userData);
+          setUser(userData);}
+          else{
+            const response = await axios.get(`http://localhost:3001/companies/${decodedToken.companyId}`, {
+            headers: { Authorization: `Bearer ${storedToken}` }
+          });
+          const userData = response.data.data;
+          setUser(userData);}
         }
       } catch (error) {
         console.error('Error fetching user data:', error);

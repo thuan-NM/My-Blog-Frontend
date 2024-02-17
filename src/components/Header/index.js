@@ -6,8 +6,10 @@ import SearchBar from "../SearchBar";
 
 const Header = () => {
 	const [isOpened, setIsOpened] = useState(false);
+	const [isNotiOpened, setIsNotiOpened] = useState(false);
+	const [isRpsActive, setIsRpsActive] = useState(false);
 	//const {handleSearchPost,searchTerm,searchResults,showPostListsWithSearch,setSearchTerm,setSearchResults,setShowPostListsWithSearch} = useSearch();
-	const { logout } = useAuth();
+	const { user, logout } = useAuth();
 	const storedToken = localStorage.getItem('token');
 	const handleOpenMenu = () => {
 		setIsOpened(!isOpened);
@@ -24,11 +26,11 @@ const Header = () => {
 						<Link to={"/"}><img src="images/logo.png" alt="" /></Link>
 					</div>
 					<SearchBar
-						// searchTerm={searchTerm}
-						// setSearchTerm={setSearchTerm}
-						// handleSearch={handleSearchPost}
+					// searchTerm={searchTerm}
+					// setSearchTerm={setSearchTerm}
+					// handleSearch={handleSearchPost}
 					/>
-					<nav>
+					<nav className={`${isRpsActive?"active":""}`}>
 						<ul>
 							<li>
 								<Link to={"/"} title="">
@@ -37,10 +39,10 @@ const Header = () => {
 								</Link>
 							</li>
 							<li>
-								<a href="companies.html" title="">
+								<Link to={"/companies"}>
 									<span><img src="images/icon2.png" alt="" /></span>
 									Companies
-								</a>
+								</Link>
 								<ul>
 									<li><a href="companies.html" title="">Companies</a></li>
 									<li><a href="company-profile.html" title="">Company Profile</a></li>
@@ -53,20 +55,16 @@ const Header = () => {
 								</a>
 							</li>
 							<li>
-								<Link to={"/friends"}>
+								<Link to={"/users"}>
 									<span><img src="images/icon4.png" alt="" /></span>
 									Profiles
 								</Link>
-								<ul>
-									<li><a href="user-profile.html" title="">User Profile</a></li>
-									<li><a href="my-profile-feed.html" title="">my-profile-feed</a></li>
-								</ul>
 							</li>
 							<li>
-								<a href="jobs.html" title="">
+								<Link to={"/jobs"}>
 									<span><img src="images/icon5.png" alt="" /></span>
 									Jobs
-								</a>
+								</Link>
 							</li>
 							<li>
 								<a href="#" title="" className="not-box-openm">
@@ -116,11 +114,11 @@ const Header = () => {
 								</div>
 							</li>
 							<li>
-								<a href="#" title="" className="not-box-open">
+								<Link className="not-box-open" onClick={() => setIsNotiOpened(!isNotiOpened)}>
 									<span><img src="images/icon7.png" alt="" /></span>
 									Notification
-								</a>
-								<div className="notification-box noti" id="notification">
+								</Link>
+								<div className={`notification-box noti ${isNotiOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`} id="notification">
 									<div className="nt-title">
 										<h4>Setting</h4>
 										<a href="#" title="">Clear all</a>
@@ -171,16 +169,19 @@ const Header = () => {
 						</ul>
 					</nav>
 					<div className="menu-btn">
-						<a href="#" title=""><i className="fa fa-bars"></i></a>
+						<Link onClick={()=>setIsRpsActive(!isRpsActive)}><i className="fa fa-bars"></i></Link>
 					</div>
-					<div className="user-account">
-						<div className="user-info" onClick={handleOpenMenu}>
-							<img src="images/userava.jpg" alt="" />
-							<Link>John</Link>
-							<i className="la la-sort-down"></i>
+					{storedToken == null ? (<div className="user-account">
+						<div className="user-info">
+							<Link className="ms-3" to={"/auth"}>Sign In Here</Link>
 						</div>
-						{isOpened &&
-							<div className="user-account-settingss animate__animated animate__faster slideInDown">
+					</div>) :
+						(<div className="user-account">
+							<div className="user-info" onClick={handleOpenMenu}>
+								<img src={!user.profilePictureUrl ? "images/userava.jpg" : user.profilePictureUrl} />
+								<i className="la la-sort-down"></i>
+							</div>
+							<div className={`user-account-settingss ${isOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`}>
 								<h3>Your Profile<Link to={"/myprofile"}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
 								<h3>Online Status</h3>
 								<ul className="on-off-status">
@@ -218,12 +219,11 @@ const Header = () => {
 									<li><a href="#" title="">Terms &amp; Conditions</a></li>
 								</ul>
 								{(storedToken != null) ? (<h3 className="tc"><button onClick={handleLogout}>Sign Out</button></h3>) : (
-										<h3 className="tc"><Link to={"/auth"} className="mt-5"><button onClick={()=>setIsOpened(!isOpened)}>Sign In</button></Link></h3>
+									<h3 className="tc"><Link to={"/auth"} className="mt-5"><button onClick={() => setIsOpened(!isOpened)}>Sign In</button></Link></h3>
 								)}
 
 							</div>
-						}
-					</div>
+						</div>)}
 				</div>
 			</div>
 		</header>

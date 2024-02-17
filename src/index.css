@@ -146,25 +146,27 @@ img{
 }
 .ask-question,
 nav,
+.notification-box,
 .notification-box.active,
 nav ul li a,
+.user-account-settingss,
 .user-account-settingss.active,
 .user-account i,
 .user-info a,
 .suggestion-usd > span i,
 .view-more > a,
 .tags-sec ul li a,
-.post-st ul li a,
+.post-st ul li button,
 .ed-opts > a,
 .bk-links li a,
-.like-com li a,
+.like-com li button,
 .user-profy > a,
 .slick-previous:before,
 .slick-nexti:before,
 .comment > a,
 .sign_link > a,
 .post-popup,
-.post-project > a,
+.post-project > button,
 .post-project-fields form ul li button,
 .post-project-fields form ul li a,
 .sign-control li button,
@@ -201,7 +203,7 @@ nav ul li:hover > ul,
 .search-bar form input,
 .search-bar form button,
 .search_form form input,
-.post-st ul li a,
+.post-st ul li button,
 .post-bar,
 .bk-links li i,
 .bid_now,
@@ -259,9 +261,9 @@ nav ul li:hover > ul,
 }
 
 .wrapper {
-	float: left;
-	width: 100%;
-	position: relative;
+	float: left !important;
+	width: 100% !important;
+	position: relative !important;
 }
 
 .overlay:before {
@@ -273,6 +275,11 @@ nav ul li:hover > ul,
 	height: 100%;
 	background-color: rgba(0,0,0,0.75);
 	z-index: 99;
+	-webkit-transition: all 0.4s ease-in !important;
+	-moz-transition: all 0.4s ease-in !important;
+	-ms-transition: all 0.4s ease-in !important;
+	-o-transition: all 0.4s ease-in !important;
+	transition: all 0.4s ease-in !important;
 }
 
 header {
@@ -401,10 +408,10 @@ header {
 }
 
 nav {
-	float: left;
-	width: 60%;
-	text-align: right;
-	padding-right: 13px;
+    float: left;
+    width: 60%;
+    text-align: right;
+    padding-right: 13px;
 }
 nav ul li {
 	display: inline-block;
@@ -465,15 +472,14 @@ nav ul ul li a {
 	right: 0;
 	width: 300px;
 	background-color: #fff;
-	opacity: 1;
-	visibility: visible;
-	z-index: 999;
-	display: none;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 0;
 }
 .notification-box.active {
-	opacity: 1;
-	visibility: visible;
-	z-index: 999999999;
+	opacity: 1 !important;
+	visibility: visible !important;
+	z-index: 999999999 !important;
 }
 .nt-title {
 	float: left;
@@ -529,6 +535,12 @@ nav ul ul li a {
 	background-color: #e44d3a;
 	padding: 18px 0;
 }
+nav {
+    float: left;
+    width: 60%;
+    text-align: right;
+    padding-right: 13px;
+}
 nav ul li span {
 	display: block;
 	height: 14px;
@@ -546,27 +558,27 @@ nav > ul > li > a:hover {
 
 .user-account {
 	float: right;
-	width: 110px;
+	width: auto;
 	border-left: 1px solid #dd3e2b;
 	border-right: 1px solid #dd3e2b;
 	box-sizing: border-box;
 	position: relative;
 	margin: 0px !important;
 }
-.user-account i:hover{
-	transform: rotate(180);
-}
 .user-info {
 	float: left;
 	width: 100%;
-	padding: 13px 10px;
+	padding: 13px 30px;
+	padding-left: 0px;
 	position: relative;
+}
+.user-info > img{
+	margin-left: 10px;
 }
 .user-account-settingss {
     position: absolute;
     opacity: 1;
-    visibility: visible;
-    z-index: 999;
+    z-index: 0;
 	top: 100%;
 	right: 0;
 	width: 240px;
@@ -574,23 +586,23 @@ nav > ul > li > a:hover {
 	border-left: 1px solid #e5e5e5;
 	border-bottom: 1px solid #e5e5e5;
 	border-right: 1px solid #e5e5e5;
-	-webkit-border-radius: 0 0 5px 5px;
+	/* -webkit-border-radius: 0 0 5px 5px;
 	-moz-border-radius: 0 0 5px 5px;
 	-ms-border-radius: 0 0 5px 5px;
-	-o-border-radius: 0 0 5px 5px;
+	-o-border-radius: 0 0 5px 5px; */
 	border-radius: 0 0 5px 5px;
-	-webkit-box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
+	/* -webkit-box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
 	-moz-box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
 	-ms-box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
 	-o-box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
-	box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24);
-	/*opacity: 0;
-	visibility: hidden;*/
+	box-shadow: 1px 1px 6px -2px rgba(0,0,0,0.24); */
+	opacity: 0;
+	visibility: hidden;
 }
 .user-account-settingss.active {
-	opacity: 1;
-	visibility: visible;
-	z-index: 9999;
+	opacity: 1 !important;
+	visibility: visible !important;
+	z-index: 9999999999 !important;
 }
 .user-account-settingss > h3 {
 	color: #000000;
@@ -895,6 +907,8 @@ main {
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
 	border-radius: 100px;
+	width: 35px !important;
+	height: 35px !important;
 }
 .sgt-text {
 	float: left;
@@ -1036,6 +1050,7 @@ main {
 .user-picy img {
 	width: 100%;
 	object-fit: cover;
+	border-radius: 50% !important;
 }
 .post-st {
 	float: right;
@@ -1058,8 +1073,19 @@ main {
 	line-height: 40px;
 	font-weight: 500;
 }
-.post-st ul li a:hover,
-.post-st ul li a.active {
+.post-st ul li button {
+	color: #b2b2b2;
+	font-size: 16px;
+	display: inline-block;
+	background-color: #e5e5e5;
+	height: 40px;
+	padding: 0 15px;
+	line-height: 40px;
+	font-weight: 500;
+	border: none;
+}
+.post-st ul li button:hover,
+.post-st ul li button.active {
 	background-color: #e44d3a;
 	color: #fff;
 }
@@ -1332,7 +1358,7 @@ main {
 }
 .skill-tags li a {
 	display: inline-block;
-	color: #b2b2b2;
+	color: #b2b2b2 !important;
 	font-size: 14px;
 	background-color: #f1f1f1;
 	-webkit-border-radius: 30px;
@@ -1354,11 +1380,11 @@ main {
 	float: left;
 	margin-top: 20px;
 }
-.like-com li {
+/* .like-com li {
 	display: inline-block;
 	margin-right: 15px;
-}
-.like-com li a {
+} */
+.like-com button {
 	color: #b2b2b2;
 	font-size: 14px;
 	font-weight: 500;
@@ -1366,19 +1392,23 @@ main {
 	margin-top: 6px;
 	margin-right: 5px;
 }
-.like-com li a:hover {
+.like-com button:hover {
 	color: #e44d3a;
 }
-.like-com li a.active {
+.like-com button.active {
 	color: #e44d3a;
 }
-.like-com li a i {
+.like-com button{
+	border: none;
+	background-color: #ffffff;
+}
+.like-com button i {
 	margin-right: 2px;
-	font-size: 14px;
+	font-size: 18px;
 	position: relative;
 	top: 2px;
 }
-.like-com li span {
+.like-com span {
 	color: #ffffff;
 	font-size: 13px;
 	width: 30px;
@@ -1546,6 +1576,7 @@ main {
 }
 .slick-slide {
 	margin: 0 4px;
+	width: 153px !important;
 }
 .envlp img {
 	position: relative;
@@ -1901,18 +1932,20 @@ main {
 .post-popup.active {
 	opacity: 1;
 	visibility: visible;
-	z-index: 999;
+	z-index: 999 !important;
 	-webkit-transform: scale(1) translateX(-50%) translateY(-50%);
 }
-.post-project > a {
+.post-project > button {
 	position: absolute;
 	top: -20px;
 	right: -20px;
-	color: #fff;
+	color: white;
 	font-size: 22px;
 	cursor: pointer;
+	background-color: transparent !important;
+	border: none;
 }
-.post-project > a:hover {
+.post-project > button:hover {
 	color: #fff;
 }
 .post-project {
@@ -1976,7 +2009,7 @@ main {
 	color: #fff;
 }
 .post-project-fields form ul li button,
-.post-project-fields form ul li a {
+.post-project-fields form ul li button {
 	color: #000000;
 	font-size: 16px;
 	border: 1px solid #e5e5e5;
@@ -2687,6 +2720,11 @@ ol, uL ,a {
 	margin-bottom: 28px;
 	margin-top: -95px;
 	position: relative;
+	border-radius: 50% !important;
+}
+.user-pro-img > img{
+	width: 70%;
+	border-radius: 50% !important;
 }
 .user-pro-img .add-dp {
 	position: absolute;
@@ -3404,7 +3442,7 @@ ol, uL ,a {
     border-bottom-left-radius: 3px;
     color: #fff;
     cursor: pointer;
-    display: inline-block;
+    display: block;
     font-size: 14px;
     font-weight: 500;
     outline: none;
