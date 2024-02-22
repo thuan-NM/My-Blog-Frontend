@@ -43,7 +43,7 @@ const SignUp = ({setCurrentTab}) => {
 				.then((res) => {
 					setPassword("");
 					if (res.data.isSuccess === 1) {
-						message.info(res.data.message)
+						message.success(res.data.message)
 						setCurrentTab("tab-1")
 					}
 				})

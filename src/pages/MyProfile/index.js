@@ -19,10 +19,11 @@ function MyProfile() {
 	const { handleRemoveFriend } = useFriend();
 	const storedToken = localStorage.getItem('token');
 	const decodedToken = jwtDecode(storedToken);
-	const [activeButton, setActiveButton] = useState("Posts");
+	const [activeButton, setActiveButton] = useState("feed");
 	const [posts, setPosts] = useState([]);
 	const [suggestions, setSuggestions] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const handleButtonClick = (buttonName) => {
 		setActiveButton(buttonName);
@@ -40,7 +41,7 @@ function MyProfile() {
 			}
 		};
 		fetchPost();
-	}, [posts]);
+	}, [posts, user]);
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -121,7 +122,7 @@ function MyProfile() {
 		//     )}
 		//   </div>
 		// </div>
-		<div>
+		<div className={`${(isModalOpen) ? "overlay" : ""}`}>
 			<section className="cover-sec">
 				<img src="images/cover-img.jpg" alt="" />
 				<div className="add-pic-box">
@@ -142,37 +143,7 @@ function MyProfile() {
 							<div className="row">
 								<div className="col-lg-3">
 									<div className="main-left-sidebar">
-										<div className="user_profile">
-											<div className="user-pro-img">
-												<img src={user.profilePictureUrl || `images/userava.jpg`} />
-												<div className="add-dp" id="OpenImgUpload">
-													<input type="file" id="file" />
-													<label htmlFor="file"><i className="fas fa-camera"></i></label>
-												</div>
-											</div>
-											<div className="user_pro_status">
-												<ul className="flw-status">
-													<li>
-														<span>Following</span>
-														<b>34</b>
-													</li>
-													<li>
-														<span>Followers</span>
-														<b>155</b>
-													</li>
-												</ul>
-											</div>
-											<ul className="social_links">
-												<li><a href="#" title=""><i className="la la-globe"></i> www.example.com</a></li>
-												<li><a href="#" title=""><i className="fab fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-behance-square"></i> Http://www.behance.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-instagram"></i> Http://www.instagram.com/john...</a></li>
-												<li><a href="#" title=""><i className="fab fa-youtube"></i> Http://www.youtube.com/john...</a></li>
-											</ul>
-										</div>
+										<Profile user={user} updateUser={updateUser} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 										<div className="suggestions full-width">
 											<div className="sd-title">
 												<h3>Suggestions</h3>
@@ -191,30 +162,24 @@ function MyProfile() {
 									<div className="main-ws-sec">
 										<div className="user-tab-sec rewivew">
 											<h3>{user.firstName} {user.lastName}</h3>
+											<hr></hr>
 											<div className="star-descp">
 												<span>Graphic Designer at Self Employed</span>
-												<ul>
-													<li><i className="fa fa-star"></i></li>
-													<li><i className="fa fa-star"></i></li>
-													<li><i className="fa fa-star"></i></li>
-													<li><i className="fa fa-star"></i></li>
-													<li><i className="fa fa-star-half-o"></i></li>
-												</ul>
-												<a href="#" title="">Status</a>
+												<hr></hr>
 											</div>
 											<div className="tab-feed st2 settingjb">
 												<ul>
 													<li data-tab="feed-dd" className="active">
-														<a href="#" title="">
+														<Link onClick={() => setActiveButton("feed")}>
 															<img src="images/ic1.png" alt="" />
 															<span>Feed</span>
-														</a>
+														</Link>
 													</li>
 													<li data-tab="info-dd">
-														<a href="#" title="">
+														<Link onClick={() => setActiveButton("info")}>
 															<img src="images/ic2.png" alt="" />
 															<span>Info</span>
-														</a>
+														</Link>
 													</li>
 													<li data-tab="saved-jobs">
 														<a href="#" title="">
@@ -276,8 +241,12 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab current" id="feed-dd">
+										<div className={`product-feed-tab ${activeButton=="feed"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="feed-dd">
 											<div className="posts-section">
+												{posts.map((post) => (
+													(post.author._id == decodedToken.userId) &&
+													<PostItem key={post._id} post={post} />
+												))}
 												<div className="process-comm">
 													<div className="spinner">
 														<div className="bounce1"></div>

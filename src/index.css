@@ -186,7 +186,8 @@ nav ul li a,
 .signin-tab button,
 .signup-tab button,
 nav ul li:hover > ul,
-.user-pro-img > a i {
+.user-pro-img > a i,
+.post-project-fields button{
 	-webkit-transition: all 0.4s ease-in;
 	-moz-transition: all 0.4s ease-in;
 	-ms-transition: all 0.4s ease-in;
@@ -252,7 +253,8 @@ nav ul li:hover > ul,
 .pagination li .page-link,
 .post_comment_sec form textarea,
 .post_comment_sec form button,
-.next-prev > a {
+.next-prev > a,
+.post-project-fields button{
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
@@ -2754,13 +2756,24 @@ ol, uL ,a {
 	padding: 11px;
 }
 .add-dp {
-    margin: -16px;
+    margin: 16px;
     padding: 0;
 }
 .add-dp input[type=file] {
     opacity: 0;
     padding: 10px 0px 9px;
     display: none;
+}
+
+.post-project-fields .submit-but {
+	margin-top: 20px;
+	border: none;
+	background-color: #F2F2F2;
+	padding: 15px;
+}
+
+.post-project-fields .submit-but:hover{
+	transform: scale(1.1);
 }
 
 .user-pro-img img {

@@ -1,25 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Modal,message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Upload } from 'antd';
+import { message } from 'antd';
 import axios from 'axios';
 
-const Profile = ({ user }) => {
+const Profile = ({ user,updateUser,isModalOpen,setIsModalOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleImageChange = (e) => {
-    setSelectedImage(e.target.files[0]);
+  const handleImageChange = (info) => {
+    if (info.file.status === 'done') {
+      setSelectedImage(info.file.originFileObj);
+    }
   };
 
   const onSubmit = async () => {
@@ -37,81 +28,69 @@ const Profile = ({ user }) => {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
-      setUpdatedPicture(response.data.profilePictureUrl);
-
+      updateUser()
       // Reset the selected image
       setSelectedImage(null);
       message.success("Change picture success!");
       // If the server successfully updates the profile picture, you can handle any necessary logic here
       console.log('Profile picture updated successfully.');
-  } catch (error) {
-    if (error.response && error.response.status === 500) {
-      console.error('Internal Server Error:', error.response.data);
-      // Handle the error appropriately
-    } else {
-      console.error('Error updating profile picture:', error);
-    }}
+    } catch (error) {
+      if (error.response && error.response.status === 500) {
+        console.error('Internal Server Error:', error.response.data);
+        // Handle the error appropriately
+      } else {
+        message.error("Change picture fail! ",error);
+        console.error('Error updating profile picture:', error);
+      }
+    }
+    setIsModalOpen(!isModalOpen);
   };
-
-  const imagePath = process.env.PUBLIC_URL + '/images/userava.jpg';
-
   return (
-    <div className="card p-0 profile-container">
-      <div className="card-body">
-        <div className="text-left">
-          <img
-            src={user.profilePictureUrl || imagePath}
-            alt="Profile Picture"
-            style={{ width: '200px', height: '200px', borderRadius: '50%' }}
-          />
-          <Button className="btn-modal" onClick={showModal}>
-            {<i className="bi bi-camera-fill"></i>}
-          </Button>
+    <div className="user_profile">
+      <div className="user-pro-img">
+        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+        <div className="add-dp" id="OpenImgUpload">
+          <label><i className="fas fa-camera" onClick={() => setIsModalOpen(!isModalOpen)}></i></label>
         </div>
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={null}>
-            <div className="modal-container">
-              <div className="title-modal">Update Picture Here</div>
-              <hr></hr>
-              <input
-                type="file"
-                id="profilePicture"
-                accept="image/*"
+        <div className={`post-popup job_post ${isModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
+          <div className="post-project">
+            <h3>Update Picture</h3>
+            <div className="post-project-fields">
+              <Upload
+                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                listType="picture"
                 onChange={handleImageChange}
-                className="modal-input"
-              />
-              <hr></hr>
-              <button className="modal-item" onClick={onSubmit}>Upload</button>
+              >
+                <Button icon={<UploadOutlined />}></Button>
+              </Upload>
+              <button className="submit-but" onClick={onSubmit}>Submit<i className="ms-2 bi bi-check-circle-fill"></i></button>
             </div>
-        </Modal>   
-      <hr/>
-        <div className="card-text username-container">
-          <i className="bi bi-person-circle me-2"></i>
-          <p>
-            {user.firstName} {user.lastName}
-          </p>
-        </div>
-        <hr />
-        {user.dob && (
-          <div className="card-text">
-            <i className="bi bi-cake2 me-2"></i>
-            {user.dob}
+            <button onClick={() => setIsModalOpen(!isModalOpen)}><i className="la la-times-circle-o"></i></button>
           </div>
-        )}
-        <hr />
-        {user.address && (
-          <div className="card-text">
-            <i className="bi bi-geo-alt me-2"></i>
-            {user.address}
-          </div>
-        )}
-        <hr />
-        <div className="card-text">
-          <i className="bi bi-envelope me-2"></i>
-          {user.email}
         </div>
-        <hr />
       </div>
+      <div className="user_pro_status">
+        <ul className="flw-status">
+          <li>
+            <span>Following</span>
+            <b>34</b>
+          </li>
+          <li>
+            <span>Followers</span>
+            <b>155</b>
+          </li>
+        </ul>
+      </div>
+      <ul className="social_links">
+        <li><a href="#" title=""><i className="la la-globe"></i> www.example.com</a></li>
+        <li><a href="#" title=""><i className="fab fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-behance-square"></i> Http://www.behance.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-instagram"></i> Http://www.instagram.com/john...</a></li>
+        <li><a href="#" title=""><i className="fab fa-youtube"></i> Http://www.youtube.com/john...</a></li>
+      </ul>
     </div>
   );
 };

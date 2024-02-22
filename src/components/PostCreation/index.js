@@ -34,7 +34,7 @@ const PostCreation = ({isJobModalOpen,handleShowJobModal,isProjectModalOpen,hand
         },
       })
       .then((res) => {
-        console.log("Create a new post successful");
+        message.success("Create a new post successful");
         if (res.status === 401) {
           // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
           navigate("/auth");
@@ -42,7 +42,6 @@ const PostCreation = ({isJobModalOpen,handleShowJobModal,isProjectModalOpen,hand
         setTitle("");
         setHashtags("");
         setContent("");
-        message.success("Create post successfully");
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {
