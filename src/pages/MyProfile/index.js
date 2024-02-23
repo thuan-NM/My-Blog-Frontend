@@ -169,47 +169,47 @@ function MyProfile() {
 											</div>
 											<div className="tab-feed st2 settingjb">
 												<ul>
-													<li data-tab="feed-dd" className="active">
+													<li data-tab="feed-dd" className={`${activeButton=="feed"?"active animate__animated animate__faster fadeIn":""}`}>
 														<Link onClick={() => setActiveButton("feed")}>
 															<img src="images/ic1.png" alt="" />
 															<span>Feed</span>
 														</Link>
 													</li>
-													<li data-tab="info-dd">
+													<li data-tab="info-dd" className={`${activeButton=="info"?"active animate__animated animate__faster fadeIn":""}`}>
 														<Link onClick={() => setActiveButton("info")}>
 															<img src="images/ic2.png" alt="" />
 															<span>Info</span>
 														</Link>
 													</li>
-													<li data-tab="saved-jobs">
-														<a href="#" title="">
+													<li data-tab="saved-jobs" className={`${activeButton=="jobs"?"active animate__animated animate__faster fadeIn":""}`}>
+														<Link onClick={() => setActiveButton("jobs")}>
 															<img src="images/ic4.png" alt="" />
 															<span>Jobs</span>
-														</a>
+														</Link>
 													</li>
-													<li data-tab="my-bids">
-														<a href="#" title="">
+													<li data-tab="my-bids" className={`${activeButton=="my-bids"?"active animate__animated animate__faster fadeIn":""}`}>
+														<Link onClick={() => setActiveButton("my-bids")}>
 															<img src="images/ic5.png" alt="" />
 															<span>Bids</span>
-														</a>
+														</Link>
 													</li>
-													<li data-tab="portfolio-dd">
-														<a href="#" title="">
+													<li data-tab="portfolio-dd" className={`${activeButton=="portfolio"?"active animate__animated animate__faster fadeIn":""}`}>
+														<Link onClick={() => setActiveButton("portfolio")}>
 															<img src="images/ic3.png" alt="" />
 															<span>Portfolio</span>
-														</a>
+														</Link>
 													</li>
-													<li data-tab="rewivewdata">
-														<a href="#" title="">
+													<li data-tab="rewivewdata" className={`${activeButton=="rewivewdata"?"active animate__animated animate__faster fadeIn":""}`}>
+														<Link onClick={() => setActiveButton("rewivewdata")}>
 															<img src="images/review.png" alt="" />
 															<span>Reviews</span>
-														</a>
+														</Link>
 													</li>
-													<li data-tab="payment-dd">
-														<a href="#" title="">
+													<li data-tab="payment-dd" className={`${activeButton=="payment"?"active animate__animated animate__faster fadeIn":""}`}>
+														<Link onClick={() => setActiveButton("payment")}>
 															<img src="images/ic6.png" alt="" />
 															<span>Payment</span>
-														</a>
+														</Link>
 													</li>
 
 												</ul>
@@ -256,7 +256,7 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab" id="my-bids">
+										<div className={`product-feed-tab ${activeButton=="my-bids"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="my-bids">
 											<ul className="nav nav-tabs bid-tab" id="myTab" role="tablist">
 												<li className="nav-item">
 													<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Manage Bids</a>
@@ -279,9 +279,9 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab" id="info-dd">
+										<div className={`product-feed-tab ${activeButton=="info"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="info-dd">
 										</div>
-										<div className="product-feed-tab" id="rewivewdata">
+										<div className={`product-feed-tab ${activeButton=="rewivewdata"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">
 												<div className="post-bar reviewtitle">
 													<h2>Reviews</h2>
@@ -344,14 +344,14 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab" id="my-bids">
+										<div className={`product-feed-tab ${activeButton=="jobs"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="jobs">
 											<div className="posts-section">
 												<div className="process-comm">
 													<a href="#" title=""><img src="images/process-icon.png" alt="" /></a>
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab" id="portfolio-dd">
+										<div className={`product-feed-tab ${activeButton=="portfolio"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="portfolio-dd">
 											<div className="portfolio-gallery-sec">
 												<h3>Portfolio</h3>
 												<div className="portfolio-btn">
@@ -364,7 +364,7 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className="product-feed-tab" id="payment-dd">
+										<div className={`product-feed-tab ${activeButton=="payment"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="payment-dd">
 											<div className="billing-method">
 												<ul>
 													<li>
