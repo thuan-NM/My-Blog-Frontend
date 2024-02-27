@@ -4,7 +4,7 @@ import { Button, Upload } from 'antd';
 import { message } from 'antd';
 import axios from 'axios';
 
-const Profile = ({ user,updateUser,isModalOpen,setIsModalOpen }) => {
+const Profile = ({ user,updateUser,isModalPicOpen,setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (info) => {
@@ -43,16 +43,16 @@ const Profile = ({ user,updateUser,isModalOpen,setIsModalOpen }) => {
         console.error('Error updating profile picture:', error);
       }
     }
-    setIsModalOpen(!isModalOpen);
+    setIsModalPicOpen(!isModalPicOpen);
   };
   return (
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `images/userava.jpg`} />
         <div className="add-dp" id="OpenImgUpload">
-          <label><i className="fas fa-camera" onClick={() => setIsModalOpen(!isModalOpen)}></i></label>
+          <label><i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i></label>
         </div>
-        <div className={`post-popup job_post ${isModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
+        <div className={`post-popup job_post ${isModalPicOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
           <div className="post-project">
             <h3>Update Picture</h3>
             <div className="post-project-fields">
@@ -65,7 +65,7 @@ const Profile = ({ user,updateUser,isModalOpen,setIsModalOpen }) => {
               </Upload>
               <button className="submit-but" onClick={onSubmit}>Submit<i className="ms-2 bi bi-check-circle-fill"></i></button>
             </div>
-            <button onClick={() => setIsModalOpen(!isModalOpen)}><i className="la la-times-circle-o"></i></button>
+            <button onClick={() => setIsModalPicOpen(!isModalPicOpen)}><i className="la la-times-circle-o"></i></button>
           </div>
         </div>
       </div>

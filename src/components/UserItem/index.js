@@ -33,7 +33,7 @@ const UserItem = ({ user, onAddFriend, onRemoveFriend, isFriend, viewed, isActiv
     <div class="col-lg-3 col-md-4 col-sm-6 col-12">
       <div class="company_profile_info">
         <div class="company-up-info">
-          <img src="images/favicon.png" alt="" />
+          <img src={user.profilePictureUrl || `images/userava.jpg`} />
           <h3>{user.lastName}</h3>
           <h4>Graphic Designer</h4>
           <ul>

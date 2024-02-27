@@ -7,11 +7,15 @@ import UserItem from "../../components/UserItem";
 import ChangePassword from "../../components/ChangePassword";
 import MyInfo from "../../components/MyInfo";
 import Profile from "../../components/Profile";
+import OverviewModal from "../../components/OverviewModal";
+import Experience from "../../components/Experience";
 import { useHashtags } from "../../contexts/HashtagContext";
 import { useFriend } from "../../contexts/FriendContext";
 import { jwtDecode } from "jwt-decode";
 import Suggestions from "../../components/Suggestion";
 import { Link } from "react-router-dom";
+import Overview from "../../components/Overview";
+import Education from "../../components/Education";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
@@ -21,9 +25,12 @@ function MyProfile() {
 	const decodedToken = jwtDecode(storedToken);
 	const [activeButton, setActiveButton] = useState("feed");
 	const [posts, setPosts] = useState([]);
+	const [overview, setOverview] = useState("");
 	const [suggestions, setSuggestions] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
+	const [isModalPicOpen, setIsModalPicOpen] = useState(false);
+	const [isExpModalOpen, setIsExpModalOpen] = useState(false);
 
 	const handleButtonClick = (buttonName) => {
 		setActiveButton(buttonName);
@@ -33,6 +40,8 @@ function MyProfile() {
 			try {
 				const postResponse = await axios.get(`http://localhost:3001/posts/user/${decodedToken.userId}`)
 				const suggestionResponse = await axios.get(`http://localhost:3001/users`);
+				const overviewResponse = await axios.get(`http://localhost:3001/overviews/${decodedToken.userId}`)
+                setOverview(overviewResponse.data.data)
 				setSuggestions(suggestionResponse.data.data)
 				setPosts(postResponse.data.data);
 				setIsLoading(false);
@@ -41,7 +50,7 @@ function MyProfile() {
 			}
 		};
 		fetchPost();
-	}, [posts, user]);
+	}, [posts, user,overview]);
 
 	if (isLoading) {
 		return <p>Loading...</p>;
@@ -51,78 +60,7 @@ function MyProfile() {
 		return <p>No results found1.</p>;
 	}
 	return (
-		//   <div>
-		//      <div classNameName="btn-group mt-3 d-flex justify-content-center" role="group" aria-label="Vertical button group">
-		//         <button
-		//           type="button"
-		//           classNameName={`buttonswitch ${activeButton === "Posts" ? 'active' : ''}`}
-		//           onClick={() => handleButtonClick("Posts")}>
-		//           Post
-		//         </button>
-		//         <button
-		//           type="button"
-		//           classNameName={`buttonswitch ${activeButton === "List Friend" ? 'active' : ''}`}
-		//           onClick={() => handleButtonClick("List Friend")}>
-		//           List Friend
-		//         </button>
-		//         <button
-		//           type="button"
-		//           classNameName={`buttonswitch ${activeButton === "My Info" ? 'active' : ''}`}
-		//           onClick={() => handleButtonClick("My Info")}>
-		//           My Info
-		//         </button>
-		//         <button
-		//           type="button"
-		//           classNameName={`buttonswitch ${activeButton === "Change Password" ? 'active' : ''}`}
-		//           onClick={() => handleButtonClick("Change Password")}>
-		//           Change PassWord
-		//         </button>
-		//       </div>
-		//   <div classNameName="row mt-3 d-flex justify-content-evenly my-profile-container">
-		//     <div classNameName="col-4 mt-3">
-		//       <Profile user={user}/>
-		//     </div>
-		//     {activeButton=="List Friend" && (
-		//     <div classNameName="col-7 friend-container mt-3">
-		//       <h2 classNameName="text-center title-item">Friends</h2>
-		//       <ul>
-		//         {user.friend.map((friend)=>(
-		//           <UserItem key={friend._id} user={friend}
-		//           isFriend={user.friend && user.friend.some((user) => user._id === friend._id)}
-		//           onRemoveFriend={() => {handleRemoveFriend(friend._id)}}/>
-		//         ))}
-		//       </ul>
-		//     </div> 
-		//     )}
-		//     {activeButton=="Posts" && (
-		//       <div classNameName="col-7 friend-container mt-3">
-		//       <h2 classNameName="text-center title-item">Posts</h2>
-		//       <ul>
-		//         {data.data.length==0 
-		//         ?<h4 classNameName="text-center mt-5">You Don't Have Any Post !!!</h4> 
-		//         :(
-		//           data.data.map((post) => (
-		//             <PostItem key={post._id} post={post} handleHashtags={handleHashtags}/>
-		//             ))
-		//         )}
-		//       </ul>
-		//   </div>
-		//     )}
-		//     {activeButton=="Change Password" &&(
-		//       <div classNameName="col-7 friend-container mt-3">
-		//         <h2 classNameName="text-center title-item">Change Password</h2>
-		//         <ChangePassword userId={user._id}/>
-		//       </div>
-		//     )}
-		//     {activeButton == "My Info" && (
-		//         <div classNameName="col-7 friend-container mt-3">
-		//         <h2 classNameName="text-center title-item">My Info</h2>
-		//         <MyInfo userId={user._id}/>
-		//         </div>
-		//     )}
-		//   </div>
-		// </div>
-		<div className={`${(isModalOpen) ? "overlay" : ""}`}>
+		<div className={`${(isOverviewModalOpen || isModalPicOpen) ? "overlay" : ""}`}>
 			<section className="cover-sec">
 				<img src="images/cover-img.jpg" alt="" />
 				<div className="add-pic-box">
@@ -143,7 +81,7 @@ function MyProfile() {
 							<div className="row">
 								<div className="col-lg-3">
 									<div className="main-left-sidebar">
-										<Profile user={user} updateUser={updateUser} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+										<Profile user={user} updateUser={updateUser} isModalPicOpen={isModalPicOpen} setIsModalPicOpen={setIsModalPicOpen} />
 										<div className="suggestions full-width">
 											<div className="sd-title">
 												<h3>Suggestions</h3>
@@ -169,43 +107,43 @@ function MyProfile() {
 											</div>
 											<div className="tab-feed st2 settingjb">
 												<ul>
-													<li data-tab="feed-dd" className={`${activeButton=="feed"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="feed-dd" className={`${activeButton == "feed" ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster slideIn"}`}>
 														<Link onClick={() => setActiveButton("feed")}>
 															<img src="images/ic1.png" alt="" />
 															<span>Feed</span>
 														</Link>
 													</li>
-													<li data-tab="info-dd" className={`${activeButton=="info"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("info")}>
 															<img src="images/ic2.png" alt="" />
 															<span>Info</span>
 														</Link>
 													</li>
-													<li data-tab="saved-jobs" className={`${activeButton=="jobs"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="saved-jobs" className={`${activeButton == "jobs" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("jobs")}>
 															<img src="images/ic4.png" alt="" />
 															<span>Jobs</span>
 														</Link>
 													</li>
-													<li data-tab="my-bids" className={`${activeButton=="my-bids"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="my-bids" className={`${activeButton == "my-bids" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("my-bids")}>
 															<img src="images/ic5.png" alt="" />
 															<span>Bids</span>
 														</Link>
 													</li>
-													<li data-tab="portfolio-dd" className={`${activeButton=="portfolio"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="portfolio-dd" className={`${activeButton == "portfolio" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("portfolio")}>
 															<img src="images/ic3.png" alt="" />
 															<span>Portfolio</span>
 														</Link>
 													</li>
-													<li data-tab="rewivewdata" className={`${activeButton=="rewivewdata"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="rewivewdata" className={`${activeButton == "rewivewdata" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("rewivewdata")}>
 															<img src="images/review.png" alt="" />
 															<span>Reviews</span>
 														</Link>
 													</li>
-													<li data-tab="payment-dd" className={`${activeButton=="payment"?"active animate__animated animate__faster fadeIn":""}`}>
+													<li data-tab="payment-dd" className={`${activeButton == "payment" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("payment")}>
 															<img src="images/ic6.png" alt="" />
 															<span>Payment</span>
@@ -241,7 +179,7 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="feed"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="feed-dd">
+										<div className={`product-feed-tab ${activeButton == "feed" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="feed-dd">
 											<div className="posts-section">
 												{posts.map((post) => (
 													(post.author._id == decodedToken.userId) &&
@@ -256,7 +194,7 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="my-bids"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="my-bids">
+										<div className={`product-feed-tab ${activeButton == "my-bids" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="my-bids">
 											<ul className="nav nav-tabs bid-tab" id="myTab" role="tablist">
 												<li className="nav-item">
 													<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Manage Bids</a>
@@ -279,9 +217,13 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="info"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="info-dd">
+										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
+											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen}/>
+											<OverviewModal setOverview={setOverview} user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen}/>
+											<Experience setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen}/>
+											<Education/>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="rewivewdata"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="rewivewdata">
+										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">
 												<div className="post-bar reviewtitle">
 													<h2>Reviews</h2>
@@ -344,14 +286,14 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="jobs"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="jobs">
+										<div className={`product-feed-tab ${activeButton == "jobs" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="jobs">
 											<div className="posts-section">
 												<div className="process-comm">
 													<a href="#" title=""><img src="images/process-icon.png" alt="" /></a>
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="portfolio"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="portfolio-dd">
+										<div className={`product-feed-tab ${activeButton == "portfolio" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="portfolio-dd">
 											<div className="portfolio-gallery-sec">
 												<h3>Portfolio</h3>
 												<div className="portfolio-btn">
@@ -364,7 +306,7 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton=="payment"?"current animate__animated animate__faster fadeIn":"animate__animated animate__faster fadeOut"}`} id="payment-dd">
+										<div className={`product-feed-tab ${activeButton == "payment" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="payment-dd">
 											<div className="billing-method">
 												<ul>
 													<li>
@@ -409,10 +351,7 @@ function MyProfile() {
 					</div>
 				</div>
 			</main>
-			<div className="overview-box" id="overview-box">
-			</div>
 		</div>
-
 	)
 }
 
