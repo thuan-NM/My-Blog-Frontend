@@ -182,7 +182,7 @@ const Header = () => {
 								<i className="la la-sort-down"></i>
 							</div>
 							<div className={`user-account-settingss ${isOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`}>
-								<h3>Your Profile<Link to={"/myprofile"}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
+								<h3>Your Profile<Link to={"/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
 								<h3>Online Status</h3>
 								<ul className="on-off-status">
 									<li>

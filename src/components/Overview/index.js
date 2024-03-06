@@ -6,7 +6,7 @@ const Overview = ({overview, setIsOverviewModalOpen, isOverviewModalOpen}) => {
         <div className={`user-profile-ov animate__animated animate__faster zoomIn`} onClick={() => setIsOverviewModalOpen(!isOverviewModalOpen)}>
             <h3>
                 <Link className="overview-open" >Overview</Link>
-                <Link className="overview-open" ><i className="bi bi-pencil-fill ms-2"></i></Link>
+                <Link className="overview-open" ><button className="edit-info"><i className="bi bi-pencil-fill ms-2"></i></button></Link>
             </h3>
             <p>{overview.data||""}</p>
         </div>

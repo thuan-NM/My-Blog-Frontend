@@ -3,16 +3,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { message } from "antd"
 
-const ExperienceModal = ({user,isExpModalOpen,setIsExpModalOpen,expId}) => {
+const ExperienceEdit = ({user,isExpEditOpen,setIsExpEditOpen,Exp}) => {
     const [subject,setSupject] = useState("");
     const [description,setDescription] = useState("");
 
 	const handleModal = (e) => {
         e.preventDefault();
-        setIsExpModalOpen(!isExpModalOpen)
+        setIsExpEditOpen(!isExpEditOpen)
     }
 
-	const handleAdd = (e) => {
+	const handleEdit = (e) => {
         e.preventDefault();
         const newExp = {
             subject: subject,
@@ -22,19 +22,19 @@ const ExperienceModal = ({user,isExpModalOpen,setIsExpModalOpen,expId}) => {
         };
         const token = localStorage.getItem("token");
         axios
-            .post("http://localhost:3001/experiences", newExp, {
+            .put(`http://localhost:3001/experiences/${Exp._id}`, newExp, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
             .then((res) => {
                 message.success(res.data.message);
+                setSupject("");
+				setDescription("");
                 if (res.status === 401) {
                     // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
                     navigate("/auth");
                 }
-                setSupject("");
-				setDescription("");
             })
             .catch((error) => {
                 message.error(error.response.data.message);
@@ -47,19 +47,19 @@ const ExperienceModal = ({user,isExpModalOpen,setIsExpModalOpen,expId}) => {
     }
 
     return (
-        <div className={`overview-box ${isExpModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
+        <div className={`overview-box ${isExpEditOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
 			<div className="overview-edit">
 				<h3>Experience</h3>
 				<form>
-					<input type="text" name="subject" placeholder="Subject" onChange={(e)=>{setSupject(e.target.value)}}/>
+					<input type="text" onChange={(e)=>{setSupject(e.target.value)}}/>
 					<textarea onChange={(e)=>{setDescription(e.target.value)}}></textarea>
-					<button type="submit" className="save" onClick={handleAdd}>Add More</button> 	
+					<button type="submit" className="save" onClick={handleEdit}>Save</button> 	
 					<button type="submit" className="cancel" onClick={handleModal}>Cancel</button>
 				</form>
-				<Link className="close-box"onClick={handleModal}><i className="la la-close" ></i></Link>
+				<Link className="close-box"><i className="la la-close" onClick={handleModal}></i></Link>
 			</div>
 		</div>
     )
 }
 
-export default ExperienceModal;
+export default ExperienceEdit;

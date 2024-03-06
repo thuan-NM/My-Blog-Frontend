@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { message } from "antd"
 
 const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setOverview}) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -8,7 +9,7 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
 
     const handleModal = (e) => {
         e.preventDefault();
-        setIsOverviewModalOpen(!isModalOpen)
+        setIsOverviewModalOpen(!isOverviewModalOpen)
     }
 
     const handleEdit = (e) => {
@@ -26,7 +27,7 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
                 },
             })
             .then((res) => {
-                message.success(res.message);
+                message.success(res.data.message);
                 if (res.status === 401) {
                     // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
                     navigate("/auth");
@@ -34,6 +35,7 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
                 setOverviewdata("");
             })
             .catch((error) => {
+                message.error(error.response.data.message);
                 if (error.response && error.response.status === 401) {
                     // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
                     navigate("/auth");
@@ -51,7 +53,7 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
                         <button className="save" onClick={handleEdit}>Save</button>
                         <button className="cancel" onClick={handleModal}>Cancel</button>
                     </form>
-                    <a className="close-box"><i className="la la-close" onClick={handleModal}></i></a>
+                    <Link className="close-box"><i className="la la-close" onClick={handleModal}></i></Link>
                 </div>
             </div>
     )

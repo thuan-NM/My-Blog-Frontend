@@ -16,6 +16,10 @@ import Suggestions from "../../components/Suggestion";
 import { Link } from "react-router-dom";
 import Overview from "../../components/Overview";
 import Education from "../../components/Education";
+import ExperienceModal from "../../components/ExperienceModal";
+import ExperienceEdit from "../../components/ExperienceEdit";
+import EducationModal from "../../components/EducationModal";
+import EducationEdit from "../../components/EducationEdit";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
@@ -26,11 +30,18 @@ function MyProfile() {
 	const [activeButton, setActiveButton] = useState("feed");
 	const [posts, setPosts] = useState([]);
 	const [overview, setOverview] = useState("");
+	const [experiences, setExperiences] = useState([])
+	const [educations, setEducations] = useState([])
 	const [suggestions, setSuggestions] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
 	const [isModalPicOpen, setIsModalPicOpen] = useState(false);
 	const [isExpModalOpen, setIsExpModalOpen] = useState(false);
+	const [isExpEditOpen, setIsExpEditOpen] = useState(false);
+	const [selectedExperience, setSelectExperience] = useState();
+	const [selectedEducation, setSelectEducation] = useState();
+	const [isEduModalOpen, setIsEduModalOpen] = useState(false);
+	const [isEduEditOpen, setIsEduEditOpen] = useState(false);
 
 	const handleButtonClick = (buttonName) => {
 		setActiveButton(buttonName);
@@ -41,26 +52,36 @@ function MyProfile() {
 				const postResponse = await axios.get(`http://localhost:3001/posts/user/${decodedToken.userId}`)
 				const suggestionResponse = await axios.get(`http://localhost:3001/users`);
 				const overviewResponse = await axios.get(`http://localhost:3001/overviews/${decodedToken.userId}`)
-                setOverview(overviewResponse.data.data)
+				const experiencesResponse = await axios.get(`http://localhost:3001/experiences/${decodedToken.userId}`)
+				const educationResponse = await axios.get(`http://localhost:3001/educations/${decodedToken.userId}`)
+				setEducations(educationResponse.data.data)
+				setExperiences(experiencesResponse.data.data)
+				setOverview(overviewResponse.data.data)
 				setSuggestions(suggestionResponse.data.data)
 				setPosts(postResponse.data.data);
 				setIsLoading(false);
 			} catch (error) {
-				setIsLoading(false);
 			}
 		};
 		fetchPost();
-	}, [posts, user,overview]);
+	}, [posts, user, overview, experiences, educations]);
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return (
+		<div className="process-comm">
+			<div className="spinner">
+				<div className="bounce1"></div>
+				<div className="bounce2"></div>
+				<div className="bounce3"></div> 
+			</div>
+		</div>)
 	}
 
 	if (user == null || user.friendRequests == null) {
 		return <p>No results found1.</p>;
 	}
 	return (
-		<div className={`${(isOverviewModalOpen || isModalPicOpen) ? "overlay" : ""}`}>
+		<div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
 			<section className="cover-sec">
 				<img src="images/cover-img.jpg" alt="" />
 				<div className="add-pic-box">
@@ -218,10 +239,14 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
-											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen}/>
-											<OverviewModal setOverview={setOverview} user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen}/>
-											<Experience setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen}/>
-											<Education/>
+											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} />
+											<OverviewModal setOverview={setOverview} user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} />
+											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
+											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
+											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
+											<Education  setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen}/>
+											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
+											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation}/>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">

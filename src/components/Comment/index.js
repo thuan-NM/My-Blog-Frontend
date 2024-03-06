@@ -4,7 +4,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Input } from 'antd';
 
 const Comment = ({ postId }) => {
-  const imagePath = process.env.PUBLIC_URL + '/images/userava.jpg';
   const { user } = useAuth();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -26,7 +25,8 @@ const Comment = ({ postId }) => {
     fetchPostAndComments();
   }, [postId, comments]);
 
-  const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
     try {
       await axios.post('http://localhost:3001/comments', {
         user,
@@ -54,59 +54,43 @@ const Comment = ({ postId }) => {
     <h4>ERROR</h4>
   }
   return (
-    <>
-      {isLoading ? (
-        <h4>Loading ...</h4>
-      ) : (
-        <div className="comment-container">
-          <div className="d-flex input-container">
-            <img
-              src={user.profilePictureUrl || imagePath}
-              alt="User Avatar"
-              className="rounded-circle m-2"
-              width="30"
-              height="30"
-            />
-            <TextArea
-              className="input-header"
-              rows="1"
-              placeholder="Add a comment..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            //   onKeyPress={handleKeyPress}
-              autoSize
-            />
-            <button className="button-header" onClick={handleCommentSubmit}>
-              <i className="bi bi-send-fill"></i>
-            </button>
-          </div>
-          <div>
-            {comments.comments.map((comment) => (
-              <div className="comment-item" key={comment._id}>
-                <div className="d-flex">
-                  <img
-                    src={comment.author.profilePictureUrl || imagePath}
-                    alt="User Avatar"
-                    className="rounded-circle me-3 ms-2"
-                    width="30"
-                    height="30"
-                  />
-                  <div>
-                    <div className="comment-content">
-                      <p className="mt-1">{comment.author.firstName} {comment.author.lastName}:</p>
-                      <p className="mt-1 ms-3">{new Date(comment.createdAt).toLocaleString()}</p>
-                    </div>
-                    <hr></hr>
-                    <p className="mt-3" dangerouslySetInnerHTML={{ __html: comment.content.replace(/\n/g, '<br>') }}></p> 
-                  </div>
-                </div>
+    <div className="comment-section">
+      <div className="comment-sec">
+        <ul>
+          {comments.comments.map((comment) => (
+          <li key={comment._id}>
+            <div className="comment-list">
+              <div className="bg-img">
+                <img src={comment.author.profilePictureUrl} alt="" />
               </div>
-            ))}
-            <hr></hr>
-          </div>
+              <div className="comment">
+                <h3>{comment.author.firstName} {comment.author.lastName}</h3>
+                <span><img src="images/clock.png" alt=""></img> {comment.createdAt}</span>
+                <p>{comment.content}</p>
+                <a href="#" title=""><i className="fa fa-reply-all"></i>Reply</a>
+              </div>
+            </div>
+          </li>
+          ))}
+        </ul>
+      </div>
+      <a href="#" className="plus-ic">
+        <i className="la la-plus"></i>
+      </a>
+      <div className="post-comment">
+        <div className="cm_img">
+          <img src={`${user.profilePictureUrl}`} alt="" />
         </div>
-      )}
-    </>
+        <div className="comment_box">
+          <form>
+            <input type="text" placeholder="Post a comment" value={newComment} onChange={(e) => setNewComment(e.target.value)}>
+            </input>
+            <button className="edit-info" onClick={handleCommentSubmit}>Send</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
   );
 };
 

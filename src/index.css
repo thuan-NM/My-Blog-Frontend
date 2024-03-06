@@ -188,7 +188,8 @@ nav ul li a,
 nav ul li:hover > ul,
 .user-pro-img > a i,
 .post-project-fields button,
-.settingjb ul li{
+.settingjb ul li,
+.edit-info{
 	-webkit-transition: all 0.4s ease-in;
 	-moz-transition: all 0.4s ease-in;
 	-ms-transition: all 0.4s ease-in;
@@ -255,7 +256,8 @@ nav ul li:hover > ul,
 .post_comment_sec form textarea,
 .post_comment_sec form button,
 .next-prev > a,
-.post-project-fields button{
+.post-project-fields button,
+.edit-info{
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	-ms-border-radius: 4px;
@@ -614,10 +616,20 @@ nav > ul > li > a:hover {
 .user-account-settingss i {
 	font-size: 25px;
 	color: #686868 !important;
+	-webkit-transition: all 0.2s ease-out !important;
+	-moz-transition: all 0.2s ease-out !important;
+	-ms-transition: all 0.2s ease-out !important;
+	-o-transition: all 0.2s ease-out !important;
+	transition: all 0.2s ease-out !important;
 }
 .user-account-settingss i:hover {
-	font-size: 37px;
+	font-size: 28px;
 	color: #e44d3a !important;
+	-webkit-transition: all 0.2s ease-in !important;
+	-moz-transition: all 0.2s ease-in !important;
+	-ms-transition: all 0.2s ease-in !important;
+	-o-transition: all 0.2s ease-in !important;
+	transition: all 0.2s ease-in !important;
 }
 .user-account-settingss button{
 	font-weight: 600;
@@ -1389,12 +1401,27 @@ main {
 	float: left;
 	margin-top: 6px;
 	margin-right: 5px;
+	-webkit-transition: all 0.15s ease-out !important;
+	-moz-transition: all 0.15s ease-out !important;
+	-ms-transition: all 0.15s ease-out !important;
+	-o-transition: all 0.15s ease-out !important;
+	transition: all 0.15s ease-out !important;
 }
 .like-com button:hover {
 	color: #e44d3a;
+	-webkit-transition: all 0.15s ease-in !important;
+	-moz-transition: all 0.15s ease-in !important;
+	-ms-transition: all 0.15s ease-in !important;
+	-o-transition: all 0.15s ease-in !important;
+	transition: all 0.15s ease-in !important;
 }
 .like-com button.active {
 	color: #e44d3a;
+	-webkit-transition: all 0.15s ease-in !important;
+	-moz-transition: all 0.15s ease-in !important;
+	-ms-transition: all 0.15s ease-in !important;
+	-o-transition: all 0.15s ease-in !important;
+	transition: all 0.15s ease-in !important;
 }
 .like-com button{
 	border: none;
@@ -1405,6 +1432,9 @@ main {
 	font-size: 18px;
 	position: relative;
 	top: 2px;
+}
+.like-com button i.active {
+	color: #e44d3a;
 }
 .like-com span {
 	color: #ffffff;
@@ -1677,6 +1707,7 @@ main {
 .comment-sec {
 	float: left;
 	width: 100%;
+	margin-bottom: 10px;
 }
 .comment-sec ul {
 	float: left;
@@ -1691,10 +1722,12 @@ main {
 }
 .comment-list {
 	display: table;
-	padding-bottom: 30px;
+	padding-bottom: 20px;
+	width: 100%;
 }
 .bg-img {
 	display: table-cell;
+	width: 8% !important;
 }
 .bg-img img {
 	-webkit-border-radius: 100px;
@@ -1702,11 +1735,17 @@ main {
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
 	border-radius: 100px;
+	margin-top: 7px;
+	width: 30px !important;
+	height: 30px !important;
 }
 .comment {
 	display: table-cell;
 	vertical-align: top;
 	width: 100%;
+	padding: 10px;
+	background-color: #F2F2F2;
+	border-radius: 25px;
 	padding-left: 10px;
 }
 .comment h3 {
@@ -1714,6 +1753,7 @@ main {
 	font-size: 16px;
 	font-weight: 600;
 	margin-bottom: 10px;
+	margin-left: 8px;
 }
 .comment img {
 	position: relative;
@@ -1725,18 +1765,21 @@ main {
 	font-size: 14px;
 	display: block;
 	margin-bottom: 14px;
+	margin-left: 8px;
 }
 .comment p {
 	color: #686868;
 	font-size: 14px;
 	margin-bottom: 10px;
 	line-height: 20px;
+	margin-left: 8px;
 }
 .comment > a {
 	display: inline-block;
 	color: #b2b2b2;
 	font-size: 14px;
 	font-weight: 600;
+	margin-left: 8px;
 }
 .comment > a.active,
 .comment > a:hover {
@@ -1757,12 +1800,16 @@ main {
 	float: left;
 	width: 40px;
 	margin-right: 10px;
+	border-radius: 50% !important;
+}
+.cm_img > img{
+	border-radius: 50% !important;
 }
 .comment_box {
 	float: none;
 }
 .comment_box input {
-	width: 372px;
+	width: 79%;
 	height: 40px;
 	border: 1px solid #e5e5e5;
 	background-color: #efefef;
@@ -1772,6 +1819,7 @@ main {
 	font-weight: 600;
 	line-height: 40px;
 	resize: none;
+	border-radius: 8px 	;
 }
 .comment_box form button {
 	float: right;
@@ -1782,7 +1830,20 @@ main {
 	text-align: center;
 	font-size: 14px;
 	border: 0;
-	margin-left: 10px;
+	width: 9%;
+	cursor: pointer;
+	font-weight: 600;
+}
+.comment_box form button:hover {
+	float: right;
+	color: #e44d3a;
+	background-color: #efefef;
+	height: 40px;
+	padding: 0 10px;
+	text-align: center;
+	font-size: 14px;
+	border: none !important;
+	width: 9%;
 	cursor: pointer;
 	font-weight: 600;
 }
@@ -6982,4 +7043,40 @@ ul#myTab {
     line-height: 24px;
     font-size: 14px;
     color: #666666;
+}
+.edit-info{
+	width: 30px;
+	height: 30px;
+	border: none;
+	padding: 5px !important;
+	margin-left: 15px;
+	background-color: transparent;
+	-webkit-transition: all 0.15s ease-out !important;
+	-moz-transition: all 0.15s ease-out !important;
+	-ms-transition: all 0.15s ease-out !important;
+	-o-transition: all 0.15s ease-out !important;
+	transition: all 0.15s ease-out !important;
+}
+.edit-info:hover{
+	background-color: white;
+	border: 1px solid gray !important;
+	transform: scale(1.2);
+	-webkit-transition: all 0.15s ease-in !important;
+	-moz-transition: all 0.15s ease-in !important;
+	-ms-transition: all 0.15s ease-in !important;
+	-o-transition: all 0.15s ease-in !important;
+	transition: all 0.15s ease-in !important;
+}
+.edit-info > i{
+	padding: 0px !important;
+	margin: 0px !important;
+	font-size: 14px !important;
+}
+.ant-picker {
+    width: 100% !important; /* Giá trị z-index có thể điều chỉnh tùy theo nhu cầu */
+}
+
+/* Đặt z-index cho overlay của DatePicker */
+.ant-picker-dropdown {
+    z-index: 10010 !important; /* Đảm bảo overlay hiển thị trên DatePicker */
 }
