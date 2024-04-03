@@ -23,6 +23,8 @@ import Jobs from "./pages/Jobs";
 import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
 import { QueryClient, QueryClientProvider } from 'react-query'
+import ChatBox from "./components/ChatBox";
+import ChatComponent from "./components/ChatComponent";
 const queryClient = new QueryClient()
 
 function App() {
@@ -31,7 +33,7 @@ function App() {
   // Kiểm tra xem đang ở trang đăng nhập hoặc đăng ký
   const isAuthPage = location.pathname.includes("/auth");
   return (
-    <div className="App wrapper">
+    <div className="wrapper">
       <QueryClientProvider client={queryClient}>
           {!isAuthPage&&<Header />}
           <Routes>
@@ -45,7 +47,9 @@ function App() {
             <Route path="/jobs" element={<Jobs/>}/>
             <Route path="/auth" element={<Auth />} />
             <Route path="*" element={<h1>Page not found</h1>} />
+            <Route path="/test" element={<ChatComponent />} />
           </Routes>
+          {!isAuthPage&&<ChatBox />}
       </QueryClientProvider>
     </div>
   );

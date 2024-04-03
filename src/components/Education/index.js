@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Education = ({setIsEduModalOpen,isEduModalOpen,educations,setSelectEducation,selectedEducation,isEduEditOpen,setIsEduEditOpen}) => {
+const Education = ({isLoading,setIsEduModalOpen,isEduModalOpen,educations,setSelectEducation,selectedEducation,isEduEditOpen,setIsEduEditOpen}) => {
 
     const handleSelect = (exp) => {
         setIsEduEditOpen(!isEduEditOpen);
@@ -34,6 +34,17 @@ const Education = ({setIsEduModalOpen,isEduModalOpen,educations,setSelectEducati
                 }
             });
     }
+
+    if (isLoading) {
+		return (
+		<div className="process-comm">
+			<div className="spinner">
+				<div className="bounce1"></div>
+				<div className="bounce2"></div>
+				<div className="bounce3"></div> 
+			</div>
+		</div>)
+	}
 
     return (
         <div className="user-profile-ov animate__animated zoomIn">

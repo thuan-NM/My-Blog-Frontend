@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload } from 'antd';
+import ImgCrop from 'antd-img-crop';
 import { message } from 'antd';
 import axios from 'axios';
 
-const Profile = ({ user,updateUser,isModalPicOpen,setIsModalPicOpen }) => {
+const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (info) => {
@@ -39,16 +40,30 @@ const Profile = ({ user,updateUser,isModalPicOpen,setIsModalPicOpen }) => {
         console.error('Internal Server Error:', error.response.data);
         // Handle the error appropriately
       } else {
-        message.error("Change picture fail! ",error);
+        message.error("Change picture fail! ", error);
         console.error('Error updating profile picture:', error);
       }
     }
     setIsModalPicOpen(!isModalPicOpen);
   };
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
   return (
     <div className="user_profile">
       <div className="user-pro-img">
-        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+        <img src={user.profilePictureUrl || `images/userava.jpg`}/>
         <div className="add-dp" id="OpenImgUpload">
           <label><i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i></label>
         </div>
@@ -56,13 +71,19 @@ const Profile = ({ user,updateUser,isModalPicOpen,setIsModalPicOpen }) => {
           <div className="post-project">
             <h3>Update Picture</h3>
             <div className="post-project-fields">
-              <Upload
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                listType="picture"
-                onChange={handleImageChange}
-              >
-                <Button icon={<UploadOutlined />}></Button>
-              </Upload>
+              <ImgCrop rotationSlider>
+                <Upload
+                  action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
+                  listType="picture-card"
+                  onChange={handleImageChange}
+                  onPreview={onPreview}
+                  data={{
+                    upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
+                  }}
+                >
+                {<UploadOutlined />}
+                </Upload>
+              </ImgCrop>
               <button className="submit-but" onClick={onSubmit}>Submit<i className="ms-2 bi bi-check-circle-fill"></i></button>
             </div>
             <button onClick={() => setIsModalPicOpen(!isModalPicOpen)}><i className="la la-times-circle-o"></i></button>

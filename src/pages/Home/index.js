@@ -7,9 +7,12 @@ import PostItem from "../../components/PostItem";
 import Pagination from "../../components/Pagination";
 import SearchBar from "../../components/SearchBar";
 import Suggestions from "../../components/Suggestion";
+import TopProfile from "../../components/TopProfile";
 import { useHashtags } from "../../contexts/HashtagContext";
 import { useSearch } from "../../contexts/SearchContext";
 import { useAuth } from "../../contexts/AuthContext";
+import TopJob from "../../components/TopJob";
+import MostInterest from "../../components/MostInterest";
 
 
 function Home() {
@@ -17,7 +20,6 @@ function Home() {
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
   const [totalPages, settotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth()
@@ -34,8 +36,6 @@ function Home() {
     const fetchPost = async () => {
       try {
         const postResponse = await axios.get(`http://localhost:3001/posts/?page=${currentPage}&pageSize=${pageSize}`);
-        const suggestionResponse = await axios.get(`http://localhost:3001/users?page=${currentPage}&pageSize=${pageSize}`);
-        setSuggestions(suggestionResponse.data.data)
         setPosts(postResponse.data.data);
         settotalPages(postResponse.data.totalPages)
         setIsLoading(false);
@@ -69,7 +69,7 @@ function Home() {
                     <div className="user-profile">
                       <div className="username-dt">
                         <div className="usr-pic">
-                          <img src={user.profilePictureUrl || `images/userava.jpg`}/>
+                          <img src={user.profilePictureUrl || `images/userava.jpg`} />
                         </div>
                       </div>
                       <div className="user-specs">
@@ -91,18 +91,7 @@ function Home() {
                       </li>
                     </ul>
                   </div>)}
-                  <div className="suggestions full-width">
-                    <div className="sd-title">
-                      <h3>Suggestions</h3>
-                      <i className="la la-ellipsis-v"></i>
-                    </div>
-                    <div className="suggestions-list">
-                      {suggestions.map((suggestion) => (user && user._id && user._id != suggestion._id && <Suggestions suggestion={suggestion} key={suggestion._id} />))}
-                      <div className="view-more">
-                        <Link href="#" title="">View More</Link>
-                      </div>
-                    </div>
-                  </div>
+                  <Suggestions />
                   <div className="tags-sec full-width">
                     <ul>
                       <li><Link href="#" title="">Help Center</Link></li>
@@ -125,7 +114,7 @@ function Home() {
                 <div className="main-ws-sec">
                   <div className="post-topbar">
                     <div className="user-picy">
-                      <img src={user.profilePictureUrl || `images/userava.jpg`}/>
+                      <img src={user.profilePictureUrl || `images/userava.jpg`} />
                     </div>
                     <div className="post-st">
                       <ul>
@@ -144,20 +133,12 @@ function Home() {
                               <i className="la la-ellipsis-v"></i>
                             </div>
                             <div className="profiles-slider slick-initialized slick-slider">
-                              <span className="slick-previous slick-arrow" style={{ display: 'inline' }}></span>
-                              <span className="slick-nexti slick-arrow" style={{ display: 'inline' }}></span>
+                              <TopProfile />
                             </div>
                           </div>)}
                         <PostItem post={post}></PostItem>
                       </React.Fragment>
                     ))}
-                    <div className="process-comm">
-                      <div className="spinner">
-                        <div className="bounce1"></div>
-                        <div className="bounce2"></div>
-                        <div className="bounce3"></div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -165,160 +146,15 @@ function Home() {
                 <div className="right-sidebar">
                   <div className="widget widget-about">
                     <img src="images/wd-logo.png" alt="" />
-                    <h3>Track Time on Workwise</h3>
-                    <span>Pay only for the Hours worked</span>
+                    <h3>Theo Dõi Ngay Meow IT</h3>
+                    <span>Lương chỉ được trả theo số giờ làm</span>
                     <div className="sign_link">
-                      <h3><Link to={"/auth"} title="">Sign up</Link></h3>
-                      <Link href="#" title="">Learn More</Link>
+                      <h3><Link to={"/auth"} title="">Đăng Ký Ngay</Link></h3>
+                      <Link to={"/about"} title="">Xem thêm</Link>
                     </div>
                   </div>
-                  <div className="widget widget-jobs">
-                    <div className="sd-title">
-                      <h3>Top Jobs</h3>
-                      <i className="la la-ellipsis-v"></i>
-                    </div>
-                    <div className="jobs-list">
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior Product Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior UI / UX Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Junior Seo Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior PHP Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior Developer Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget widget-jobs">
-                    <div className="sd-title">
-                      <h3>Most Viewed This Week</h3>
-                      <i className="la la-ellipsis-v"></i>
-                    </div>
-                    <div className="jobs-list">
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior Product Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Senior UI / UX Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                      <div className="job-info">
-                        <div className="job-details">
-                          <h3>Junior Seo Designer</h3>
-                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                        </div>
-                        <div className="hr-rate">
-                          <span>$25/hr</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget suggestions full-width">
-                    <div className="sd-title">
-                      <h3>Most Viewed People</h3>
-                      <i className="la la-ellipsis-v"></i>
-                    </div>
-                    <div className="suggestions-list">
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>Jessica William</h4>
-                          <span>Graphic Designer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>John Doe</h4>
-                          <span>PHP Developer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>Poonam</h4>
-                          <span>Wordpress Developer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>Bill Gates</h4>
-                          <span>C &amp; C++ Developer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>Jessica William</h4>
-                          <span>Graphic Designer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="suggestion-usd">
-                        <img src="images/myfavicon.png" alt="" />
-                        <div className="sgt-text">
-                          <h4>John Doe</h4>
-                          <span>PHP Developer</span>
-                        </div>
-                        <span><i className="la la-plus"></i></span>
-                      </div>
-                      <div className="view-more">
-                        <Link href="#" title="">View More</Link>
-                      </div>
-                    </div>
-                  </div>
+                  <TopJob />
+                  <MostInterest />
                 </div>
               </div>
             </div>

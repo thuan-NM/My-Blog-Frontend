@@ -41,7 +41,14 @@ const Comment = ({ postId }) => {
     }
   };
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="process-comm">
+        <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      </div>)
   }
   if (comments.comments.length !== 0) {
     comments.comments.forEach(comment => {
@@ -54,7 +61,7 @@ const Comment = ({ postId }) => {
     <h4>ERROR</h4>
   }
   return (
-    <div className="comment-section">
+    <div className="comment-section animate__animated animate__fast animate__fadeIn">
       <div className="comment-sec">
         <ul>
           {comments.comments.map((comment) => (

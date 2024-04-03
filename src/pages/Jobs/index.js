@@ -11,6 +11,10 @@ import { useHashtags } from "../../contexts/HashtagContext";
 import { useSearch } from "../../contexts/SearchContext";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../jquery.range.css"
+import { InputNumber, Slider, Switch } from "antd";
+import TopProfile from "../../components/TopProfile";
+import TopJob  from "../../components/TopJob";
+import MostInterest from "../../components/MostInterest";
 
 
 function Jobs() {
@@ -22,19 +26,39 @@ function Jobs() {
     const [totalPages, settotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth()
-    const pageSize = 5;
-    const { showPostLists, hashtagResults, handleHashtags, setHashtagResults, setShowPostLists } = useHashtags();
-    const { handleSearchPost, searchTerm, searchResults, showPostListsWithSearch, setSearchTerm, setSearchResults, setShowPostListsWithSearch } = useSearch();
+    const [minInputValue, setMinInputValue] = useState(0)
+    const [maxInputValue, setMaxInputValue] = useState(500000)
+    const [skills, setSkills] = useState("");
+    const [typeOfJob, setTypeOfJob] = useState("");
+    const [workType, setWorkType] = useState("");
+    const [country, setCountry] = useState("");
+    const [input, setInput] = useState(true);
+    const [experience, setExperience] = useState("");
+    const defaultFilter = {
+        skills: [""],
+        typeOfJob: "",
+        workType: "",
+        minInputValue: 0,
+        maxInputValue: 500000,
+        country: "",
+        experience: ""
+    }
+    const [filter, setFilter] = useState(defaultFilter);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
 
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await axios.get(`http://localhost:3001/posts`);
+                const postResponse = await axios.post(`http://localhost:3001/posts/filter`, filter, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
                 const suggestionResponse = await axios.get(`http://localhost:3001/users`);
                 setSuggestions(suggestionResponse.data.data)
                 setPosts(postResponse.data.data);
@@ -45,7 +69,7 @@ function Jobs() {
             }
         };
         fetchPost();
-    }, [posts]);
+    }, [filter]);
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -58,13 +82,34 @@ function Jobs() {
         e.preventDefault();
         setIsProjectModalOpen(!isProjectModalOpen);
     };
+
+    const onChange = (value) => {
+        setMinInputValue(value[0]);
+        setMaxInputValue(value[1]);
+    };
+    const handleFilter = (e) => {
+        e.preventDefault()
+        const newfilter = {
+            skills: skills.split(","),
+            typeOfJob: typeOfJob,
+            workType: workType,
+            minInputValue: minInputValue,
+            maxInputValue: maxInputValue,
+            country: country,
+            experience: experience,
+        }
+        setFilter(newfilter)
+    }
+
+    
+
     return (
         <div><div className="search-sec">
             <div className="container">
                 <div className="search-box">
                     <form>
                         <input type="text" name="search" placeholder="Search keywords" />
-                        <button type="submit">Search</button>
+                        <button>Search</button>
                     </form>
                 </div>
             </div>
@@ -77,122 +122,124 @@ function Jobs() {
                                 <div className="col-lg-3 pd-left-none no-pd">
                                     <div className="filter-secs">
                                         <div className="filter-heading">
-                                            <h3>Filters</h3>
-                                            <a href="#" title="">Clear all filters</a>
+                                            <div className="filter-title">
+                                                <h3>Bộ lọc</h3>
+                                            </div>
+                                            <button onClick={() => setFilter(defaultFilter)}>Xóa bộ lọc</button>
                                         </div>
                                         <div className="paddy">
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Skills</h3>
-                                                    <a href="#" title="">Clear</a>
+                                                    <h3>Các skills</h3>
+                                                    <button onClick={() => setSkills("")}>Xóa</button>
                                                 </div>
                                                 <form>
-                                                    <input type="text" name="search-skills" placeholder="Search skills" />
+                                                    <input type="text" name="search-skills" placeholder="Tìm skills ..." value={skills} onChange={(e) => { setSkills(e.target.value) }} />
                                                 </form>
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Availabilty</h3>
-                                                    <a href="#" title="">Clear</a>
-                                                </div>
-                                                <ul className="avail-checks">
-                                                    <li>
-                                                        <input type="radio" name="cc" id="c1" />
-                                                        <label htmlFor="c1">
-                                                            <span></span>
-                                                        </label>
-                                                        <small>Hourly</small>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" name="cc" id="c2" />
-                                                        <label htmlFor="c2">
-                                                            <span></span>
-                                                        </label>
-                                                        <small>Part Time</small>
-                                                    </li>
-                                                    <li>
-                                                        <input type="radio" name="cc" id="c3" />
-                                                        <label htmlFor="c3">
-                                                            <span></span>
-                                                        </label>
-                                                        <small>Full Time</small>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="filter-dd">
-                                                <div className="filter-ttl">
-                                                    <h3>Job Type</h3>
-                                                    <a href="#" title="">Clear</a>
+                                                    <h3>Loại hợp đồng</h3>
+                                                    <button onClick={() => setTypeOfJob("")}>Xóa</button>
                                                 </div>
                                                 <form className="job-tp">
-                                                    <select>
-                                                        <option>Select a job type</option>
-                                                        <option>Select a job type</option>
-                                                        <option>Select a job type</option>
-                                                        <option>Select a job type</option>
+                                                    <select onChange={(e) => setTypeOfJob(e.target.value)} value={typeOfJob}>
+                                                        <option value={""}>Chọn loại hợp đồng</option>
+                                                        <option>Hourly</option>
+                                                        <option>Part Time</option>
+                                                        <option>Full Time</option>
                                                     </select>
                                                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                 </form>
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Pay Rate / Hr ($)</h3>
-                                                    <a href="#" title="">Clear</a>
+                                                    <h3>Loại hình công việc</h3>
+                                                    <button onClick={() => { setWorkType("") }}>Xóa</button>
+                                                </div>
+                                                <form className="job-tp">
+                                                    <select onChange={(e) => setWorkType(e.target.value)} value={workType}>
+                                                        <option>Chọn loại hình</option>
+                                                        <option>Onsite</option>
+                                                        <option>Remote</option>
+                                                        <option>Hybrid</option>
+                                                    </select>
+                                                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                </form>
+                                            </div>
+                                            <div className="filter-dd">
+                                                <div className="filter-ttl">
+                                                    <h3>Lương / Hr ($)</h3>
                                                 </div>
                                                 <div className="rg-slider">
-                                                    <input className="rn-slider slider-input" type="hidden" value="5,50" style={{display: "none"}} />
-                                                    <div className="slider-container theme-green" style={{width: "300px"}}>
-                                                        <div className="back-bar">
-                                                            <div className="selected-bar">
-                                                            </div>
-                                                            <div className="pointer low">
-                                                            </div><div className="pointer-label low" style={{left: "0px"}}>5
-                                                            </div>
-                                                            <div className="pointer high">
-                                                            </div>
-                                                            <div className="pointer-label high">50
-                                                            </div>
-                                                            <div className="clickable-dummy">
-                                                            </div>
-                                                        </div>
-                                                        <div className="scale">
-                                                        </div>
-                                                    </div>
+                                                    <InputNumber
+                                                        style={{
+                                                            margin: '0 16px',
+                                                        }}
+                                                        value={minInputValue}
+                                                        onChange={(value) => setMinInputValue(value)}
+                                                    />
+                                                    <span> - </span>
+                                                    <InputNumber
+                                                        style={{
+                                                            margin: '0 16px',
+                                                        }}
+                                                        value={maxInputValue}
+                                                        onChange={(value) => setMaxInputValue(value)}
+                                                    />
+                                                    <Slider range defaultValue={[minInputValue, maxInputValue]} onChange={onChange} value={[minInputValue, maxInputValue]} max={1000} step={10} />
                                                 </div>
-                                                <div className="rg-limit">
+                                                <div className="rg-limit mt-0">
                                                     <h4>1</h4>
-                                                    <h4>100+</h4>
+                                                    <h4>1000+</h4>
                                                 </div>
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Experience Level</h3>
-                                                    <a href="#" title="">Clear</a>
+                                                    <h3>Mức độ kinh nghiệm</h3>
+                                                    <button onClick={() => { setExperience("") }}>Xóa</button>
                                                 </div>
                                                 <form className="job-tp">
-                                                    <select>
-                                                        <option>Select a experience level</option>
-                                                        <option>3 years</option>
-                                                        <option>4 years</option>
-                                                        <option>5 years</option>
+                                                    <select onChange={(e) => setExperience(e.target.value)} value={experience}>
+                                                        <option value={""}>Chọn mức độ kinh nghiệm</option>
+                                                        <option>Fresher Developer</option>
+                                                        <option>Junior Developer</option>
+                                                        <option>Middle Developer</option>
+                                                        <option>Senior Developer</option>
+                                                        <option>Team Leader</option>
+                                                        <option>Tester</option>
                                                     </select>
                                                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                 </form>
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Countries</h3>
-                                                    <a href="#" title="">Clear</a>
+                                                    <h3>Khu vực</h3>
+                                                    <button onClick={() => { setCountry("") }}>Xóa</button>
                                                 </div>
                                                 <form className="job-tp">
-                                                    <select>
-                                                        <option>Select a country</option>
-                                                        <option>United Kingdom</option>
-                                                        <option>United States</option>
-                                                        <option>Russia</option>
-                                                    </select>
-                                                    <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
+                                                    {input ? (
+                                                        <select onChange={(e) => { setCountry(e.target.value) }} value={country}>
+                                                            <option value={""}>Chọn một khu vực</option>
+                                                            <option>Mỹ</option>
+                                                            <option>Anh</option>
+                                                            <option>Việt Nam</option>
+                                                        </select>
+                                                    ) : (
+                                                        <input placeholder="Nhập tên khu vực" value={country} onChange={(e) => { setCountry(e.target.value) }}></input>
+                                                    )}
+                                                    <button className="search-btn" onClick={handleFilter}>Lọc</button>
                                                 </form>
+                                                <Switch
+                                                    checked={input}
+                                                    checkedChildren="Lựa chọn"
+                                                    unCheckedChildren="Nhập"
+                                                    onChange={() => {
+                                                        setInput(!input);
+                                                    }}
+                                                    className="mt-3"
+                                                />
+
                                             </div>
                                         </div>
                                     </div>
@@ -220,20 +267,12 @@ function Jobs() {
                                                                 <i className="la la-ellipsis-v"></i>
                                                             </div>
                                                             <div className="profiles-slider slick-initialized slick-slider">
-                                                                <span className="slick-previous slick-arrow" style={{ display: 'inline' }}></span>
-                                                                <span className="slick-nexti slick-arrow" style={{ display: 'inline' }}></span>
+                                                               <TopProfile/>
                                                             </div>
                                                         </div>)}
                                                     <PostItem post={post}></PostItem>
-                                                </React.Fragment>
+                                                </React.Fragment> 
                                             ))}
-                                            <div className="process-comm">
-                                                <div className="spinner">
-                                                    <div className="bounce1"></div>
-                                                    <div className="bounce2"></div>
-                                                    <div className="bounce3"></div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -241,160 +280,16 @@ function Jobs() {
                                     <div className="right-sidebar">
                                         <div className="widget widget-about">
                                             <img src="images/wd-logo.png" alt="" />
-                                            <h3>Track Time on Workwise</h3>
-                                            <span>Pay only for the Hours worked</span>
+                                            <h3>Theo Dõi Ngay Meow IT</h3>
+                                            <span>Lương chỉ được trả theo số giờ làm</span>
                                             <div className="sign_link">
-                                                <h3><Link to={"/auth"} title="">Sign up</Link></h3>
-                                                <Link href="#" title="">Learn More</Link>
+                                                <h3><Link to={"/auth"} title="">Đăng Ký Ngay</Link></h3>
+                                                <Link to={"/about"} title="">Xem thêm</Link>
                                             </div>
                                         </div>
-                                        <div className="widget widget-jobs">
-                                            <div className="sd-title">
-                                                <h3>Top Jobs</h3>
-                                                <i className="la la-ellipsis-v"></i>
-                                            </div>
-                                            <div className="jobs-list">
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior Product Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior UI / UX Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Junior Seo Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior PHP Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior Developer Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="widget widget-jobs">
-                                            <div className="sd-title">
-                                                <h3>Most Viewed This Week</h3>
-                                                <i className="la la-ellipsis-v"></i>
-                                            </div>
-                                            <div className="jobs-list">
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior Product Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Senior UI / UX Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                                <div className="job-info">
-                                                    <div className="job-details">
-                                                        <h3>Junior Seo Designer</h3>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
-                                                    </div>
-                                                    <div className="hr-rate">
-                                                        <span>$25/hr</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="widget suggestions full-width">
-                                            <div className="sd-title">
-                                                <h3>Most Viewed People</h3>
-                                                <i className="la la-ellipsis-v"></i>
-                                            </div>
-                                            <div className="suggestions-list">
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>Jessica William</h4>
-                                                        <span>Graphic Designer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>John Doe</h4>
-                                                        <span>PHP Developer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>Poonam</h4>
-                                                        <span>Wordpress Developer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>Bill Gates</h4>
-                                                        <span>C &amp; C++ Developer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>Jessica William</h4>
-                                                        <span>Graphic Designer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="suggestion-usd">
-                                                    <img src="images/myfavicon.png" alt="" />
-                                                    <div className="sgt-text">
-                                                        <h4>John Doe</h4>
-                                                        <span>PHP Developer</span>
-                                                    </div>
-                                                    <span><i className="la la-plus"></i></span>
-                                                </div>
-                                                <div className="view-more">
-                                                    <Link href="#" title="">View More</Link>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <TopJob/>
+                                        <MostInterest/>
+                                        <Suggestions/>
                                     </div>
                                 </div>
                             </div>

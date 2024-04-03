@@ -23,8 +23,8 @@ import EducationEdit from "../../components/EducationEdit";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
-	const { handleHashtags } = useHashtags();
-	const { handleRemoveFriend } = useFriend();
+	// const { handleHashtags } = useHashtags();
+	// const { handleRemoveFriend } = useFriend();
 	const storedToken = localStorage.getItem('token');
 	const decodedToken = jwtDecode(storedToken);
 	const [activeButton, setActiveButton] = useState("feed");
@@ -65,17 +65,6 @@ function MyProfile() {
 		};
 		fetchPost();
 	}, [posts, user, overview, experiences, educations]);
-
-	if (isLoading) {
-		return (
-		<div className="process-comm">
-			<div className="spinner">
-				<div className="bounce1"></div>
-				<div className="bounce2"></div>
-				<div className="bounce3"></div> 
-			</div>
-		</div>)
-	}
 
 	if (user == null || user.friendRequests == null) {
 		return <p>No results found1.</p>;
@@ -244,7 +233,7 @@ function MyProfile() {
 											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
-											<Education  setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen}/>
+											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen}/>
 											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
 											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation}/>
 										</div>

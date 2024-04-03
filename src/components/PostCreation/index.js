@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { UploadOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { message } from 'antd';
+import { Upload, message } from 'antd';
 
 const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, handleShowProjectModal }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");
   const [description, setDescription] = useState("");
-  const [typeOfJob, setTypeOfJob] = useState("Full Time");
-  const [experience, setExperience] = useState("")
-  const [price, setPrice] = useState("");
+  const [typeOfJob, setTypeOfJob] = useState("");
+  const [experience, setExperience] = useState("");
+  const [price, setPrice] = useState(0);
+  const [workType, setWorkType] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalFileOpen, setIsModalFileOpen] = useState(false);
   const { user } = useAuth();
 
   const handleCreatePost = (e) => {
@@ -23,6 +27,7 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
       price: price,
       typeOfJob: typeOfJob,
       experience: experience,
+      workType: workType,
       // lay user -> author
       user: user,
     };
@@ -52,6 +57,11 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
     if (isJobModalOpen == true) handleShowJobModal(e);
     else handleShowProjectModal(e)
   };
+const handleFile = (info) => {
+    if (info.file.status === 'done') {
+      setSelectedFile(info.file.originFileObj);
+    }
+  };
 
   return (
     <div className={`post-popup job_post ${isJobModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
@@ -63,15 +73,26 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
               <div className="col-lg-12">
                 <input type="text" id="title" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
               </div>
-              <div className="inp-field">
-                <select onChange={(e) => setExperience(e.target.value)} value={experience}>
-                  <option>Fresher Developer</option>
-                  <option>Junior Developer</option>
-                  <option>Middle Developer</option>
-                  <option>Senior Developer</option>
-                  <option>Team Leader</option>
-                  <option>Tester</option>
-                </select>
+              <div className="col-lg-6">
+                <div className="inp-field">
+                  <select onChange={(e) => setExperience(e.target.value)} value={experience}>
+                    <option>Fresher Developer</option>
+                    <option>Junior Developer</option>
+                    <option>Middle Developer</option>
+                    <option>Senior Developer</option>
+                    <option>Team Leader</option>
+                    <option>Tester</option>
+                  </select>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="inp-field">
+                  <select onChange={(e) => setWorkType(e.target.value)} value={workType}>
+                    <option>Onsite</option>
+                    <option>Remote</option>
+                    <option>Hybrid</option>
+                  </select>
+                </div>
               </div>
               <div className="col-lg-12">
                 <input type="text" id="skills" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
@@ -86,7 +107,7 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
                 <div className="inp-field">
                   <select onChange={(e) => setTypeOfJob(e.target.value)} value={typeOfJob}>
                     <option>Full Time</option>
-                    <option>Part time</option>
+                    <option>Part Time</option>
                     <option>Hourly</option>
                   </select>
                 </div>
@@ -94,12 +115,24 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
               <div className="col-lg-12">
                 <textarea id="description" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
               </div>
+              <div className="col-lg-12 attach-file">
+                <Upload
+                    action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
+                    onChange={handleFile}
+                    data={{
+                      upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
+                    }}
+                  >
+                    {<UploadOutlined />}
+                  </Upload>
+              </div>
               <div className="col-lg-12">
                 <ul>
                   <li><button className="active" onClick={handleCreatePost}>Post</button></li>
                   <li><button onClick={handleShowJobModal}>Cancel</button></li>
                 </ul>
               </div>
+              
             </div>
           </form>
         </div>
