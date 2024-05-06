@@ -1540,8 +1540,9 @@ main {
 }
 
 .bid_now {
+	border: none !important;
 	color: #fff;
-	background-color: #51a5fb;
+	background-color: #51a5fb !important;
 	text-transform: capitalize;
 	display: inline-block;
 	height: 30px;
@@ -1551,8 +1552,22 @@ main {
 	top: -3px;
 }
 
-.bid_now:hover {
+.bk-links li .ant-btn {
+	border: none !important;
 	color: #fff;
+	background-color: #51a5fb !important;
+	text-transform: capitalize;
+	display: inline-block;
+	height: 30px;
+	padding: 0 10px;
+	line-height: 30px;
+	position: relative;
+	top: -3px;
+	border-radius: 4px !important;
+}
+
+.bk-links li .ant-btn:hover {
+	color: #fff !important;
 }
 
 
@@ -2283,24 +2298,30 @@ main {
 	justify-content: space-between;
 	border-radius: 4px !important;
 }
-.attach-file .ant-upload-wrapper{
+
+.attach-file .ant-upload-wrapper {
 	display: flex;
 	flex-direction: row;
 	height: 50px !important;
 }
-.attach-file .ant-upload{
+
+.attach-file .ant-upload {
 	margin: auto !important;
 	margin-right: 20px !important;
 }
+
 .attach-file .ant-upload span {
 	font-size: 24px;
 }
-.attach-file .ant-upload-list{
+
+.attach-file .ant-upload-list {
 	margin: auto !important;
 }
-.attach-file .ant-upload-list-item:hover{
+
+.attach-file .ant-upload-list-item:hover {
 	background-color: transparent !important;
 }
+
 .post-popup.active {
 	opacity: 1;
 	visibility: visible;
@@ -3200,10 +3221,14 @@ a {
 	margin-top: -40px;
 }
 
-.ant-modal-root .ant-modal-wrap .ant-modal .ant-modal-content {
+/* .ant-modal-root .ant-modal-wrap .ant-modal .ant-modal-content {
 	height: 450px !important;
+} */
+.modal-job-btn{
+	margin: auto !important;
+	width: fit-content !important;
+	text-align: center !important;
 }
-
 .user-pro-img {
 	float: left;
 	width: 100% !important;
@@ -4880,6 +4905,13 @@ a:hover {
 	z-index: 9999;
 }
 
+.conversation-box.active:hover {
+	transition: all 0.1s ease-out !important;
+	opacity: 1;
+	visibility: visible;
+	z-index: 10000;
+}
+
 .conversation-box:before {
 	content: '';
 	position: absolute;
@@ -5091,6 +5123,7 @@ a:hover {
 	margin-top: 7px;
 	margin-left: 10px;
 }
+
 .chat-user-info img {
 	width: 35px;
 	height: 35px;
@@ -5136,7 +5169,7 @@ a:hover {
 
 .chat-msg.st2 {
 	padding: 0px;
-	padding-left: 25px !important; 
+	padding-left: 25px !important;
 }
 
 .chat-msg.st2 span {
@@ -5148,7 +5181,7 @@ a:hover {
 /* =========== typing-msg =========== */
 
 .typing-msg {
-	z-index: 99999!important;
+	z-index: 99999 !important;
 	float: left;
 	width: 100%;
 	border-top: 1px solid #e6e6e6;
@@ -6646,7 +6679,7 @@ a:hover {
 
 .cadidatesbtn {
 	position: absolute;
-	left: 0;
+	left: 20px;
 	padding-top: 5px;
 }
 

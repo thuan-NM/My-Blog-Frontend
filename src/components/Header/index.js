@@ -79,7 +79,6 @@ const Header = () => {
 									<div className="nott-list">
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img1.png" alt="" />
 											</div>
 											<div className="notification-info">
 												<h3><a href="messages.html" title="">Jassica William</a> </h3>
@@ -89,7 +88,6 @@ const Header = () => {
 										</div>
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img2.png" alt="" />
 											</div>
 											<div className="notification-info">
 												<h3><a href="messages.html" title="">Jassica William</a></h3>
@@ -99,7 +97,6 @@ const Header = () => {
 										</div>
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img3.png" alt="" />
 											</div>
 											<div className="notification-info">
 												<h3><a href="messages.html" title="">Jassica William</a></h3>
@@ -126,7 +123,6 @@ const Header = () => {
 									<div className="nott-list">
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img1.png" alt="" />
 											</div>
 											<div className="notification-info">
 												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -135,7 +131,7 @@ const Header = () => {
 										</div>
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img2.png" alt="" />
+												
 											</div>
 											<div className="notification-info">
 												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -144,7 +140,7 @@ const Header = () => {
 										</div>
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img3.png" alt="" />
+												
 											</div>
 											<div className="notification-info">
 												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
@@ -153,7 +149,7 @@ const Header = () => {
 										</div>
 										<div className="notfication-details">
 											<div className="noty-user-img">
-												<img src="images/resources/ny-img2.png" alt="" />
+												
 											</div>
 											<div className="notification-info">
 												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>

@@ -20,6 +20,7 @@ import ExperienceModal from "../../components/ExperienceModal";
 import ExperienceEdit from "../../components/ExperienceEdit";
 import EducationModal from "../../components/EducationModal";
 import EducationEdit from "../../components/EducationEdit";
+import ManageJob from "../../components/ManageJob";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
@@ -164,18 +165,18 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className="product-feed-tab" id="saved-jobs">
-											<ul className="nav nav-tabs" id="myTab" role="tablist">
-												<li className="nav-item">
-													<a className="nav-link active" id="mange-tab" data-toggle="tab" href="#mange" role="tab" aria-controls="home" aria-selected="true">Manage Jobs</a>
+											<ul class="nav nav-tabs" id="myTab" role="tablist">
+												<li class="nav-item">
+													<a class="nav-link active" id="mange-tab" data-toggle="tab" href="#mange" role="tab" aria-controls="home" aria-selected="true">Manage Jobs</a>
 												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="saved-tab" data-toggle="tab" href="#saved" role="tab" aria-controls="profile" aria-selected="false">Saved Jobs</a>
+												<li class="nav-item">
+													<a class="nav-link" id="saved-tab" data-toggle="tab" href="#saved" role="tab" aria-controls="profile" aria-selected="false">Saved Jobs</a>
 												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="contact-tab" data-toggle="tab" href="#applied" role="tab" aria-controls="applied" aria-selected="false">Applied Jobs</a>
+												<li class="nav-item">
+													<a class="nav-link" id="contact-tab" data-toggle="tab" href="#applied" role="tab" aria-controls="applied" aria-selected="false">Applied Jobs</a>
 												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="cadidates-tab" data-toggle="tab" href="#cadidates" role="tab" aria-controls="contact" aria-selected="false">Applied cadidates</a>
+												<li class="nav-item">
+													<a class="nav-link" id="cadidates-tab" data-toggle="tab" href="#cadidates" role="tab" aria-controls="contact" aria-selected="false">Applied cadidates</a>
 												</li>
 											</ul>
 											<div className="tab-content" id="myTabContent">
@@ -233,9 +234,9 @@ function MyProfile() {
 											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
-											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen}/>
+											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} />
 											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
-											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation}/>
+											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} />
 										</div>
 										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">
@@ -300,12 +301,438 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton == "jobs" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="jobs">
-											<div className="posts-section">
-												<div className="process-comm">
-													<a href="#" title=""><img src="images/process-icon.png" alt="" /></a>
+										<div className={`product-feed-tab ${activeButton == "jobs" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="saved-jobs">
+											<ul class="nav nav-tabs" id="myTab" role="tablist">
+												<li class="nav-item">
+													<a class="nav-link active" id="mange-tab" data-toggle="tab" href="#mange" role="tab" aria-controls="home" aria-selected="true">Manage Jobs</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" id="saved-tab" data-toggle="tab" href="#saved" role="tab" aria-controls="profile" aria-selected="false">Saved Jobs</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" id="contact-tab" data-toggle="tab" href="#applied" role="tab" aria-controls="applied" aria-selected="false">Applied Jobs</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" id="cadidates-tab" data-toggle="tab" href="#cadidates" role="tab" aria-controls="contact" aria-selected="false">Applied cadidates</a>
+												</li>
+											</ul>
+											<div class="tab-content" id="myTabContent">
+												<div class="tab-pane fade show active" id="mange" role="tabpanel" aria-labelledby="mange-tab">
+													<ManageJob />
+												</div>
+												<div class="tab-pane fade" id="saved" role="tabpanel" aria-labelledby="saved-tab">
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>Senior Wordpress Developer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Unsaved</a>
+																<a class="clrbtn" href="#">Message</a>
+															</div>
+														</ul>
+													</div>
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>Senior PHP Developer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Unsaved</a>
+																<a class="clrbtn" href="#">Message</a>
+															</div>
+														</ul>
+													</div>
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>UI UX Designer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Unsaved</a>
+																<a class="clrbtn" href="#">Message</a>
+															</div>
+														</ul>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="applied" role="tabpanel" aria-labelledby="applied-tab">
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>Senior Wordpress Developer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Applied</a>
+																<a class="clrbtn" href="#">Message</a>
+																<a href="#">
+																	<i class="far fa-trash-alt"></i>
+																</a>
+															</div>
+														</ul>
+													</div>
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>Senior PHP Developer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Applied</a>
+																<a class="clrbtn" href="#">Message</a>
+																<a href="#">
+																	<i class="far fa-trash-alt"></i>
+																</a>
+															</div>
+														</ul>
+													</div>
+													<div class="post-bar">
+														<div class="p-all saved-post">
+															<div class="usy-dt">
+																<div class="wordpressdevlp">
+																	<h2>UI UX Designer</h2>
+
+																	<p><i class="la la-clock-o"></i>Posted on 30 August 2018</p>
+																</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Unsaved</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+														</div>
+														<ul class="savedjob-info saved-info">
+															<li>
+																<h3>Applicants</h3>
+																<p>10</p>
+															</li>
+															<li>
+																<h3>Job Type</h3>
+																<p>Full Time</p>
+															</li>
+															<li>
+																<h3>Salary</h3>
+																<p>$600 - Mannual</p>
+															</li>
+															<li>
+																<h3>Posted : 5 Days Ago</h3>
+																<p>Open</p>
+															</li>
+															<div class="devepbtn saved-btn">
+																<a class="clrbtn" href="#">Applied</a>
+																<a class="clrbtn" href="#">Message</a>
+																<a href="#">
+																	<i class="far fa-trash-alt"></i>
+																</a>
+															</div>
+														</ul>
+													</div>
+												</div>
+												<div class="tab-pane fade" id="cadidates" role="tabpanel" aria-labelledby="cadidates-tab">
+													<div class="post-bar">
+														<div class="post_topbar applied-post">
+															<div class="usy-dt">
+																<img src="images/resources/us-pic.png" alt=""/>
+																	<div class="usy-name">
+																		<h3>John Doe</h3>
+																		<div class="epi-sec epi2">
+																			<ul class="descp descptab bklink">
+																				<li><img src="images/icon8.png" alt=""/><span>Epic Coder</span></li>
+																				<li><img src="images/icon9.png" alt=""/><span>India</span></li>
+																			</ul>
+																		</div>
+																	</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Accept</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+															<div class="job_descp noborder">
+																<div class="star-descp review profilecnd">
+																	<ul class="bklik">
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star-half-o"></i></li>
+																		<a href="#" title="">5.0 of 5 Reviews</a>
+																	</ul>
+																</div>
+																<div class="devepbtn appliedinfo noreply">
+																	<a class="clrbtn" href="#">Accept</a>
+																	<a class="clrbtn" href="#">View Profile</a>
+																	<a class="clrbtn" href="#">Message</a>
+																	<a href="#">
+																		<i class="far fa-trash-alt"></i>
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="post-bar">
+														<div class="post_topbar  applied-post">
+															<div class="usy-dt">
+																<img src="images/resources/us-pic.png" alt=""/>
+																	<div class="usy-name">
+																		<h3>John Doe</h3>
+																		<div class="epi-sec epi2">
+																			<ul class="descp descptab bklink">
+																				<li><img src="images/icon8.png" alt=""/><span>Epic Coder</span></li>
+																				<li><img src="images/icon9.png" alt=""/><span>India</span></li>
+																			</ul>
+																		</div>
+																	</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Accept</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+															<div class="job_descp noborder">
+																<div class="star-descp review profilecnd">
+																	<ul class="bklik">
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star-half-o"></i></li>
+																		<a href="#" title="">5.0 of 5 Reviews</a>
+																	</ul>
+																</div>
+																<div class="devepbtn appliedinfo noreply">
+																	<a class="clrbtn" href="#">Accept</a>
+																	<a class="clrbtn" href="#">View Profile</a>
+																	<a class="clrbtn" href="#">Message</a>
+																	<a href="#">
+																		<i class="far fa-trash-alt"></i>
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="post-bar">
+														<div class="post_topbar applied-post">
+															<div class="usy-dt">
+																<img src="images/resources/us-pic.png" alt=""/>
+																	<div class="usy-name">
+																		<h3>John Doe</h3>
+																		<div class="epi-sec epi2">
+																			<ul class="descp descptab bklink">
+																				<li><img src="images/icon8.png" alt=""/><span>Epic Coder</span></li>
+																				<li><img src="images/icon9.png" alt=""/><span>India</span></li>
+																			</ul>
+																		</div>
+																	</div>
+															</div>
+															<div class="ed-opts">
+																<a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+																<ul class="ed-options">
+																	<li><a href="#" title="">Edit Post</a></li>
+																	<li><a href="#" title="">Accept</a></li>
+																	<li><a href="#" title="">Unbid</a></li>
+																	<li><a href="#" title="">Close</a></li>
+																	<li><a href="#" title="">Hide</a></li>
+																</ul>
+															</div>
+															<div class="job_descp noborder">
+																<div class="star-descp review profilecnd">
+																	<ul class="bklik">
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star"></i></li>
+																		<li><i class="fa fa-star-half-o"></i></li>
+																		<a href="#" title="">5.0 of 5 Reviews</a>
+																	</ul>
+																</div>
+																<div class="devepbtn appliedinfo noreply">
+																	<a class="clrbtn" href="#">Accept</a>
+																	<a class="clrbtn" href="#">View Profile</a>
+																	<a class="clrbtn" href="#">Message</a>
+																	<a href="#">
+																		<i class="far fa-trash-alt"></i>
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
+											
 										</div>
 										<div className={`product-feed-tab ${activeButton == "portfolio" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="portfolio-dd">
 											<div className="portfolio-gallery-sec">

@@ -41,6 +41,7 @@ const AuthProvider = ({ children }) => {
   const login = (userData, token) => {
     setUser(userData);
     localStorage.setItem('token', token);
+    updateUser()
   };
 
   const logout = () => {

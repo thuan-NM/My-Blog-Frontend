@@ -104,8 +104,8 @@ function Home() {
                       <li><Link href="#" title="">Copyright Policy</Link></li>
                     </ul>
                     <div className="cp-sec">
-                      <img src="images/logo2.png" alt="" />
-                      <p><img src="images/cp.png" alt="" />Copyright 2019</p>
+                      <img src="images/myfavicon.png" alt="" width={30} height={30}/>
+                      <p>Copyright 2019</p>
                     </div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ function Home() {
               <div className="col-lg-3 pd-right-none no-pd">
                 <div className="right-sidebar">
                   <div className="widget widget-about">
-                    <img src="images/wd-logo.png" alt="" />
+                    <img src="images/myfavicon.png" alt="" />
                     <h3>Theo Dõi Ngay Meow IT</h3>
                     <span>Lương chỉ được trả theo số giờ làm</span>
                     <div className="sign_link">

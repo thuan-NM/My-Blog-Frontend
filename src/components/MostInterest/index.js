@@ -40,7 +40,7 @@ const MostInterest = () => {
             </div>
             <div className="jobs-list">
                 {data.data.map((post) =>
-                    <div className="job-info">
+                    <div className="job-info" key={post._id}>
                         <div className="job-details">
                             <h3>{post.title}</h3>
                             <p>{post.description}</p>

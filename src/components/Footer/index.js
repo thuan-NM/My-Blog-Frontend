@@ -15,7 +15,7 @@ function Footer() {
 						<li><a href="#" title="">Language</a></li>
 						<li><a href="#" title="">Copyright Policy</a></li>
 					</ul>
-					<p><img src="images/copy-icon.png" alt=""/>Copyright 2019</p>
+					<p><img alt=""/>Copyright 2019</p>
 				</div>
 			</div>
   );

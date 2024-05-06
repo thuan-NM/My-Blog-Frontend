@@ -39,7 +39,7 @@ const Suggestions = () => {
             </div>
             <div className="suggestions-list">
                 {data.data.map((suggestion) => (user && user._id && user._id != suggestion._id && (
-                    <div className="suggestion-usd">
+                    <div className="suggestion-usd" key={suggestion._id} >
                         <img src={suggestion.profilePictureUrl || `images/userava.jpg`} />
                         <div className="sgt-text">
                             <h4>{suggestion.firstName} {suggestion.lastName}</h4>
