@@ -8,9 +8,9 @@ const ChatComponent = ({ datauser }) => {
     const [receivedMessages, setReceivedMessages] = useState([]);
     const [isChatting, setIsChatting] = useState(false);
     const socketRef = useRef(null);
-
+    const token = localStorage.getItem("token");
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        
         if (token && user) {
             socketRef.current = new WebSocket(`ws://localhost:3001?senderId=${user._id}&receiverId=${datauser._id}`);
             console.log('WebSocket connection established');
@@ -26,11 +26,11 @@ const ChatComponent = ({ datauser }) => {
         };
 
         return () => {
-            if (socketRef.current) {
+            if (!token) {
                 socketRef.current.close();
             }
         };
-    }, [user, datauser._id]);
+    }, [user, datauser._id,token]);
 
     const sendMessage = (e) => {
         e.preventDefault();
@@ -44,10 +44,10 @@ const ChatComponent = ({ datauser }) => {
         }
     };
 
-    const handleChat = () => {
+    const handleChat = (e) => {
+        e.preventDefault()
         setIsChatting(!isChatting);
         if (!isChatting) {
-            socketRef.current = new WebSocket(`ws://localhost:3001?senderId=${user._id}&receiverId=${datauser._id}`);
             console.log('WebSocket connection established');
         } else {
             socketRef.current.close();
@@ -60,7 +60,7 @@ const ChatComponent = ({ datauser }) => {
     return (
         <div className="chatbox">
             <div className="chat-mg" onClick={handleChat}>
-                <a href="#" title=""><img src={datauser.profilePictureUrl || `images/userava.jpg`} alt="" /></a>
+                <a title=""><img src={datauser.profilePictureUrl || `images/userava.jpg`} alt="" /></a>
             </div>
             <div className={`conversation-box ${isChatting ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
                 <div className="con-title mg-3">

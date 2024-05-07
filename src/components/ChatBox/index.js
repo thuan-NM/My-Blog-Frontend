@@ -30,11 +30,11 @@ const ChatBox = () => {
 
     return (
         <div className="chatbox-list">
-            {/* {data.data.map((datauser) => (
-                user && user._id && user._id !== datauser._id && ( */}
-                    <ChatComponent datauser={data.data[1]} key={data.data._id} />
-                {/* )
-            ))} */}
+            {data.data.map((datauser) => (
+                user && user._id && user._id !== datauser._id && (
+                    <ChatComponent datauser={datauser} key={datauser._id} />
+                )
+            ))}
         </div>
     );
 };

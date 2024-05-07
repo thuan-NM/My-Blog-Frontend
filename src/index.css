@@ -1349,18 +1349,48 @@ main {
 	box-shadow: 0px 2px #e4e4e4;
 }
 
+.ant-modal-body .post-bar {
+	width: 100%;
+	background-color: #fff;
+	border: 1px solid #e4e4e4;
+	margin: 10px 0px;
+	box-shadow: 2px 3px #e4e4e4 !important;
+	padding: 30px !important;
+}
+
+.ant-modal-title {
+	text-align: center !important;
+	font-size: 24px !important;
+	border-bottom: 2px solid black;
+}
+
 .post_topbar {
 	float: left;
 	width: 100%;
 	position: relative;
 }
 
+.nobody{
+	margin:40px 0px ;
+	font-size: 20px;
+	text-align:  center;
+}
+
 .rep-post {
 	padding: 0;
 }
 
-.usy-dt {
+.usy-dt{
 	float: left;
+}
+
+.usy-dtt {
+	float: none !important;
+	display: flex !important;
+	gap: 12px;
+	justify-content: space-between !important;
+	padding-bottom: 10px;
+	border-bottom:1px #c3c3c3 solid ;
 }
 
 .usy-dt img {
@@ -1432,7 +1462,8 @@ main {
 
 .usy-name {
 	float: left;
-	margin-left: 15px;
+	margin-left: 20px !important;
+	height: 100% !important;
 }
 
 .usy-name h3 {
@@ -1442,6 +1473,16 @@ main {
 	font-weight: 600;
 	margin-bottom: 5px;
 	margin-top: 2px;
+}
+
+.ant-modal-body .usy-name h3 {
+	color: #000000;
+	font-size: 18px;
+	text-transform: capitalize;
+	font-weight: 600;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	border-bottom: 1px solid black;
 }
 
 .usy-name span {
@@ -1576,6 +1617,13 @@ main {
 .job_descp {
 	float: left;
 	width: 100%;
+}
+
+.ant-modal-body .job_descp {
+	margin-top: 40px;
+	float: left;
+	width: 100%;
+	font-size: large;
 }
 
 .job_descp h3 {
@@ -3224,11 +3272,12 @@ a {
 /* .ant-modal-root .ant-modal-wrap .ant-modal .ant-modal-content {
 	height: 450px !important;
 } */
-.modal-job-btn{
+.modal-job-btn {
 	margin: auto !important;
 	width: fit-content !important;
 	text-align: center !important;
 }
+
 .user-pro-img {
 	float: left;
 	width: 100% !important;
@@ -6761,6 +6810,7 @@ a:hover {
 	color: #fff;
 	padding: 5px 10px 5px 10px;
 	margin-right: 15px;
+	border: none !important;
 }
 
 .transpairentbtn a {
@@ -6787,7 +6837,17 @@ a:hover {
 	margin-right: 5px;
 }
 
-.devepbtn a:hover i {
+.ant-modal-body .devepbtn button {
+	color: #666666;
+	background-color: white;
+	border: 1px solid #b2b2b2;
+	padding: 7px 15px 7px 15px;
+	border-radius: 3px;
+	margin-right: 5px;
+}
+
+.ant-modal-body .devepbtn button:hover {
+	background-color: #e44d3a;
 	color: #fff;
 }
 
@@ -6814,6 +6874,10 @@ a:hover {
 	padding-left: 20px;
 }
 
+.ant-modal-body .devepbtn {
+	margin-top: 0px;
+	padding-left: 0px;
+}
 .rep-thanks hr {
 	margin-right: -20px;
 	margin-left: -20px;
@@ -6828,10 +6892,22 @@ a:hover {
 	font-size: 14px;
 }
 
+.usy-sec{
+	display: flex;
+	gap: 16px;
+}
+
 .appliedinfo {
 	padding-left: 0;
 	padding-top: 20px !important;
 	padding-bottom: 10px;
+}
+
+.ant-modal-body .appliedinfo {
+	padding-left: 0;
+	padding-top: 0px !important;
+	padding-bottom: 0px;
+	margin: auto 0 !important;
 }
 
 .epi2 {
@@ -7798,7 +7874,7 @@ ul#myTab {
 }
 
 .noreply {
-	padding-top: 30px;
+	/* padding-top: 30px; */
 }
 
 #my-bids .nav-tabs {

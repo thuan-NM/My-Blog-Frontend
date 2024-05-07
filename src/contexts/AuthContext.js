@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
     updateUser()
   };
 
-  const logout = () => {
+  const logout = (ws) => {
     setUser(null);
     localStorage.removeItem('token');
     navigate("/auth");
