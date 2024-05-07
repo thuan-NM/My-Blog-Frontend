@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 
-const AppliedJob = () => {
+const HiredJob = () => {
     const [posts, setPosts] = useState([]);
     const storedToken = localStorage.getItem('token');
     const decodedToken = jwtDecode(storedToken);
@@ -10,7 +10,7 @@ const AppliedJob = () => {
 
     const data = {
         userId: decodedToken.userId,
-        statusdata: "Applied"
+        statusdata: "Hired"
     }
 
     useEffect(() => {
@@ -72,9 +72,6 @@ const AppliedJob = () => {
                                 <p><i className="la la-clock-o"></i>Đăng vào {new Date(post.createdAt).toLocaleString()} bởi {post.author.userdata.firstName} {post.author.userdata.lastName}</p>
                             </div>
                         </div>
-                        <div className="ed-opts">
-                            <a href="#" title="" className="ed-opts-open"><i className="la la-ellipsis-v"></i></a>
-                        </div>
                     </div>
                     <ul className="savedjob-info saved-info">
                         <li>
@@ -90,7 +87,7 @@ const AppliedJob = () => {
                             <p>{post.price}/hr</p>
                         </li>
                         <div className="devepbtn saved-btn ">
-                            <button className="clrbtn" disabled>Applied</button>
+                            <button className="clrbtn" disabled>Hired</button>
                             <button className="clrbtn" onClick={() => handleDelete(post.status._id)}>
                                 <i className="far fa-trash-alt"></i>
                             </button>
@@ -102,4 +99,4 @@ const AppliedJob = () => {
     )
 }
 
-export default AppliedJob;
+export default HiredJob;

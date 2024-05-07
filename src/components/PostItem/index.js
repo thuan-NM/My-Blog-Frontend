@@ -18,6 +18,7 @@ const PostItem = ({ post, handleHashtags }) => {
   });
   const [isCommentFieldOpen, setIsCommentFieldOpen] = useState(false)
   const [open, setOpen] = useState(false);
+  const [applicationStatus, setApplicationStatus] = useState(null);
   const { user } = useAuth();
 
   const isAuthor = post.author._id === user._id;
@@ -83,9 +84,14 @@ const PostItem = ({ post, handleHashtags }) => {
 
   useEffect(() => {
     const fetchReactionStats = async () => {
+      const data ={ postid: post._id,
+        userid:user._id
+      }
       try {
         const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
         const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
+        const response = await axios.get(`http://localhost:3001/jobstatus/checkUserApplied/`, { params: data });
+        setApplicationStatus(response.data.data);
         setComments(commentsResponse.data.data);
         setReactionStats(reactionStatsResponse.data.data);
         setIsLoading(false);
@@ -107,6 +113,12 @@ const PostItem = ({ post, handleHashtags }) => {
         </div>
       </div>)
   }
+
+  // Trong component PostItem
+
+  // Trong JSX của bạn
+
+
 
   return (
     <div className="post-bar">
@@ -137,7 +149,19 @@ const PostItem = ({ post, handleHashtags }) => {
         <ul className="bk-links">
           <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
           <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
-          <li><Button className="bid_now" onClick={showModal}>Ứng tuyển</Button></li>
+          {
+            user._id !== post.author.userdata._id && (
+              <li>
+                <Button
+                  className="bid_now"
+                  onClick={showModal}
+                  disabled={applicationStatus && applicationStatus !== 'Denied'}
+                >
+                  {applicationStatus && applicationStatus !== 'Denied' ? 'Đã nộp' : 'Ứng tuyển'}
+                </Button>
+              </li>
+            )
+          }
         </ul>
       </div>
       <div className="job_descp">
@@ -171,8 +195,9 @@ const PostItem = ({ post, handleHashtags }) => {
           onOk={handleOk}
           onCancel={handleCancel}
           width={800}
+          footer={[]}
         >
-          <ApplyModal postId={post._id} onOk={handleOk}/>
+          <ApplyModal postId={post._id} onOk={handleOk} />
         </Modal>
       </>
 

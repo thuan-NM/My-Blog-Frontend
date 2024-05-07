@@ -23,11 +23,26 @@ const ManageJobItem = () => {
         fetchPost();
     }, [jobstatus]);
     if (isLoading) {
-        <div className="spinner">
+        <div className="spinner animate__animated animate__fast animate__fadeIn">
             <div className="bounce1"></div>
             <div className="bounce2"></div>
             <div className="bounce3"></div>
         </div>
+    }
+
+    if (jobstatus.length == 0) {
+        return (
+            <div className="animate__animated animate__fast animate__fadeIn">
+                <h1 className="nobody">
+                    Không có bất cứ gì!
+                </h1>
+                <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div>
+            </div>
+        )
     }
 
     const showModal = (id) => {
@@ -42,9 +57,22 @@ const ManageJobItem = () => {
         setOpenModalId(null);
     };
 
+    const handleDelete = async (postId) => {
+        try {
+            await axios.delete(`http://localhost:3001/posts/${postId}`, {
+                headers: {
+                    Authorization: `Bearer ${storedToken}`,
+                },
+            });
+            fetchPosts(); // Refetch the posts after a post is deleted
+        } catch (error) {
+            console.error('Error deleting job status:', error);
+        }
+    };
+
     console.log(jobstatus)
     return (
-        <div class="tab-pane fade" id="mange" role="tabpanel" aria-labelledby="mange-tab">
+        <div class="tab-pane fade show active animate__animated animate__fast animate__fadeIn" id="mange" role="tabpanel" aria-labelledby="mange-tab">
             {jobstatus.map((item) =>
             (
                 <div class="posts-bar" key={item._id}>
@@ -68,8 +96,8 @@ const ManageJobItem = () => {
                                     >
                                         <CandidateManageModal candidates={item} key={item._id} />
                                     </Modal>
-                                    <a href="#">
-                                        <i class="far fa-trash-alt"></i>
+                                    <a className="clrbtn" onClick={() => handleDelete(item._id)}>
+                                        <i className="far fa-trash-alt"></i>
                                     </a>
                                 </div>
                             </div>
