@@ -23,44 +23,6 @@ const PostItem = ({ post, handleHashtags }) => {
   const { user } = useAuth();
   const storedToken = localStorage.getItem('token');
   const decodedToken = jwtDecode(storedToken);
-  const isAuthor = post.author._id === user._id;
-
-  const items = [
-    {
-      key: '1',
-      label: (
-        <Link className="dropdown-item" to={`/posts/${post._id}`}>
-          View
-        </Link>
-      ),
-    },
-    isAuthor && {
-      key: '2',
-      label: (
-        <Link className="dropdown-item" to={`/posts/${post._id}`}>
-          Edit
-        </Link>
-      ),
-    },
-    isAuthor && {
-      key: '3',
-      label: (
-        <p onClick={() => handleDelete(post)} className="dropdown-item">Delete</p>
-      ),
-    },
-    isAuthor && {
-      key: '4',
-      label: (
-        <p onClick={() => handleDelete(post)} className="dropdown-item">Unsaved</p>
-      ),
-    },
-    isAuthor && {
-      key: '5',
-      label: (
-        <p onClick={() => handleDelete(post)} className="dropdown-item">Hide</p>
-      ),
-    },
-  ].filter(Boolean);
 
   const showModal = () => {
     setOpen(true);
@@ -87,7 +49,7 @@ const PostItem = ({ post, handleHashtags }) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        if (user!=null) {
+        if (user != null) {
           const data = {
             postid: post._id,
             userid: decodedToken.userId
@@ -121,23 +83,14 @@ const PostItem = ({ post, handleHashtags }) => {
   return (
     <div className="post-bar">
       <div className="post_topbar">
-        <div className="usy-dt">
+        <Link to={`/userprofile/${post.author.userdata._id}`} className="usy-dt">
           <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
             height="40" />
           <div className="usy-name">
             <h3>{post.author.userdata.firstName} {post.author.userdata.lastName}</h3>
             <span><img src="images/clock.png" alt="" />{new Date(post.createdAt).toLocaleString()}</span>
           </div>
-        </div>
-        <div className="ed-opts">
-          <Dropdown menu={{ items }}>
-            <a onClick={(e) => e.preventDefault()}>
-              <Space className="options-toggle">
-                <i className="la la-ellipsis-v"></i>
-              </Space>
-            </a>
-          </Dropdown>
-        </div>
+        </Link>
       </div>
       <div className="epi-sec">
         <ul className="descp">

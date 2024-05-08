@@ -58,7 +58,7 @@ const EducationEdit = ({user,isEduEditOpen,setIsEduEditOpen,selectedEducation}) 
     return (
         <div className={`overview-box ${isEduEditOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
             <div className="overview-edit">
-				<h3>Education</h3>
+				<h3>Học vấn</h3>
 				<form>
 					<input type="text" placeholder="School / University" onChange={(e)=>{setSchool(e.target.value)}}/>
 					<div className="datepicky">
@@ -77,8 +77,8 @@ const EducationEdit = ({user,isEduEditOpen,setIsEduEditOpen,selectedEducation}) 
 					</div>
 					<input type="text" placeholder="Degree" onChange={(e)=>{setDegree(e.target.value)}}/>
 					<textarea placeholder="Description" onChange={(e)=>{setDescription(e.target.value)}}></textarea>
-					<button className="save" onClick={handleEdit}>Save</button>
-					<button className="cancel"onClick={handleModal}>Cancel</button>
+					<button className="save" onClick={handleEdit}>Lưu</button>
+					<button className="cancel"onClick={handleModal}>Hủy bỏ</button>
 				</form>
 				<Link className="close-box" onClick={handleModal}><i className="la la-close"></i></Link>
 			</div>

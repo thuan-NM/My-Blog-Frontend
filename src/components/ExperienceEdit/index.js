@@ -49,12 +49,12 @@ const ExperienceEdit = ({user,isExpEditOpen,setIsExpEditOpen,Exp}) => {
     return (
         <div className={`overview-box ${isExpEditOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
 			<div className="overview-edit">
-				<h3>Experience</h3>
+				<h3>Kinh nghiệm</h3>
 				<form>
 					<input type="text" onChange={(e)=>{setSupject(e.target.value)}}/>
 					<textarea onChange={(e)=>{setDescription(e.target.value)}}></textarea>
-					<button type="submit" className="save" onClick={handleEdit}>Save</button> 	
-					<button type="submit" className="cancel" onClick={handleModal}>Cancel</button>
+					<button type="submit" className="save" onClick={handleEdit}>Lưu</button> 	
+					<button type="submit" className="cancel" onClick={handleModal}>Hủy bỏ</button>
 				</form>
 				<Link className="close-box"><i className="la la-close" onClick={handleModal}></i></Link>
 			</div>

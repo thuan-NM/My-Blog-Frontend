@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd"
 
-const Experience = ({setIsExpModalOpen,isExpModalOpen,isExpEditOpen,setIsExpEditOpen,setSelectExperience,selectedExperience,experiences}) => {
+const Experience = ({ isAuthor, setIsExpModalOpen, isExpModalOpen, isExpEditOpen, setIsExpEditOpen, setSelectExperience, selectedExperience, experiences }) => {
 
     const handleSelect = (exp) => {
         setIsExpEditOpen(!isExpEditOpen);
@@ -38,16 +38,21 @@ const Experience = ({setIsExpModalOpen,isExpModalOpen,isExpEditOpen,setIsExpEdit
     return (
         <div className="user-profile-ov st2 animate__animated animate__fast zoomIn" >
             <h3>
-                <Link className="exp-bx-open">Experience</Link>
-                <Link className="exp-bx-open" onClick={() => setIsExpModalOpen(!isExpModalOpen)}>
-                <button className="edit-info"><i className="bi bi-plus-circle-fill ms-2"></i></button>
-                </Link>
+                <Link className="exp-bx-open">Kinh nghiệm</Link>
+                {isAuthor && (
+                    <Link className="exp-bx-open" onClick={() => setIsExpModalOpen(!isExpModalOpen)}>
+                        <button className="edit-info"><i className="bi bi-plus-circle-fill ms-2"></i></button>
+                    </Link>)}
             </h3>
-            { experiences.map((experience)=>(
+            {experiences.map((experience) => (
                 <div className="ms-2 animate__animated fadeIn" key={experience._id}>
                     <h4>{experience.subject}
-                        <button className="edit-info" onClick={()=>handleSelect(experience)}><i className="bi bi-pencil-fill" ></i></button>
-                        <button className="edit-info" onClick={()=>handleDelete(experience)}><i className="ms-3 bi bi-trash-fill" ></i></button>
+                        {isAuthor && (
+                            <>
+                                <button className="edit-info" onClick={() => handleSelect(experience)}><i className="bi bi-pencil-fill" ></i></button>
+                                <button className="edit-info" onClick={() => handleDelete(experience)}><i className="ms-3 bi bi-trash-fill" ></i></button>
+                            </>
+                        )}
                     </h4>
                     <p>{experience.description}</p>
                 </div>

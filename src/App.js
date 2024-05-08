@@ -18,7 +18,7 @@ import PostDetail from "./pages/PostDetail";
 import Users from "./pages/Users";
 import AboutUs from "./pages/AboutUs";
 import MyProfile from "./pages/MyProfile";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./pages/UserProfile"; 
 import Jobs from "./pages/Jobs";
 import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
@@ -41,13 +41,12 @@ function App() {
             <Route path="/about" element={<AboutUs />} />
             <Route path="/posts/:postId" element={<PostDetail />} />
             <Route path="/myprofile" element={<MyProfile />} />
-            <Route path="/userprofile/:userId" element={<UserProfile />} />
             <Route path="/users" element={<Users />} />
             <Route path="/companies" element={<Companies/>}/>
             <Route path="/jobs" element={<Jobs/>}/>
             <Route path="/auth" element={<Auth />} />
             <Route path="*" element={<h1>Page not found</h1>} />
-            <Route path="/test" element={<ChatComponent />} />
+            <Route path="/userprofile/:id" element={<UserProfile />} />
           </Routes>
           {!isAuthPage&&<ChatBox />}
       </QueryClientProvider>

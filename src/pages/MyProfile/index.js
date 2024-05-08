@@ -21,6 +21,8 @@ import ExperienceEdit from "../../components/ExperienceEdit";
 import EducationModal from "../../components/EducationModal";
 import EducationEdit from "../../components/EducationEdit";
 import ManageJob from "../../components/ManageJob";
+import { EuroCircleOutlined } from "@ant-design/icons"
+import CoverPicture from "../../components/CoverPicture";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
@@ -43,6 +45,7 @@ function MyProfile() {
 	const [selectedEducation, setSelectEducation] = useState();
 	const [isEduModalOpen, setIsEduModalOpen] = useState(false);
 	const [isEduEditOpen, setIsEduEditOpen] = useState(false);
+	const isAuthor = true;
 
 	const handleButtonClick = (buttonName) => {
 		setActiveButton(buttonName);
@@ -72,19 +75,7 @@ function MyProfile() {
 	}
 	return (
 		<div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
-			<section className="cover-sec">
-				<img src="images/cover-img.jpg" alt="" />
-				<div className="add-pic-box">
-					<div className="container">
-						<div className="row no-gutters">
-							<div className="col-lg-12 col-sm-12">
-								<input type="file" id="file" />
-								<label htmlFor="file">Change Image</label>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<CoverPicture user={user}/>
 			<main>
 				<div className="main-section">
 					<div className="container">
@@ -110,25 +101,25 @@ function MyProfile() {
 													<li data-tab="feed-dd" className={`${activeButton == "feed" ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster slideIn"}`}>
 														<Link onClick={() => setActiveButton("feed")}>
 															<img src="images/ic1.png" alt="" />
-															<span>Feed</span>
+															<span>Bảng tin</span>
 														</Link>
 													</li>
 													<li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("info")}>
 															<img src="images/ic2.png" alt="" />
-															<span>Info</span>
+															<span>Thông tin</span>
 														</Link>
 													</li>
 													<li data-tab="saved-jobs" className={`${activeButton == "jobs" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("jobs")}>
 															<img src="images/ic4.png" alt="" />
-															<span>Jobs</span>
+															<span>Công việc</span>
 														</Link>
 													</li>
 													<li data-tab="my-bids" className={`${activeButton == "my-bids" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("my-bids")}>
 															<img src="images/ic5.png" alt="" />
-															<span>Bids</span>
+															<span>Đấu thầu</span>
 														</Link>
 													</li>
 													<li data-tab="portfolio-dd" className={`${activeButton == "portfolio" ? "active animate__animated animate__faster zoomIn" : ""}`}>
@@ -140,16 +131,15 @@ function MyProfile() {
 													<li data-tab="rewivewdata" className={`${activeButton == "rewivewdata" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("rewivewdata")}>
 															<img src="images/review.png" alt="" />
-															<span>Reviews</span>
+															<span>Đánh giá</span>
 														</Link>
 													</li>
 													<li data-tab="payment-dd" className={`${activeButton == "payment" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("payment")}>
 															<img src="images/ic6.png" alt="" />
-															<span>Payment</span>
+															<span>Thu nhập</span>
 														</Link>
 													</li>
-
 												</ul>
 											</div>
 										</div>
@@ -197,13 +187,13 @@ function MyProfile() {
 										<div className={`product-feed-tab ${activeButton == "my-bids" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="my-bids">
 											<ul className="nav nav-tabs bid-tab" id="myTab" role="tablist">
 												<li className="nav-item">
-													<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Manage Bids</a>
+													<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Quản lý đấu thầu</a>
 												</li>
 												<li className="nav-item">
-													<a className="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab" aria-controls="contact" aria-selected="false">Manage Bidders</a>
+													<a className="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab" aria-controls="contact" aria-selected="false">Người đấu thầu</a>
 												</li>
 												<li className="nav-item">
-													<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Active Bids</a>
+													<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Đang đấu thầu</a>
 												</li>
 											</ul>
 											<div className="tab-content" id="myTabContent">
@@ -218,19 +208,18 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
-											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} />
-											<OverviewModal setOverview={setOverview} user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} />
-											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
+											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} isAuthor={isAuthor} />
+											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} isAuthor={isAuthor} />
 											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
-											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} />
+											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} isAuthor={isAuthor} />
 											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
 											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} />
 										</div>
 										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">
 												<div className="post-bar reviewtitle">
-													<h2>Reviews</h2>
+													<h2>Đánh giá</h2>
 												</div>
 												<div className="post-bar ">
 													<div className="post_topbar">
@@ -260,7 +249,7 @@ function MyProfile() {
 															<a href="#" title="">5.0 of 5 Reviews</a>
 														</div>
 														<div className="reviewtext">
-															<p>Lorem ipsum dolor sit amet, adipiscing elit. Nulla luctus mi et porttitor ultrices</p>
+															<p>Bạn là nhất, nhất bạn, bạn nhất</p>
 															<hr />
 														</div>
 
@@ -270,8 +259,8 @@ function MyProfile() {
 																<div className="usy-name">
 																	<h3>John Doe</h3>
 																	<div className="epi-sec epi2">
-																		<p><i className="la la-clock-o"></i>3 min ago</p>
-																		<p className="tahnks">Thanks :)</p>
+																		<p><i className="la la-clock-o"></i>3 phút trước</p>
+																		<p className="tahnks">Củm ưn :)</p>
 																	</div>
 																</div>
 															</div>
@@ -280,8 +269,8 @@ function MyProfile() {
 															<hr />
 															<div className="usy-dt">
 																<img src="images/resources/bg-img4.png" alt="" />
-																<input className="reply" type="text" placeholder="Reply" />
-																<a className="replybtn" href="#">Send</a>
+																<input className="reply" type="text" placeholder="Trả lời" />
+																<a className="replybtn" href="#">Gửi</a>
 
 															</div>
 														</div>
@@ -297,7 +286,7 @@ function MyProfile() {
 											<div className="portfolio-gallery-sec">
 												<h3>Portfolio</h3>
 												<div className="portfolio-btn">
-													<a href="#" title=""><i className="fas fa-plus-square"></i> Add Portfolio</a>
+													<a href="#" title=""><i className="fas fa-plus-square"></i> Thêm Portfolio</a>
 												</div>
 												<div className="gallery_pf">
 													<div className="row">
@@ -310,22 +299,22 @@ function MyProfile() {
 											<div className="billing-method">
 												<ul>
 													<li>
-														<h3>Add Billing Method</h3>
+														<h3>Phương thức thanh toán</h3>
 														<a href="#" title=""><i className="fa fa-plus-circle"></i></a>
 													</li>
 													<li>
-														<h3>See Activity</h3>
-														<a href="#" title="">View All</a>
+														<h3>Xem hoạt động</h3>
+														<a href="#" title="">Xem tất cả</a>
 													</li>
 													<li>
-														<h3>Total Money</h3>
+														<h3>Tổng tiền</h3>
 														<span>$0.00</span>
 													</li>
 												</ul>
 												<div className="lt-sec">
 													<img src="images/lt-icon.png" alt="" />
-													<h4>All your transactions are saved here</h4>
-													<a href="#" title="">Click Here</a>
+													<h4>Các sao kê của bạn</h4>
+													<a title=""><EuroCircleOutlined className="p-0 m-0 me-2" />Bấm vào </a>
 												</div>
 											</div>
 										</div>
@@ -334,7 +323,7 @@ function MyProfile() {
 								<div className="col-lg-3">
 									<div className="right-sidebar">
 										<div className="message-btn">
-											<a href="profile-account-setting.html" title=""><i className="fas fa-cog"></i>Setting</a>
+											<a href="profile-account-setting.html" title=""><i className="fas fa-cog"></i>Cài đặt</a>
 										</div>
 										<div className="widget widget-portfolio">
 											<div className="wd-heady">

@@ -71,14 +71,14 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
           <div className="post-project">
             <h3>Update Picture</h3>
             <div className="post-project-fields">
-              <ImgCrop rotationSlider>
+              <ImgCrop rotationSlider className="crop">
                 <Upload
                   action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
                   listType="picture-card"
                   onChange={handleImageChange}
                   onPreview={onPreview}
                   data={{
-                    upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
+                    upload_preset: "sudykqqg",
                   }}
                 >
                 {<UploadOutlined />}
@@ -93,11 +93,11 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       <div className="user_pro_status">
         <ul className="flw-status">
           <li>
-            <span>Following</span>
+            <span>Đang theo dõi</span>
             <b>34</b>
           </li>
           <li>
-            <span>Followers</span>
+            <span>Người theo dõi</span>
             <b>155</b>
           </li>
         </ul>

@@ -64,7 +64,7 @@ const SignIn = () => {
 	return (
 		<div className={`sign_in_sec animated fadeIn`} id="tab-1">
 			<div className="signin-tab">
-				<h3>Sign in {currentTabSignUp=="tab-3"?"with User":"with Company"}</h3>
+				<h3>Đăng nhập {currentTabSignUp=="tab-3"?"bằng người dùng":"bằng công ty"}</h3>
 				<ul>
 					<li data-tab="tab-3"
 						className={`animated fadeIn ${currentTabSignUp == "tab-3" ? "current" : ""}`}>
@@ -97,14 +97,14 @@ const SignIn = () => {
 								<label htmlFor="c1">
 									<span></span>
 								</label>
-								<small>Remember me</small>
+								<small>Ghi nhớ tài khoản</small>
 							</div>
-							<a href="#" title="">Forgot Password?</a>
+							<a href="#" title="">Quên mật khẩu?</a>
 						</div>
 					</div>
 					<div className="col-lg-12 no-pdd">
 						<button onClick={handleLoginWithUser} disabled={isLoading}>
-							{isLoading ? "Wait htmlFor a moment..." : "Sign In"}
+							{isLoading ? "Wait htmlFor a moment..." : "Đăng nhập"}
 						</button>
 					</div>
 				</div>
@@ -132,23 +132,23 @@ const SignIn = () => {
 								<label htmlFor="c1">
 									<span></span>
 								</label>
-								<small>Remember me</small>
+								<small>Ghi nhớ tài khoản</small>
 							</div>
-							<a href="#" title="">Forgot Password?</a>
+							<a href="#" title="">Quên mật khẩu?</a>
 						</div>
 					</div>
 					<div className="col-lg-12 no-pdd">
 						<button onClick={handleLoginWithCompany} disabled={isLoading}>
-							{isLoading ? "Wait htmlFor a moment..." : "Sign In"}
+							{isLoading ? "Wait htmlFor a moment..." : "Đăng nhập"}
 						</button>
 					</div>
 				</div>
 			</form>}
 			<div className="login-resources">
-				<h4>Login Via Social Account</h4>
+				<h4>Đăng nhập bằng tài khoản khác</h4>
 				<ul>
-					<li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Login Via Facebook</a></li>
-					<li><a href="#" title="" className="tw"><i className="fa fa-twitter"></i>Login Via Twitter</a></li>
+					<li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Đăng nhập bằng Facebook</a></li>
+					<li><a href="#" title="" className="tw"><i className="fa fa-twitter"></i>Đăng nhập bằng Twitter</a></li>
 				</ul>
 			</div>
 		</div>

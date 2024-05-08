@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { useAuth } from "../../contexts/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const TopProfile = () => {
     const settings = {
@@ -53,11 +54,11 @@ const TopProfile = () => {
                         <h3>{curUser.lastName}</h3>
                         <span>Graphic Designer</span>
                         <ul>
-                            <li><a href="#" title="" className="follow">Follow</a></li>
+                            <li><a href="#" title="" className="follow">Theo dõi</a></li>
                             <li><a href="#" title="" className="message-us"><i className="fa fa-envelope"></i></a></li>
-                            <li><a href="#" title="" className="hire-us">Hire</a></li>
+                            <li><a href="#" title="" className="hire-us">Tuyển</a></li>
                         </ul>
-                        <a href="user-profile.html" title="" className="view-more-pro">View Profile</a>
+                        <Link to={`/userprofile/${curUser._id}`}>Xem trang cá nhân</Link>
                     </div>
                 ))
                 )}

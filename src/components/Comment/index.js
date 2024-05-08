@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from '../../contexts/AuthContext';
 import { Input } from 'antd';
+import { Link } from "react-router-dom";
 
 const Comment = ({ postId }) => {
   const { user } = useAuth();
@@ -67,11 +68,13 @@ const Comment = ({ postId }) => {
           {comments.comments.map((comment) => (
           <li key={comment._id}>
             <div className="comment-list">
-              <div className="bg-img">
+              <Link to={`/userprofile/${comment.author._id}`} className="bg-img">
                 <img src={comment.author.profilePictureUrl} alt="" />
-              </div>
+              </Link>
               <div className="comment">
+                <Link to={`/userprofile/${comment.author._id}`}>
                 <h3>{comment.author.firstName} {comment.author.lastName}</h3>
+                </Link>
                 <span><img src="images/clock.png" alt=""></img> {comment.createdAt}</span>
                 <p>{comment.content}</p>
                 <a href="#" title=""><i className="fa fa-reply-all"></i>Trả lời</a>
@@ -81,7 +84,7 @@ const Comment = ({ postId }) => {
           ))}
         </ul>
       </div>
-      <a href="#" className="plus-ic">
+      <a className="plus-ic">
         <i className="la la-plus"></i>
       </a>
       <div className="post-comment">

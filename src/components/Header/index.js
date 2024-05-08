@@ -35,98 +35,56 @@ const Header = () => {
 							<li>
 								<Link to={"/"} title="">
 									<span><img src="images/icon1.png" alt="" /></span>
-									Home
+									Trang chủ
 								</Link>
 							</li>
 							<li>
 								<Link to={"/companies"}>
 									<span><img src="images/icon2.png" alt="" /></span>
-									Companies
+									Công ty
 								</Link>
-								<ul>
-									<li><a href="companies.html" title="">Companies</a></li>
-									<li><a href="company-profile.html" title="">Company Profile</a></li>
-								</ul>
 							</li>
 							<li>
 								<a href="projects.html" title="">
 									<span><img src="images/icon3.png" alt="" /></span>
-									Projects
+									Dự án
 								</a>
 							</li>
 							<li>
 								<Link to={"/users"}>
 									<span><img src="images/icon4.png" alt="" /></span>
-									Profiles
+									Người dùng
 								</Link>
 							</li>
 							<li>
 								<Link to={"/jobs"}>
 									<span><img src="images/icon5.png" alt="" /></span>
-									Jobs
+									Công việc
 								</Link>
 							</li>
 							<li>
 								<a href="#" title="" className="not-box-openm">
 									<span><img src="images/icon6.png" alt="" /></span>
-									Messages
+									Tin nhắn
 								</a>
-								<div className="notification-box msg" id="message">
-									<div className="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
-									</div>
-									<div className="nott-list">
-										<div className="notfication-details">
-											<div className="noty-user-img">
-											</div>
-											<div className="notification-info">
-												<h3><a href="messages.html" title="">Jassica William</a> </h3>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.</p>
-												<span>2 min ago</span>
-											</div>
-										</div>
-										<div className="notfication-details">
-											<div className="noty-user-img">
-											</div>
-											<div className="notification-info">
-												<h3><a href="messages.html" title="">Jassica William</a></h3>
-												<p>Lorem ipsum dolor sit amet.</p>
-												<span>2 min ago</span>
-											</div>
-										</div>
-										<div className="notfication-details">
-											<div className="noty-user-img">
-											</div>
-											<div className="notification-info">
-												<h3><a href="messages.html" title="">Jassica William</a></h3>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempo incididunt ut labore et dolore magna aliqua.</p>
-												<span>2 min ago</span>
-											</div>
-										</div>
-										<div className="view-all-nots">
-											<a href="messages.html" title="">View All Messsages</a>
-										</div>
-									</div>
-								</div>
 							</li>
 							<li>
 								<Link className="not-box-open" onClick={() => setIsNotiOpened(!isNotiOpened)}>
 									<span><img src="images/icon7.png" alt="" /></span>
-									Notification
+									Thông báo
 								</Link>
 								<div className={`notification-box noti ${isNotiOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`} id="notification">
 									<div className="nt-title">
-										<h4>Setting</h4>
-										<a href="#" title="">Clear all</a>
+										<h4>Cài đặt</h4>
+										<a title="">Xóa tất cả</a>
 									</div>
 									<div className="nott-list">
 										<div className="notfication-details">
 											<div className="noty-user-img">
 											</div>
 											<div className="notification-info">
-												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-												<span>2 min ago</span>
+												<h3><a href="#" title="">Jassica William</a> Đã bình luận vào bài viết của bạn.</h3>
+												<span>2 phút trước</span>
 											</div>
 										</div>
 										<div className="notfication-details">
@@ -134,8 +92,8 @@ const Header = () => {
 												
 											</div>
 											<div className="notification-info">
-												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-												<span>2 min ago</span>
+												<h3><a href="#" title="">Jassica William</a> Đã bình luận vào bài viết của bạn.</h3>
+												<span>2 phút trước</span>
 											</div>
 										</div>
 										<div className="notfication-details">
@@ -143,8 +101,8 @@ const Header = () => {
 												
 											</div>
 											<div className="notification-info">
-												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-												<span>2 min ago</span>
+												<h3><a href="#" title="">Jassica William</a> Đã bình luận vào bài viết của bạn.</h3>
+												<span>2 phút trước</span>
 											</div>
 										</div>
 										<div className="notfication-details">
@@ -152,12 +110,12 @@ const Header = () => {
 												
 											</div>
 											<div className="notification-info">
-												<h3><a href="#" title="">Jassica William</a> Comment on your project.</h3>
-												<span>2 min ago</span>
+												<h3><a href="#" title="">Jassica William</a> Đã bình luận vào bài viết của bạn.</h3>
+												<span>2 phút trước</span>
 											</div>
 										</div>
 										<div className="view-all-nots">
-											<a href="#" title="">View All Notification</a>
+											<a href="#" title="">Xem tất cả thông báo</a>
 										</div>
 									</div>
 								</div>
@@ -178,8 +136,8 @@ const Header = () => {
 								<i className="la la-sort-down"></i>
 							</div>
 							<div className={`user-account-settingss ${isOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`}>
-								<h3>Your Profile<Link to={"/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
-								<h3>Online Status</h3>
+								<h3>Trang cá nhân<Link to={"/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
+								<h3>Trạng thái hoạt động</h3>
 								<ul className="on-off-status">
 									<li>
 										<div className="fgt-sec">
@@ -200,21 +158,21 @@ const Header = () => {
 										</div>
 									</li>
 								</ul>
-								<h3>Custom Status</h3>
+								<h3>Tùy chỉnh trạng thái</h3>
 								<div className="search_form">
 									<form>
 										<input type="text" name="search" />
 										<button type="submit">Ok</button>
 									</form>
 								</div>
-								<h3>Setting</h3>
+								<h3>Cài đặt</h3>
 								<ul className="us-links mb-3">
-									<li><a href="profile-account-setting.html" title="">Account Setting</a></li>
-									<li><a href="#" title="">Privacy</a></li>
-									<li><a href="#" title="">Faqs</a></li>
-									<li><a href="#" title="">Terms &amp; Conditions</a></li>
+									<li><a href="profile-account-setting.html" title="">Cài đặt tài khoản</a></li>
+									<li><a href="#" title="">Quyền riêng tư</a></li>
+									<li><a href="#" title="">Câu hỏi thường gặp</a></li>
+									<li><a href="#" title="">Điều khoản sử dụng</a></li>
 								</ul>
-								{(storedToken != null) ? (<h3 className="tc"><button onClick={handleLogout}>Sign Out</button></h3>) : (
+								{(storedToken != null) ? (<h3 className="tc"><button onClick={handleLogout}>Đăng xuất</button></h3>) : (
 									<h3 className="tc"><Link to={"/auth"} className="mt-5"><button onClick={() => setIsOpened(!isOpened)}>Sign In</button></Link></h3>
 								)}
 

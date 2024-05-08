@@ -40,11 +40,13 @@ const Suggestions = () => {
             <div className="suggestions-list">
                 {data.data.map((suggestion) => (user && user._id && user._id != suggestion._id && (
                     <div className="suggestion-usd" key={suggestion._id} >
-                        <img src={suggestion.profilePictureUrl || `images/userava.jpg`} />
-                        <div className="sgt-text">
+                        <Link to={`/userprofile/${suggestion._id}`}>
+                            <img src={suggestion.profilePictureUrl || `images/userava.jpg`} />
+                        </Link>
+                        <Link to={`/userprofile/${suggestion._id}`} className="sgt-text">
                             <h4>{suggestion.firstName} {suggestion.lastName}</h4>
                             <span>Graphic Designer</span>
-                        </div>
+                        </Link>
                         <span><i className="la la-plus"></i></span>
                     </div>
                 )))}

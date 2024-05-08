@@ -24,7 +24,7 @@ const SignUp = ({setCurrentTab}) => {
 
 	const handleSignUpUser = async (e) => {
 		if (!isUserChecked) {
-			message.info("You must check the term");
+			message.info("Bạn phải đồng ý với điều khoản sử dụng");
 			e.preventDefault();
 		}
 		else {
@@ -57,7 +57,7 @@ const SignUp = ({setCurrentTab}) => {
 
 	const handleSignUpCompany = async (e) => {
 		if (!isCompanyChecked) {
-			message.info("You must check the term");
+			message.info("Bạn phải đồng ý với điều khoản sử dụng");
 			e.preventDefault();
 		}
 		else {
@@ -174,12 +174,12 @@ const SignUp = ({setCurrentTab}) => {
 									<label htmlFor="c2">
 										<span></span>
 									</label>
-									<small>Yes, I understand and agree to the workwise Terms &amp; Conditions.</small>
+									<small>Tôi hiểu và đồng ý với Điều khoản &amp; Điều kiện tương ứng.</small>
 								</div>
 							</div>
 						</div>
 						<div className="col-lg-12 no-pdd">
-							<button onClick={handleSignUpUser}>Get Started</button>
+							<button onClick={handleSignUpUser}>Đăng ký</button>
 						</div>
 					</div>
 				</form>

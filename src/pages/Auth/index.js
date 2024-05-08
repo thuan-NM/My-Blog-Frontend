@@ -32,14 +32,14 @@ function Register() {
                       className={`animated fadeIn ${currentTab === "tab-1" ? "current" : ""}`}
                       onClick={() => handleTabClick("tab-1")}
                     >
-                      <button title="">Sign in</button>
+                      <button title="">Đăng nhập</button>
                     </li>
                     <li
                       data-tab="tab-2"
                       className={`animated fadeIn ${currentTab === "tab-2" ? "current" : ""}`}
                       onClick={() => handleTabClick("tab-2")}
                     >
-                      <button title="">Sign up</button>
+                      <button title="">Đăng ký</button>
                     </li>
                   </ul>
                   {currentTab == "tab-1"?<SignIn/>:<SignUp setCurrentTab={setCurrentTab}/>}

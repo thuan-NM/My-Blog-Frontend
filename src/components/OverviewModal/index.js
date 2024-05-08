@@ -46,12 +46,12 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
     return (
             <div className={`overview-box ${isOverviewModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
                 <div className="overview-edit">
-                    <h3>Overview</h3>
-                    <span>5000 character left</span>
+                    <h3>Tổng quan</h3>
+                    <span>5000 ký tự</span>
                     <form>
                         <textarea onChange={(e)=>setOverviewdata(e.target.value)}></textarea>
-                        <button className="save" onClick={handleEdit}>Save</button>
-                        <button className="cancel" onClick={handleModal}>Cancel</button>
+                        <button className="save" onClick={handleEdit}>Lưu</button>
+                        <button className="cancel" onClick={handleModal}>Hủy bỏ</button>
                     </form>
                     <Link className="close-box"><i className="la la-close" onClick={handleModal}></i></Link>
                 </div>

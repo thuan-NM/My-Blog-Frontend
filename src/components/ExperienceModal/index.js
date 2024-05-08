@@ -49,12 +49,12 @@ const ExperienceModal = ({user,isExpModalOpen,setIsExpModalOpen,expId}) => {
     return (
         <div className={`overview-box ${isExpModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
 			<div className="overview-edit">
-				<h3>Experience</h3>
+				<h3>Kinh nghiệm</h3>
 				<form>
-					<input type="text" name="subject" placeholder="Subject" onChange={(e)=>{setSupject(e.target.value)}}/>
+					<input type="text" name="subject" placeholder="Chủ đề" onChange={(e)=>{setSupject(e.target.value)}}/>
 					<textarea onChange={(e)=>{setDescription(e.target.value)}}></textarea>
-					<button type="submit" className="save" onClick={handleAdd}>Add More</button> 	
-					<button type="submit" className="cancel" onClick={handleModal}>Cancel</button>
+					<button type="submit" className="save" onClick={handleAdd}>Thêm</button> 	
+					<button type="submit" className="cancel" onClick={handleModal}>Hủy bỏ</button>
 				</form>
 				<Link className="close-box"onClick={handleModal}><i className="la la-close" ></i></Link>
 			</div>

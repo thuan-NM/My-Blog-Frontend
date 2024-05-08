@@ -130,7 +130,7 @@ function Jobs() {
                                         <div className="paddy">
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Các skills</h3>
+                                                    <h3>Các kỹ năng</h3>
                                                     <button onClick={() => setSkills("")}>Xóa</button>
                                                 </div>
                                                 <form>
@@ -169,7 +169,7 @@ function Jobs() {
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Lương / Hr ($)</h3>
+                                                    <h3>Lương / giờ ($)</h3>
                                                 </div>
                                                 <div className="rg-slider">
                                                     <InputNumber
@@ -196,7 +196,7 @@ function Jobs() {
                                             </div>
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
-                                                    <h3>Mức độ kinh nghiệm</h3>
+                                                    <h3>Kinh nghiệm</h3>
                                                     <button onClick={() => { setExperience("") }}>Xóa</button>
                                                 </div>
                                                 <form className="job-tp">
@@ -252,8 +252,8 @@ function Jobs() {
                                             </div>
                                             <div className="post-st">
                                                 <ul>
-                                                    <li><button className="post_project" href="#" title="">Post a Project</button></li>
-                                                    <li><button className="post-jb" onClick={handleShowJobModal}>Post a Job</button></li>
+                                                    <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
+                                                    <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
                                                 </ul>
                                             </div>
                                         </div>
