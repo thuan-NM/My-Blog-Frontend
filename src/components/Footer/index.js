@@ -5,17 +5,17 @@ function Footer() {
     <div className="footy-sec">
 				<div className="container">
 					<ul>
-						<li><a href="help-center.html" title="">Help Center</a></li>
-						<li><Link to={"/about"} title="">About</Link></li>
-						<li><a href="#" title="">Privacy Policy</a></li>
-						<li><a href="#" title="">Community Guidelines</a></li>
-						<li><a href="#" title="">Cookies Policy</a></li>
-						<li><a href="#" title="">Career</a></li>
-						<li><a href="forum.html" title="">Forum</a></li>
-						<li><a href="#" title="">Language</a></li>
-						<li><a href="#" title="">Copyright Policy</a></li>
+						<li><a href="help-center.html" title="">Trung tâm hỗ trợ</a></li>
+						<li><Link to={"/about"} title="">Về chúng tôi</Link></li>
+						<li><a href="#" title="">Chính sách bảo mật</a></li>
+						<li><a href="#" title="">Cộng đồng</a></li>
+						<li><a href="#" title="">Chính sách Cookies</a></li>
+						<li><a href="#" title="">Hồ sơ</a></li>
+						<li><a href="forum.html" title="">Diễn đàn</a></li>
+						<li><a href="#" title="">Ngôn ngữ</a></li>
+						<li><a href="#" title="">Chính sách bản quyền</a></li>
 					</ul>
-					<p><img alt=""/>Copyright 2019</p>
+					<p><img alt=""/>Bản quyền 2019</p>
 				</div>
 			</div>
   );

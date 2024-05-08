@@ -51,7 +51,7 @@ const AppliedJob = () => {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
                 <h1 className="nobody">
-                    Không có bất cứ gì!
+                    Bạn đang không ứng tuyển công việc nào.
                 </h1>
                 <div className="spinner">
                     <div className="bounce1"></div>
@@ -78,19 +78,19 @@ const AppliedJob = () => {
                     </div>
                     <ul className="savedjob-info saved-info">
                         <li>
-                            <h3>Applicants</h3>
+                            <h3>Số ứng viên</h3>
                             <p>10</p>
                         </li>
                         <li>
-                            <h3>Job Type</h3>
+                            <h3>Loại hợp đồng</h3>
                             <p>{post.typeOfJob}</p>
                         </li>
                         <li>
-                            <h3>Salary</h3>
-                            <p>{post.price}/hr</p>
+                            <h3>Lương</h3>
+                            <p>{post.price}$/giờ</p>
                         </li>
                         <div className="devepbtn saved-btn ">
-                            <button className="clrbtn" disabled>Applied</button>
+                            <button className="clrbtn" disabled>Đã ứng tuyển</button>
                             <button className="clrbtn" onClick={() => handleDelete(post.status._id)}>
                                 <i className="far fa-trash-alt"></i>
                             </button>

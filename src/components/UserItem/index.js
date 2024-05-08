@@ -37,12 +37,12 @@ const UserItem = ({ user, onAddFriend, onRemoveFriend, isFriend, viewed, isActiv
           <h3>{user.lastName}</h3>
           <h4>Graphic Designer</h4>
           <ul>
-            <li><a href="#" title="" class="follow">Follow</a></li>
+            <li><a href="#" title="" class="follow">Theo dõi</a></li>
             <li><a href="#" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
-            <li><a href="#" title="" class="hire-us">Hire</a></li>
+            <li><a href="#" title="" class="hire-us">Tuyển dụng</a></li>
           </ul>
         </div>
-        <a href="user-profile.html" title="" class="view-more-pro">View Profile</a>
+        <a href="user-profile.html" title="" class="view-more-pro">Xem trang cá nhân</a>
       </div>
     </div>
   );

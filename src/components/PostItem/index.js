@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import Comment from '../Comment';
 import ApplyModal from '../ApplyModal';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 
 const PostItem = ({ post, handleHashtags }) => {
@@ -20,7 +21,8 @@ const PostItem = ({ post, handleHashtags }) => {
   const [open, setOpen] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
   const { user } = useAuth();
-
+  const storedToken = localStorage.getItem('token');
+  const decodedToken = jwtDecode(storedToken);
   const isAuthor = post.author._id === user._id;
 
   const items = [
@@ -84,26 +86,29 @@ const PostItem = ({ post, handleHashtags }) => {
 
   useEffect(() => {
     const fetchReactionStats = async () => {
-      const data ={ postid: post._id,
-        userid:user._id
-      }
       try {
-        const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
-        const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
-        const response = await axios.get(`http://localhost:3001/jobstatus/checkUserApplied/`, { params: data });
-        setApplicationStatus(response.data.data);
-        setComments(commentsResponse.data.data);
-        setReactionStats(reactionStatsResponse.data.data);
-        setIsLoading(false);
+        if (user!=null) {
+          const data = {
+            postid: post._id,
+            userid: decodedToken.userId
+          }
+          const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
+          const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
+          const response = await axios.get(`http://localhost:3001/jobstatus/checkUserApplied/`, { params: data });
+          setApplicationStatus(response.data.data);
+          setComments(commentsResponse.data.data);
+          setReactionStats(reactionStatsResponse.data.data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.error('Error fetching reaction stats:', error);
       }
     };
 
     fetchReactionStats();
-  }, [comments, reactionStats]);
+  }, [comments, reactionStats, applicationStatus]);
 
-  if (isLoading) {
+  if (isLoading || !user) {
     return (
       <div className="process-comm">
         <div className="spinner">
@@ -113,13 +118,6 @@ const PostItem = ({ post, handleHashtags }) => {
         </div>
       </div>)
   }
-
-  // Trong component PostItem
-
-  // Trong JSX của bạn
-
-
-
   return (
     <div className="post-bar">
       <div className="post_topbar">
@@ -168,7 +166,7 @@ const PostItem = ({ post, handleHashtags }) => {
         <h3>{post.title}</h3>
         <ul className="job-dt">
           <li><a href="#" title="">{post.typeOfJob}</a></li>
-          <li><span>${post.price} / hr</span></li>
+          <li><span>${post.price} / giờ</span></li>
         </ul>
         <p>{post.description}</p>
         <ul className="skill-tags">
@@ -181,11 +179,11 @@ const PostItem = ({ post, handleHashtags }) => {
       </div>
       <div className="job-status-bar">
         <div className="like-com">
-          <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i>Like</button>
+          <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i>Yêu thích</button>
           <span className="ms-1 me-4">{reactionStats.totalReactions}</span>
-          <button onClick={() => setIsCommentFieldOpen(!isCommentFieldOpen)}><i className="fas fa-comment-alt"></i>Comment {comments.totalComments}</button>
+          <button onClick={() => setIsCommentFieldOpen(!isCommentFieldOpen)}><i className="fas fa-comment-alt"></i>Bình luận {comments.totalComments}</button>
         </div>
-        <a href="#"><i className="fas fa-eye"></i>Views 50</a>
+        <a href="#"><i className="fas fa-eye"></i>Lượt xem: 50</a>
       </div>
       {isCommentFieldOpen && <Comment postId={post._id} />}
       <>

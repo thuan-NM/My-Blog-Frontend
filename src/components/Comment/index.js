@@ -58,7 +58,7 @@ const Comment = ({ postId }) => {
     });
   }
   else {
-    <h4>ERROR</h4>
+    <h4>Lỗi</h4>
   }
   return (
     <div className="comment-section animate__animated animate__fast animate__fadeIn">
@@ -74,7 +74,7 @@ const Comment = ({ postId }) => {
                 <h3>{comment.author.firstName} {comment.author.lastName}</h3>
                 <span><img src="images/clock.png" alt=""></img> {comment.createdAt}</span>
                 <p>{comment.content}</p>
-                <a href="#" title=""><i className="fa fa-reply-all"></i>Reply</a>
+                <a href="#" title=""><i className="fa fa-reply-all"></i>Trả lời</a>
               </div>
             </div>
           </li>
@@ -90,9 +90,9 @@ const Comment = ({ postId }) => {
         </div>
         <div className="comment_box">
           <form>
-            <input type="text" placeholder="Post a comment" value={newComment} onChange={(e) => setNewComment(e.target.value)}>
+            <input type="text" placeholder="Nhập bình luận" value={newComment} onChange={(e) => setNewComment(e.target.value)}>
             </input>
-            <button className="edit-info" onClick={handleCommentSubmit}>Send</button>
+            <button className="edit-info" onClick={handleCommentSubmit}>Gửi</button>
           </form>
         </div>
       </div>

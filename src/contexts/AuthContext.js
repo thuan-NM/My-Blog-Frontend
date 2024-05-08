@@ -13,28 +13,30 @@ const AuthProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const storedToken = localStorage.getItem('token');
-  
+
         if (storedToken) {
           const decodedToken = jwtDecode(storedToken);
           console.log(decodedToken)
-          if(!decodedToken.companyId){
-          const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
-            headers: { Authorization: `Bearer ${storedToken}` }
-          });
-          const userData = response.data.data;
-          setUser(userData);}
-          else{
+          if (!decodedToken.companyId) {
+            const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
+              headers: { Authorization: `Bearer ${storedToken}` }
+            });
+            const userData = response.data.data;
+            setUser(userData);
+          }
+          else {
             const response = await axios.get(`http://localhost:3001/companies/${decodedToken.companyId}`, {
-            headers: { Authorization: `Bearer ${storedToken}` }
-          });
-          const userData = response.data.data;
-          setUser(userData);}
+              headers: { Authorization: `Bearer ${storedToken}` }
+            });
+            const userData = response.data.data;
+            setUser(userData);
+          }
         }
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -53,13 +55,13 @@ const AuthProvider = ({ children }) => {
   const updateUser = async () => {
     try {
       const storedToken = localStorage.getItem('token');
-  
+
       if (storedToken) {
         const decodedToken = jwtDecode(storedToken);
         const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
           headers: { Authorization: `Bearer ${storedToken}` }
         });
-  
+
         const userData = response.data.data;
         setUser(userData);
       }
@@ -69,7 +71,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout,updateUser }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

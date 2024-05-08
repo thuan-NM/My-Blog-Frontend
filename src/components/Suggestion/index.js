@@ -49,7 +49,7 @@ const Suggestions = () => {
                     </div>
                 )))}
                 <div className="view-more">
-                    <Link to={"/users"}>View More</Link>
+                    <Link to={"/users"}>Xem thêm</Link>
                 </div>
             </div>
 

@@ -79,32 +79,33 @@ function Home() {
                     </div>
                     <ul className="user-fw-status">
                       <li>
-                        <h4>Following</h4>
+                        <h4>Đang theo dõi</h4>
                         <span>34</span>
                       </li>
                       <li>
-                        <h4>Followers</h4>
+                        <h4>Người theo dõi</h4>
                         <span>155</span>
                       </li>
                       <li>
-                        <Link href="my-profile.html" title="">View Profile</Link>
+                        <Link href="my-profile.html" title="">Xem trang cá nhân</Link>
                       </li>
                     </ul>
                   </div>)}
                   <Suggestions />
                   <div className="tags-sec full-width">
                     <ul>
-                      <li><Link href="#" title="">Help Center</Link></li>
-                      <li><Link to={"/about"} >About</Link></li>
-                      <li><Link href="#" title="">Privacy Policy</Link></li>
-                      <li><Link href="#" title="">Community Guidelines</Link></li>
-                      <li><Link href="#" title="">Cookies Policy</Link></li>
-                      <li><Link href="#" title="">Career</Link></li>
-                      <li><Link href="#" title="">Language</Link></li>
-                      <li><Link href="#" title="">Copyright Policy</Link></li>
+                      <li><a href="help-center.html" title="">Trung tâm hỗ trợ</a></li>
+                      <li><Link to={"/about"} title="">Về chúng tôi</Link></li>
+                      <li><a href="#" title="">Chính sách bảo mật |</a></li>
+                      <li><a href="#" title="">Cộng đồng</a></li>
+                      <li><a href="#" title="">Cookies |</a></li>
+                      <li><a href="#" title="">Hồ sơ</a></li>
+                      <li><a href="forum.html" title="">Diễn đàn</a></li>
+                      <li><a href="#" title="">Ngôn ngữ</a></li>
+                      <li><a href="#" title="">Chính sách bản quyền</a></li>
                     </ul>
                     <div className="cp-sec">
-                      <img src="images/myfavicon.png" alt="" width={30} height={30}/>
+                      <img src="images/myfavicon.png" alt="" width={30} height={30} />
                       <p>Copyright 2019</p>
                     </div>
                   </div>
@@ -118,8 +119,8 @@ function Home() {
                     </div>
                     <div className="post-st">
                       <ul>
-                        <li><button className="post_project" href="#" title="">Post a Project</button></li>
-                        <li><button className="post-jb" onClick={handleShowJobModal}>Post a Job</button></li>
+                        <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
+                        <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
                       </ul>
                     </div>
                   </div>
@@ -129,7 +130,7 @@ function Home() {
                         {index === 2 && (
                           <div className="top-profiles">
                             <div className="pf-hd">
-                              <h3>Top Profiles</h3>
+                              <h3>Người dùng hàng đầu</h3>
                               <i className="la la-ellipsis-v"></i>
                             </div>
                             <div className="profiles-slider slick-initialized slick-slider">

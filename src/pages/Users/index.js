@@ -107,7 +107,7 @@ function Users() {
     <section class="companies-info">
       <div class="container">
         <div class="company-title">
-          <h3>All Users</h3>
+          <h3>Tất cả người dùng</h3>
         </div>
         <div class="companies-list">
           <div class="row">

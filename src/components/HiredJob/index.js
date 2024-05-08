@@ -75,19 +75,19 @@ const HiredJob = () => {
                     </div>
                     <ul className="savedjob-info saved-info">
                         <li>
-                            <h3>Applicants</h3>
+                            <h3>Số ứng viên</h3>
                             <p>10</p>
                         </li>
                         <li>
-                            <h3>Job Type</h3>
+                            <h3>Loại hợp đồng</h3>
                             <p>{post.typeOfJob}</p>
                         </li>
                         <li>
-                            <h3>Salary</h3>
-                            <p>{post.price}/hr</p>
+                            <h3>Lương</h3>
+                            <p>{post.price}$/giờ</p>
                         </li>
                         <div className="devepbtn saved-btn ">
-                            <button className="clrbtn" disabled>Hired</button>
+                            <button className="clrbtn" disabled>Đã được tuyển</button>
                             <button className="clrbtn" onClick={() => handleDelete(post.status._id)}>
                                 <i className="far fa-trash-alt"></i>
                             </button>

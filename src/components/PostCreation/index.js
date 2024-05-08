@@ -66,12 +66,12 @@ const handleFile = (info) => {
   return (
     <div className={`post-popup job_post ${isJobModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
       <div className="post-project">
-        <h3>Post a job</h3>
+        <h3>Đăng công việc</h3>
         <div className="post-project-fields">
           <form>
             <div className="row">
               <div className="col-lg-12">
-                <input type="text" id="title" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input type="text" id="title" placeholder="Tên công việc" value={title} onChange={(e) => setTitle(e.target.value)} />
               </div>
               <div className="col-lg-6">
                 <div className="inp-field">
@@ -95,11 +95,11 @@ const handleFile = (info) => {
                 </div>
               </div>
               <div className="col-lg-12">
-                <input type="text" id="skills" placeholder="Skills" value={skills} onChange={(e) => setSkills(e.target.value)} />
+                <input type="text" id="skills" placeholder="Kỹ năng" value={skills} onChange={(e) => setSkills(e.target.value)} />
               </div>
               <div className="col-lg-6">
                 <div className="price-br">
-                  <input type="text" id="price" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} />
+                  <input type="text" id="price" placeholder="Lương" value={price} onChange={(e) => setPrice(e.target.value)} />
                   <i className="la la-dollar"></i>
                 </div>
               </div>
@@ -113,7 +113,7 @@ const handleFile = (info) => {
                 </div>
               </div>
               <div className="col-lg-12">
-                <textarea id="description" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <textarea id="description" placeholder="Mô tả công việc" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
               </div>
               <div className="col-lg-12 attach-file">
                 <Upload
@@ -128,8 +128,8 @@ const handleFile = (info) => {
               </div>
               <div className="col-lg-12">
                 <ul>
-                  <li><button className="active" onClick={handleCreatePost}>Post</button></li>
-                  <li><button onClick={handleShowJobModal}>Cancel</button></li>
+                  <li><button className="active" onClick={handleCreatePost}>Đăng tải</button></li>
+                  <li><button onClick={handleShowJobModal}>Hủy bỏ</button></li>
                 </ul>
               </div>
               
