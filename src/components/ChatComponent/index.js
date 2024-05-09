@@ -1,41 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { w3cwebsocket as WebSocket } from 'websocket';
 import { useAuth } from '../../contexts/AuthContext';
-
 const ChatComponent = ({ datauser }) => {
     const { user } = useAuth();
+    const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState('');
     const [receivedMessages, setReceivedMessages] = useState([]);
     const [isChatting, setIsChatting] = useState(false);
-    const socketRef = useRef(null);
-    const token = localStorage.getItem("token");
-    useEffect(() => {
-        
-        if (token && user) {
-            socketRef.current = new WebSocket(`ws://localhost:3001?senderId=${user._id}&receiverId=${datauser._id}`);
-            console.log('WebSocket connection established');
-        }
+    const newSocket = new WebSocket(`ws://localhost:3001?user-id=${user._id}`);
 
-        socketRef.current.onmessage = (event) => {
-            const messageData = JSON.parse(event.data);
-            setReceivedMessages(receivedMessages => [...receivedMessages, messageData]);
+    useEffect(() => {
+
+        newSocket.onopen = () => {
+            console.log('WebSocket connection established');
+            setSocket(newSocket);
+            const data = {
+                type: 'load_messages',
+                senderId: user._id,
+                receiverId: datauser._id
+            };
+            newSocket.send(JSON.stringify(data));
         };
 
-        socketRef.current.onclose = () => {
+        newSocket.onmessage = (event) => {
+            const messageData = JSON.parse(event.data);
+            setReceivedMessages((receivedMessages) => [...receivedMessages, messageData]);
+        };
+
+        newSocket.onclose = () => {
             console.log('WebSocket connection closed');
+            setSocket(null);
         };
 
         return () => {
-            if (!token) {
-                socketRef.current.close();
+            if (socket) {
+                socket.close();
             }
         };
-    }, [user, datauser._id,token]);
+    }, []);
 
     const sendMessage = (e) => {
         e.preventDefault();
-        if (socketRef.current && message.trim() !== '') {
-            socketRef.current.send(JSON.stringify({
+        if (socket) {
+            socket.send(JSON.stringify({
                 text: message,
                 sender: user._id,
                 receiver: datauser._id
@@ -45,18 +52,14 @@ const ChatComponent = ({ datauser }) => {
     };
 
     const handleChat = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setIsChatting(!isChatting);
-        if (!isChatting) {
-            console.log('WebSocket connection established');
-        } else {
-            socketRef.current.close();
-        }
     };
 
     const filteredMessages = receivedMessages.filter(
         (msg) => msg.sender === datauser._id || msg.receiver === datauser._id
     );
+    console.log(filteredMessages)
     return (
         <div className="chatbox">
             <div className="chat-mg" onClick={handleChat}>

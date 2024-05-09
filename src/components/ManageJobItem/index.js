@@ -78,7 +78,8 @@ const ManageJobItem = () => {
                 <div class="posts-bar" key={item._id}>
                     <div class="post-bar bgclr">
                         <div class="wordpressdevlp">
-                            <h2>{item.experience}</h2>
+                            <h2>{item.title}</h2>
+                            <h5 className="fw-semibold mb-3">{item.experience}</h5>
                             <p><i class="la la-clock-o"></i>{new Date(item.createdAt).toLocaleString()}</p>
                         </div>
                         <br />

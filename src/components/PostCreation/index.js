@@ -10,10 +10,10 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");
   const [description, setDescription] = useState(""); 
-  const [typeOfJob, setTypeOfJob] = useState("");
-  const [experience, setExperience] = useState("");
+  const [typeOfJob, setTypeOfJob] = useState("Full Time");
+  const [experience, setExperience] = useState("Fresher Developer");
   const [price, setPrice] = useState(0);
-  const [workType, setWorkType] = useState("");
+  const [workType, setWorkType] = useState("Onsite");
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalFileOpen, setIsModalFileOpen] = useState(false);
   const { user } = useAuth();
@@ -44,9 +44,9 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
           // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
           navigate("/auth");
         }
+        setDescription("");
         setTitle("");
-        setHashtags("");
-        setContent("");
+        setSkills("");
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {

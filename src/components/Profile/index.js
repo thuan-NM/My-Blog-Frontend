@@ -4,10 +4,12 @@ import { Button, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { message } from 'antd';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const storedToken = localStorage.getItem('token');
+  const decodedToken = jwtDecode(storedToken);
   const handleImageChange = (info) => {
     if (info.file.status === 'done') {
       setSelectedImage(info.file.originFileObj);
@@ -64,9 +66,9 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `images/userava.jpg`}/>
-        <div className="add-dp" id="OpenImgUpload">
+        {(user._id==decodedToken.userId)&&(<div className="add-dp" id="OpenImgUpload">
           <label><i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i></label>
-        </div>
+        </div>)}
         <div className={`post-popup job_post ${isModalPicOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
           <div className="post-project">
             <h3>Update Picture</h3>
