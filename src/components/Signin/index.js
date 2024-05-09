@@ -40,7 +40,7 @@ const SignIn = () => {
 		e.preventDefault();
 		const company = {
 			email: email,
-			password: password,
+			password: companyPassword,
 		};
 		axios
 			.post("http://localhost:3001/companyauth/login", company)

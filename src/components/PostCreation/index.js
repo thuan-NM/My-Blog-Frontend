@@ -132,7 +132,6 @@ const handleFile = (info) => {
                   <li><button onClick={handleShowJobModal}>Hủy bỏ</button></li>
                 </ul>
               </div>
-              
             </div>
           </form>
         </div>

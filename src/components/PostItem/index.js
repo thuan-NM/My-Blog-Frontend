@@ -22,7 +22,10 @@ const PostItem = ({ post, handleHashtags }) => {
   const [applicationStatus, setApplicationStatus] = useState(null);
   const { user } = useAuth();
   const storedToken = localStorage.getItem('token');
-  const decodedToken = jwtDecode(storedToken);
+  let decodedToken;
+  if (storedToken) {
+    decodedToken = jwtDecode(storedToken);
+  }
 
   const showModal = () => {
     setOpen(true);
@@ -49,18 +52,21 @@ const PostItem = ({ post, handleHashtags }) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        if (user != null) {
+        const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
+        const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
+        setComments(commentsResponse.data.data);
+        setReactionStats(reactionStatsResponse.data.data);
+        setIsLoading(false);
+        if (user != null && storedToken != null) {
           const data = {
             postid: post._id,
             userid: decodedToken.userId
           }
-          const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
-          const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
           const response = await axios.get(`http://localhost:3001/jobstatus/checkUserApplied/`, { params: data });
           setApplicationStatus(response.data.data);
-          setComments(commentsResponse.data.data);
-          setReactionStats(reactionStatsResponse.data.data);
-          setIsLoading(false);
+        }
+        else {
+          setApplicationStatus("guest");
         }
       } catch (error) {
         console.error('Error fetching reaction stats:', error);
@@ -101,7 +107,7 @@ const PostItem = ({ post, handleHashtags }) => {
           <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
           <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
           {
-            user._id !== post.author.userdata._id && (
+            (user._id !== post.author.userdata._id)&&(applicationStatus!="guest") ? (
               <li>
                 <Button
                   className="bid_now"
@@ -111,7 +117,7 @@ const PostItem = ({ post, handleHashtags }) => {
                   {applicationStatus && applicationStatus !== 'Denied' ? 'Đã nộp' : 'Ứng tuyển'}
                 </Button>
               </li>
-            )
+            ) : <li></li>
           }
         </ul>
       </div>
