@@ -51,36 +51,27 @@ const Comment = ({ postId }) => {
         </div>
       </div>)
   }
-  if (comments.comments.length !== 0) {
-    comments.comments.forEach(comment => {
-      if (comment.author && comment.author.profilePictureUrl === "") {
-        comment.author.profilePictureUrl = imagePath;
-      }
-    });
-  }
-  else {
-    <h4>Lỗi</h4>
-  }
+
   return (
     <div className="comment-section animate__animated animate__fast animate__fadeIn">
       <div className="comment-sec">
         <ul>
           {comments.comments.map((comment) => (
-          <li key={comment._id}>
-            <div className="comment-list">
-              <Link to={`/userprofile/${comment.author._id}`} className="bg-img">
-                <img src={comment.author.profilePictureUrl} alt="" />
+            <li key={comment._id}>
+              <div className="comment-list">
+                <Link to={`/userprofile/${comment.author._id}`} className="bg-img">
+                  <img src={comment.author.profilePictureUrl || `images/userava.jpg`} alt="" width="40"/>
               </Link>
-              <div className="comment">
-                <Link to={`/userprofile/${comment.author._id}`}>
-                <h3>{comment.author.firstName} {comment.author.lastName}</h3>
-                </Link>
-                <span><img src="images/clock.png" alt=""></img> {comment.createdAt}</span>
-                <p>{comment.content}</p>
-                <a href="#" title=""><i className="fa fa-reply-all"></i>Trả lời</a>
+                <div className="comment">
+                  <Link to={`/userprofile/${comment.author._id}`}>
+                    <h3>{comment.author.firstName} {comment.author.lastName}</h3>
+                  </Link>
+                  <span><img src="images/clock.png" alt=""></img> {comment.createdAt}</span>
+                  <p>{comment.content}</p>
+                  <a href="#" title=""><i className="fa fa-reply-all"></i>Trả lời</a>
+                </div>
               </div>
-            </div>
-          </li>
+            </li>
           ))}
         </ul>
       </div>
@@ -99,7 +90,7 @@ const Comment = ({ postId }) => {
           </form>
         </div>
       </div>
-      
+
     </div>
   );
 };
