@@ -13,7 +13,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import "../../jquery.range.css"
 import { InputNumber, Slider, Switch } from "antd";
 import TopProfile from "../../components/TopProfile";
-import TopJob  from "../../components/TopJob";
+import TopJob from "../../components/TopJob";
 import MostInterest from "../../components/MostInterest";
 
 
@@ -54,12 +54,12 @@ function Jobs() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await axios.post(`http://localhost:3001/posts/filter`, filter, {
+                const postResponse = await axios.post(`https://my-blog-server-ua7q.onrender.com/posts/filter`, filter, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                const suggestionResponse = await axios.get(`http://localhost:3001/users`);
+                const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
                 setSuggestions(suggestionResponse.data.data)
                 setPosts(postResponse.data.data);
                 settotalPages(postResponse.data.totalPages)
@@ -72,7 +72,14 @@ function Jobs() {
     }, [filter]);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="process-comm">
+                <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div>
+            </div>)
     }
     const handleShowJobModal = (e) => {
         e.preventDefault();
@@ -100,9 +107,6 @@ function Jobs() {
         }
         setFilter(newfilter)
     }
-
-    
-
     return (
         <div><div className="search-sec">
             <div className="container">
@@ -267,11 +271,11 @@ function Jobs() {
                                                                 <i className="la la-ellipsis-v"></i>
                                                             </div>
                                                             <div className="profiles-slider slick-initialized slick-slider">
-                                                               <TopProfile/>
+                                                                <TopProfile />
                                                             </div>
                                                         </div>)}
                                                     <PostItem post={post}></PostItem>
-                                                </React.Fragment> 
+                                                </React.Fragment>
                                             ))}
                                         </div>
                                     </div>
@@ -287,9 +291,9 @@ function Jobs() {
                                                 <Link to={"/about"} title="">Xem thêm</Link>
                                             </div>
                                         </div>
-                                        <TopJob/>
-                                        <MostInterest/>
-                                        <Suggestions/>
+                                        <TopJob />
+                                        <MostInterest />
+                                        <Suggestions />
                                     </div>
                                 </div>
                             </div>

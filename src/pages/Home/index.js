@@ -13,31 +13,22 @@ import { useSearch } from "../../contexts/SearchContext";
 import { useAuth } from "../../contexts/AuthContext";
 import TopJob from "../../components/TopJob";
 import MostInterest from "../../components/MostInterest";
-
+import PostServices from "../../services/post.services"
 
 function Home() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [posts, setPosts] = useState([]);
   const [totalPages, settotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth()
-  const pageSize = 5;
-  const { showPostLists, hashtagResults, handleHashtags, setHashtagResults, setShowPostLists } = useHashtags();
-  const { handleSearchPost, searchTerm, searchResults, showPostListsWithSearch, setSearchTerm, setSearchResults, setShowPostListsWithSearch } = useSearch();
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postResponse = await axios.get(`http://localhost:3001/posts/?page=${currentPage}&pageSize=${pageSize}`);
-        setPosts(postResponse.data.data);
-        settotalPages(postResponse.data.totalPages)
+        const postResponse = await PostServices.getJobsList();
+        setPosts(postResponse.data);
+        settotalPages(postResponse.totalPages);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);

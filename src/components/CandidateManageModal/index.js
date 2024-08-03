@@ -20,7 +20,7 @@ const CandidateManageModal = ({ candidates }) => {
 
     const hired = async (candidateId) => {
         try {
-            await axios.put(`http://localhost:3001/jobstatus/hire/${candidateId}`, { postid: candidates._id }, {
+            await axios.put(`https://my-blog-server-ua7q.onrender.com/jobstatus/hire/${candidateId}`, { postid: candidates._id }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -34,7 +34,7 @@ const CandidateManageModal = ({ candidates }) => {
 
     const denied = async (candidateId) => {
         try {
-            await axios.put(`http://localhost:3001/jobstatus/deny/${candidateId}`, { postid: candidates._id }, {
+            await axios.put(`https://my-blog-server-ua7q.onrender.com/jobstatus/deny/${candidateId}`, { postid: candidates._id }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

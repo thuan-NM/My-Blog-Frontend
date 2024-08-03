@@ -26,7 +26,7 @@ const MyInfo = ({ userId }) => {
     // Fetch user data when the component mounts
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/users/${userId}`);
+        const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/users/${userId}`);
         setUser(response.data.data);
         setEmail(response.data.data.email);
         setFirstName(response.data.data.firstName || "");
@@ -46,7 +46,7 @@ const MyInfo = ({ userId }) => {
   const handleUpdate = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3001/users/${userId}`,
+        `https://my-blog-server-ua7q.onrender.com/users/${userId}`,
         {
           email,
           firstName,

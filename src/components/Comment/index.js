@@ -15,7 +15,7 @@ const Comment = ({ postId }) => {
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
-        const commentsResponse = await axios.get(`http://localhost:3001/comments/${postId}`);
+        const commentsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/comments/${postId}`);
         setComments(commentsResponse.data.data);
         setIsLoading(false);
       } catch (error) {
@@ -29,7 +29,7 @@ const Comment = ({ postId }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/comments', {
+      await axios.post('https://my-blog-server-ua7q.onrender.com/comments', {
         user,
         postId,
         content: newComment,

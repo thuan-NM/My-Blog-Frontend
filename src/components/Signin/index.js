@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../contexts/AuthContext";
 import { message } from "antd"
-import axios from "axios";
+import AuthServices from "../../services/auth.services"
+import CompanyAuthServices from "../../services/companyAuth.services";
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -20,21 +21,20 @@ const SignIn = () => {
 			username: username,
 			password: password,
 		};
-		axios
-			.post("http://localhost:3001/auth/login", user)
-			.then((res) => {
-				setPassword("");
-				if (res.data.isSuccess === 1) {
-					const { user, token } = res.data;
-					login(user, token);
-					message.success(res.data.message)
-					navigate("/");
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				message.error(error.response.data.message)
-			});
+		try {
+			const res = await AuthServices.signIn(user)
+			setPassword("")
+			if(res.isSuccess === 1) {
+				const { user, token } = res;
+	 			login(user, token);
+				message.success(res.message)
+				navigate("/")
+			}
+		}
+		catch (error) {
+			console.log(error)
+			message.error(error.response.data.message)
+		}
 	};
 	const handleLoginWithCompany = async (e) => {
 		e.preventDefault();
@@ -42,21 +42,20 @@ const SignIn = () => {
 			email: email,
 			password: companyPassword,
 		};
-		axios
-			.post("http://localhost:3001/companyauth/login", company)
-			.then((res) => {
-				setPassword("");
-				if (res.data.isSuccess === 1) {
-					const { company, token } = res.data;
-					login(company, token);
-					message.success(res.data.message)
-					navigate("/");
-				}
-			})
-			.catch((error) => {
-				console.log(error);
-				message.error(error.response.data.message)
-			});
+		try {
+			const res = await CompanyAuthServices.signIn(company)
+			setCompanyPassword("")
+			if(res.isSuccess === 1) {
+				const { company, token } = res;
+	 			login(company, token);
+				message.success(res.message)
+				navigate("/")
+			}
+		}
+		catch (error) {
+			console.log(error)
+			message.error(error.response.data.message)
+		}
 	};
 	const handleTabClick = (tab) => {
 		setCurrentTabSignUp(tab);

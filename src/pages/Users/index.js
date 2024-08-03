@@ -24,13 +24,19 @@ function Users() {
     () =>
       axios
         .get(
-          `http://localhost:3001/users?page=${currentPage}&pageSize=${pageSize}`
+          `https://my-blog-server-ua7q.onrender.com/users?page=${currentPage}&pageSize=${pageSize}`
         )
         .then((response) => response.data),
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <div class="process-comm">
+      <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+      </div>
+    </div>
   }
 
   if (error) {
@@ -111,18 +117,18 @@ function Users() {
         </div>
         <div class="companies-list">
           <div class="row">
-          {data.data.map((curUser) => 
-             // Check if the user is logged in before displaying the information
-             ( user && user._id && user._id != curUser._id && (
-                 <UserItem
-                     key={curUser._id}
-                     user={curUser}
-                     onAddFriend={() => {handleSendFriendRequest(curUser)}}
-                     onRemoveFriend={() => {handleRemoveFriend(curUser._id)}}
-                     isFriend={user.friend && user.friend.some((friend) => friend._id === curUser._id)}
-                 />
-             ))
-           )} 
+            {data.data.map((curUser) =>
+            // Check if the user is logged in before displaying the information
+            (user && user._id && user._id != curUser._id && (
+              <UserItem
+                key={curUser._id}
+                user={curUser}
+                onAddFriend={() => { handleSendFriendRequest(curUser) }}
+                onRemoveFriend={() => { handleRemoveFriend(curUser._id) }}
+                isFriend={user.friend && user.friend.some((friend) => friend._id === curUser._id)}
+              />
+            ))
+            )}
           </div>
         </div>
         <div class="process-comm">

@@ -15,7 +15,7 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
         setSelectEducation(exp);
         const token = localStorage.getItem("token");
         axios
-            .delete(`http://localhost:3001/educations/${exp._id}`, {
+            .delete(`https://my-blog-server-ua7q.onrender.com/educations/${exp._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

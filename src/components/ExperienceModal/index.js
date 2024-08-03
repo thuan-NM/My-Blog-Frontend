@@ -22,7 +22,7 @@ const ExperienceModal = ({user,isExpModalOpen,setIsExpModalOpen,expId}) => {
         };
         const token = localStorage.getItem("token");
         axios
-            .post("http://localhost:3001/experiences", newExp, {
+            .post("https://my-blog-server-ua7q.onrender.com/experiences", newExp, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

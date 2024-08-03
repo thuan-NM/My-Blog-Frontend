@@ -28,7 +28,7 @@ const EducationEdit = ({user,isEduEditOpen,setIsEduEditOpen,selectedEducation}) 
         };
         const token = localStorage.getItem("token");
         axios
-            .put(`http://localhost:3001/educations/${selectedEducation._id}`, newEdu, {
+            .put(`https://my-blog-server-ua7q.onrender.com/educations/${selectedEducation._id}`, newEdu, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

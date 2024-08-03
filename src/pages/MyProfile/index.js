@@ -53,11 +53,11 @@ function MyProfile() {
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
-				const postResponse = await axios.get(`http://localhost:3001/posts/user/${decodedToken.userId}`)
-				const suggestionResponse = await axios.get(`http://localhost:3001/users`);
-				const overviewResponse = await axios.get(`http://localhost:3001/overviews/${decodedToken.userId}`)
-				const experiencesResponse = await axios.get(`http://localhost:3001/experiences/${decodedToken.userId}`)
-				const educationResponse = await axios.get(`http://localhost:3001/educations/${decodedToken.userId}`)
+				const postResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/user/${decodedToken.userId}`)
+				const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
+				const overviewResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/overviews/${decodedToken.userId}`)
+				const experiencesResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/experiences/${decodedToken.userId}`)
+				const educationResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/educations/${decodedToken.userId}`)
 				setEducations(educationResponse.data.data)
 				setExperiences(experiencesResponse.data.data)
 				setOverview(overviewResponse.data.data)
@@ -69,6 +69,17 @@ function MyProfile() {
 		};
 		fetchPost();
 	}, [posts, user, overview, experiences, educations]);
+
+	if (isLoading) {
+		return (
+		  <div className="process-comm">
+			<div className="spinner">
+			  <div className="bounce1"></div>
+			  <div className="bounce2"></div>
+			  <div className="bounce3"></div>
+			</div>
+		  </div>)
+	  }
 
 	if (user == null || user.friendRequests == null) {
 		return <p>No results found1.</p>;
@@ -225,7 +236,6 @@ function MyProfile() {
 												<div className="post-bar ">
 													<div className="post_topbar">
 														<div className="usy-dt">
-															<img src="images/resources/bg-img3.png" alt="" />
 															<div className="usy-name">
 																<h3>Rock William</h3>
 																<div className="epi-sec epi2">
@@ -313,7 +323,6 @@ function MyProfile() {
 													</li>
 												</ul>
 												<div className="lt-sec">
-													<img src="images/lt-icon.png" alt="" />
 													<h4>Các sao kê của bạn</h4>
 													<a title=""><EuroCircleOutlined className="p-0 m-0 me-2" />Bấm vào </a>
 												</div>
@@ -329,7 +338,6 @@ function MyProfile() {
 										<div className="widget widget-portfolio">
 											<div className="wd-heady">
 												<h3>Portfolio</h3>
-												<img src="images/photo-icon.png" alt="" />
 											</div>
 											<div className="pf-gallery">
 											</div>

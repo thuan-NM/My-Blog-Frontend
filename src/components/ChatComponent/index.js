@@ -7,12 +7,12 @@ const ChatComponent = ({ datauser }) => {
     const [message, setMessage] = useState('');
     const [receivedMessages, setReceivedMessages] = useState([]);
     const [isChatting, setIsChatting] = useState(false);
-    const newSocket = new WebSocket(`ws://localhost:3001?user-id=${user._id}`);
+    const newSocket = new WebSocket('wss://my-blog-server-ua7q.onrender.com?user-id=' + user._id);
+
 
     useEffect(() => {
 
         newSocket.onopen = () => {
-            console.log('WebSocket connection established');
             setSocket(newSocket);
             const data = {
                 type: 'load_messages',
@@ -28,7 +28,6 @@ const ChatComponent = ({ datauser }) => {
         };
 
         newSocket.onclose = () => {
-            console.log('WebSocket connection closed');
             setSocket(null);
         };
 

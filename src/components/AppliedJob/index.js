@@ -19,7 +19,7 @@ const AppliedJob = () => {
 
     const fetchPosts = async () => {
         try {
-            const jobstatusResponse = await axios.get(`http://localhost:3001/jobstatus/applied`, { params: data });
+            const jobstatusResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/applied`, { params: data });
             setPosts(jobstatusResponse.data.data);
             setIsLoading(false);
         } catch (error) {
@@ -29,7 +29,7 @@ const AppliedJob = () => {
 
     const handleDelete = async (postId) => {
         try {
-            await axios.delete(`http://localhost:3001/jobstatus/${postId}`, {
+            await axios.delete(`https://my-blog-server-ua7q.onrender.com/jobstatus/${postId}`, {
                 headers: {
                     Authorization: `Bearer ${storedToken}`,
                 },

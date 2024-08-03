@@ -53,12 +53,12 @@ function UserProfile() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const userres = await axios.get(`http://localhost:3001/users/${id}`)
-        const postResponse = await axios.get(`http://localhost:3001/posts/user/${id}`)
-        const suggestionResponse = await axios.get(`http://localhost:3001/users`);
-        const overviewResponse = await axios.get(`http://localhost:3001/overviews/${id}`)
-        const experiencesResponse = await axios.get(`http://localhost:3001/experiences/${id}`)
-        const educationResponse = await axios.get(`http://localhost:3001/educations/${id}`)
+        const userres = await axios.get(`https://my-blog-server-ua7q.onrender.com/users/${id}`)
+        const postResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/user/${id}`)
+        const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
+        const overviewResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/overviews/${id}`)
+        const experiencesResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/experiences/${id}`)
+        const educationResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/educations/${id}`)
         setUser(userres.data.data)
         setEducations(educationResponse.data.data)
         setExperiences(experiencesResponse.data.data)
@@ -72,9 +72,17 @@ function UserProfile() {
     fetchPost();
   }, [posts, user, overview, experiences, educations]);
 
-  if (user == null || user.friendRequests == null) {
-    return <p>No results found1.</p>;
-  }
+  if (isLoading) {
+		return (
+		  <div className="process-comm">
+			<div className="spinner">
+			  <div className="bounce1"></div>
+			  <div className="bounce2"></div>
+			  <div className="bounce3"></div>
+			</div>
+		  </div>)
+	  }
+
   return (
     <div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
       <section className="cover-sec">

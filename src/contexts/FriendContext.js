@@ -13,7 +13,7 @@ export const FriendProvider = ({ children }) => {
     const handleSendFriendRequest = (friend) => {
         axios
         .put(
-        `http://localhost:3001/users/${user._id}/send-friend-request`,
+        `https://my-blog-server-ua7q.onrender.com/users/${user._id}/send-friend-request`,
         { friend },
         { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -22,7 +22,7 @@ export const FriendProvider = ({ children }) => {
     const handleAcceptFriendRequest = (friendRequest, acceptRequest) => {
         // Chấp nhận hoặc từ chối lời mời kết bạn
         axios.put(
-        `http://localhost:3001/users/${user._id}/accept-friend-request`,
+        `https://my-blog-server-ua7q.onrender.com/users/${user._id}/accept-friend-request`,
         { friendRequest, acceptRequest },
         { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -35,7 +35,7 @@ export const FriendProvider = ({ children }) => {
     const handleRemoveFriend = (friendId) => {
         // Chấp nhận hoặc từ chối lời mời kết bạn
         axios.put(
-        `http://localhost:3001/users/${user._id}/remove-friend`,
+        `https://my-blog-server-ua7q.onrender.com/users/${user._id}/remove-friend`,
         { friendId},
         { headers: { Authorization: `Bearer ${token}` } }
         )

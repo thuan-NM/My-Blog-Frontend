@@ -17,7 +17,7 @@ export const PostProvider = ({ children }) => {
       
         try {
           await axios.put(
-            `http://localhost:3001/posts/${post._id}`,
+            `https://my-blog-server-ua7q.onrender.com/posts/${post._id}`,
             updatedPost,
             {
               headers: {
@@ -42,7 +42,7 @@ export const PostProvider = ({ children }) => {
 
   const handleDelete = async (data) => {
     try {
-        await axios.delete(`http://localhost:3001/posts/${data._id}`);
+        await axios.delete(`https://my-blog-server-ua7q.onrender.com/posts/${data._id}`);
     } catch (error) {
         console.error('Error deleting post:', error);
     }

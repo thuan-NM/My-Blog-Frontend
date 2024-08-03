@@ -17,7 +17,7 @@ const ChangePassword = ({ userId }) => {
       }
 
       const response = await axios.put(
-        `http://localhost:3001/auth/changepassword/${userId}`,
+        `https://my-blog-server-ua7q.onrender.com/auth/changepassword/${userId}`,
         {
           currentPassword,
           newPassword,

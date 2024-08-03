@@ -18,7 +18,7 @@ export const HashtagsProvider = ({ children }) => {
           
           try {
             const response = await axios.get(
-              `http://localhost:3001/posts/search?searchTerm=${hashtag}`
+              `https://my-blog-server-ua7q.onrender.com/posts/search?searchTerm=${hashtag}`
             );
             setHashtagResults(response.data.data);
           } catch (error) {

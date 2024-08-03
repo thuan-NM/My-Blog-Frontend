@@ -18,7 +18,7 @@ function PostEditing({post, closeModal } ) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/posts/${post._id}`);
+        const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/${post._id}`);
         setContent(response.data.data.content)
         setTitle(response.data.data.title)
         setIsLoading(false);

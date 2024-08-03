@@ -19,7 +19,7 @@ export const SearchProvider = ({ children }) => {
           setShowFriendLists(false);
           try {
             const response = await axios.get(
-              `http://localhost:3001/users/search?searchTerm=${searchTerm}`
+              `https://my-blog-server-ua7q.onrender.com/users/search?searchTerm=${searchTerm}`
             );
               setSearchResults(response.data.data);
           } catch (error) {
@@ -35,7 +35,7 @@ export const SearchProvider = ({ children }) => {
           setShowPostListsWithSearch(false);
             try {
               const response = await axios.get(
-                `http://localhost:3001/posts/search?searchTerm=${searchTerm}`
+                `https://my-blog-server-ua7q.onrender.com/posts/search?searchTerm=${searchTerm}`
               );
               setSearchResults(response.data.data);
               navigate("/")

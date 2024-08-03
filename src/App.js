@@ -24,7 +24,6 @@ import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ChatBox from "./components/ChatBox";
-import ChatComponent from "./components/ChatComponent";
 const queryClient = new QueryClient()
 
 function App() {

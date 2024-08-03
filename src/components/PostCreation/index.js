@@ -33,7 +33,7 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
     };
     const token = localStorage.getItem("token");
     axios
-      .post("http://localhost:3001/posts", newPost, {
+      .post("https://my-blog-server-ua7q.onrender.com/posts", newPost, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

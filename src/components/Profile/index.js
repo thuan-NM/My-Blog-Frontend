@@ -26,7 +26,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       const formData = new FormData();
       formData.append('profilePicture', selectedImage);
 
-      const response = await axios.post(`http://localhost:3001/users/update-picture/${user._id}`, formData, {
+      const response = await axios.post(`https://my-blog-server-ua7q.onrender.com/users/update-picture/${user._id}`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

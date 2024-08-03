@@ -21,7 +21,7 @@ const OverviewModal = ({ user, isOverviewModalOpen, setIsOverviewModalOpen ,setO
         };
         const token = localStorage.getItem("token");
         axios
-            .post("http://localhost:3001/overviews", newOverview, {
+            .post("https://my-blog-server-ua7q.onrender.com/overviews", newOverview, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

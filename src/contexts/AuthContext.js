@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import UserServices from "../services/user.services"
+import CompanyServices from "../services/company.services"
 
 const AuthContext = createContext();
 
@@ -18,17 +20,14 @@ const AuthProvider = ({ children }) => {
           const decodedToken = jwtDecode(storedToken);
           console.log(decodedToken)
           if (!decodedToken.companyId) {
-            const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
-              headers: { Authorization: `Bearer ${storedToken}` }
-            });
-            const userData = response.data.data;
+            const response = await UserServices.getUsersWithId(decodedToken.userId)
+            const userData = response.data;
+            console.log("this:",userData)
             setUser(userData);
           }
           else {
-            const response = await axios.get(`http://localhost:3001/companies/${decodedToken.companyId}`, {
-              headers: { Authorization: `Bearer ${storedToken}` }
-            });
-            const userData = response.data.data;
+            const response = await CompanyServices.getCompanyWithId(decodedToken.companyId)
+            const userData = response.data;
             setUser(userData);
           }
         }
@@ -58,7 +57,7 @@ const AuthProvider = ({ children }) => {
 
       if (storedToken) {
         const decodedToken = jwtDecode(storedToken);
-        const response = await axios.get(`http://localhost:3001/users/${decodedToken.userId}`, {
+        const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/users/${decodedToken.userId}`, {
           headers: { Authorization: `Bearer ${storedToken}` }
         });
 

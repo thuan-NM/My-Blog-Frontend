@@ -24,13 +24,20 @@ function Companies() {
     () =>
       axios
         .get(
-          `http://localhost:3001/companies?page=${currentPage}&pageSize=${pageSize}`
+          `https://my-blog-server-ua7q.onrender.com/companies?page=${currentPage}&pageSize=${pageSize}`
         )
         .then((response) => response.data),
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="process-comm">
+        <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      </div>)
   }
 
   if (error) {
@@ -45,7 +52,7 @@ function Companies() {
     return <p>No results found1.</p>;
   }
   const searchTermInfo = searchTerm;
-return (
+  return (
     <section class="companies-info">
       <div class="container">
         <div class="company-title">
@@ -53,18 +60,18 @@ return (
         </div>
         <div class="companies-list">
           <div class="row">
-          {data.data.map((curCompany) => 
-             // Check if the user is logged in before displaying the information
-             ( user && user._id && user._id != curCompany._id && (
-                 <CompanyItem
-                     key={curCompany._id}
-                     company={curCompany}
-                     onAddFriend={() => {handleSendFriendRequest(curCompany)}}
-                     onRemoveFriend={() => {handleRemoveFriend(curCompany._id)}}
-                     isFriend={user.friend && user.friend.some((friend) => friend._id === curCompany._id)}
-                 />
-             ))
-           )} 
+            {data.data.map((curCompany) =>
+            // Check if the user is logged in before displaying the information
+            (user && user._id && user._id != curCompany._id && (
+              <CompanyItem
+                key={curCompany._id}
+                company={curCompany}
+                onAddFriend={() => { handleSendFriendRequest(curCompany) }}
+                onRemoveFriend={() => { handleRemoveFriend(curCompany._id) }}
+                isFriend={user.friend && user.friend.some((friend) => friend._id === curCompany._id)}
+              />
+            ))
+            )}
           </div>
         </div>
         <div class="process-comm">

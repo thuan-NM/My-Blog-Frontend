@@ -14,7 +14,7 @@ const Experience = ({ isAuthor, setIsExpModalOpen, isExpModalOpen, isExpEditOpen
         setSelectExperience(exp);
         const token = localStorage.getItem("token");
         axios
-            .delete(`http://localhost:3001/experiences/${exp._id}`, {
+            .delete(`https://my-blog-server-ua7q.onrender.com/experiences/${exp._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

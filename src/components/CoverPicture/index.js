@@ -26,7 +26,7 @@ const CoverPicture = ({ user }) => {
             const formData = new FormData();
             formData.append('coverPicture', selectedCoverImage);
 
-            const response = await axios.post(`http://localhost:3001/users/update-cover-picture/${user._id}`, formData, {
+            const response = await axios.post(`https://my-blog-server-ua7q.onrender.com/users/update-cover-picture/${user._id}`, formData, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
                 },

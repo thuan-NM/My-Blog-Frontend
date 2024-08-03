@@ -9,11 +9,18 @@ const ChatBox = () => {
     const { user } = useAuth();
     const { data, isLoading, error } = useQuery(
         ["users", user],
-        () => axios.get(`http://localhost:3001/users`).then((response) => response.data),
+        () => axios.get(`https://my-blog-server-ua7q.onrender.com/users`).then((response) => response.data),
     );
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="process-comm">
+                <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div>
+            </div>)
     }
 
     if (error) {
@@ -21,13 +28,24 @@ const ChatBox = () => {
     }
 
     if (!data || data.length === 0) {
-        return <p>No results found.</p>;
+        return <div className="process-comm">
+            <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+            </div>
+        </div>;
     }
 
     if (!user || !user.friendRequests) {
-        return <p>No results found.</p>;
+        return <div className="process-comm">
+            <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+            </div>
+        </div>;
     }
-
     return (
         <div className="chatbox-list">
             {data.data.map((datauser) => (

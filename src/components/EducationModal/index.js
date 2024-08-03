@@ -30,7 +30,7 @@ const EducationModal = ({setIsLoading,user, setIsEduModalOpen, isEduModalOpen}) 
         };
         const token = localStorage.getItem("token");
         axios
-            .post("http://localhost:3001/educations", newEdu, {
+            .post("https://my-blog-server-ua7q.onrender.com/educations", newEdu, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

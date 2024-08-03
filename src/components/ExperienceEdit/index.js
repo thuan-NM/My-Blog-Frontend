@@ -22,7 +22,7 @@ const ExperienceEdit = ({user,isExpEditOpen,setIsExpEditOpen,Exp}) => {
         };
         const token = localStorage.getItem("token");
         axios
-            .put(`http://localhost:3001/experiences/${Exp._id}`, newExp, {
+            .put(`https://my-blog-server-ua7q.onrender.com/experiences/${Exp._id}`, newExp, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

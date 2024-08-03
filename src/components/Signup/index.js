@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { message } from "antd"
+import AuthServices from "../../services/auth.services";
+import CompanyAuthServices from "../../services/companyAuth.services";
 
-import axios from "axios";
-
-const SignUp = ({setCurrentTab}) => {
-	const navigate = useNavigate();
+const SignUp = ({ setCurrentTab }) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
@@ -38,20 +36,19 @@ const SignUp = ({setCurrentTab}) => {
 				password: password,
 				confirmpassword: confirmpassword,
 			};
-			await axios
-				.post("http://localhost:3001/auth/register", user)
-				.then((res) => {
-					setPassword("");
-					if (res.data.isSuccess === 1) {
-						message.success(res.data.message)
-						setCurrentTab("tab-1")
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					// Sử dụng message.error để hiển thị thông báo lỗi từ server
-					message.error(error.response.data.message);
-				});
+			try {
+				const res = await AuthServices.signUp(user)
+				setPassword("");
+				console.log(res);
+				if (res.isSuccess === 1) {
+					message.success(res.message)
+					setCurrentTab("tab-1")
+				}
+			}
+			catch (error) {
+				console.log(error);
+				message.error(error.response.data.message)
+			}
 		}
 	};
 
@@ -69,20 +66,18 @@ const SignUp = ({setCurrentTab}) => {
 				password: copmpanyPassword,
 				confirmpassword: confirmcompanypassword,
 			};
-			await axios
-				.post("http://localhost:3001/companyauth/register", company)
-				.then((res) => {
-					setCompanyPassword("");
-					if (res.data.isSuccess === 1) {
-						message.info(res.data.message)
-						setCurrentTab("tab-1")
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-					// Sử dụng message.error để hiển thị thông báo lỗi từ server
-					message.error(error.response.data.message);
-				});
+			try {
+				const res = await CompanyAuthServices.signUp(company)
+				setCompanyPassword("")
+				if (res.isSuccess === 1 ) {
+					message.success(res.message)
+					setCurrentTab("tab-1")
+				}
+			}
+			catch (error){
+				console.log(error);
+				message.error(error.response.data.message)
+			}
 		}
 	};
 

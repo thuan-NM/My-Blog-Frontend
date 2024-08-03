@@ -125,7 +125,7 @@ const Header = () => {
 					<div className="menu-btn">
 						<Link onClick={()=>setIsRpsActive(!isRpsActive)}><i className="fa fa-bars"></i></Link>
 					</div>
-					{storedToken == null ? (<div className="user-account">
+					{storedToken === null ? (<div className="user-account">
 						<div className="user-info">
 							<Link className="ms-3" to={"/auth"}>Sign In Here</Link>
 						</div>

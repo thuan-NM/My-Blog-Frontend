@@ -287,6 +287,7 @@ nav ul li:hover>ul,
 .post-project-fields button,
 .settingjb ul li,
 .edit-info,
+.company_profile_info>a,
 .filter-dd .search-btn .saved-btn button {
 	-webkit-transition: all 0.4s ease-in;
 	-moz-transition: all 0.4s ease-in;
@@ -1975,6 +1976,22 @@ main {
 	color: #fff;
 }
 
+.company_profile_info>a {
+	float: left;
+	width: 100%;
+	color: #000000;
+	font-size: 14px;
+	text-transform: capitalize;
+	padding: 15px 0;
+	border-top: 1px solid #ececec;
+	font-weight: 600;
+}
+
+.company_profile_info>a:hover {
+	background-color: #e44d3a;
+	color: #fff;
+	;
+}
 
 
 /* =============== comment-section ============== */

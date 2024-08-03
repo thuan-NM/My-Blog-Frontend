@@ -14,7 +14,7 @@ const ManageJobItem = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const jobstatusResponse = await axios.get(`http://localhost:3001/jobstatus/${decodedToken.userId}`)
+                const jobstatusResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/${decodedToken.userId}`)
                 setJobstatus(jobstatusResponse.data.data);
                 setIsLoading(false);
             } catch (error) {
@@ -59,7 +59,7 @@ const ManageJobItem = () => {
 
     const handleDelete = async (postId) => {
         try {
-            await axios.delete(`http://localhost:3001/posts/${postId}`, {
+            await axios.delete(`https://my-blog-server-ua7q.onrender.com/posts/${postId}`, {
                 headers: {
                     Authorization: `Bearer ${storedToken}`,
                 },
@@ -72,22 +72,22 @@ const ManageJobItem = () => {
 
     console.log(jobstatus)
     return (
-        <div class="tab-pane fade show active animate__animated animate__fast animate__fadeIn" id="mange" role="tabpanel" aria-labelledby="mange-tab">
+        <div className="tab-pane fade show active animate__animated animate__fast animate__fadeIn" id="mange" role="tabpanel" aria-labelledby="mange-tab">
             {jobstatus.map((item) =>
             (
-                <div class="posts-bar" key={item._id}>
-                    <div class="post-bar bgclr">
-                        <div class="wordpressdevlp">
+                <div className="posts-bar" key={item._id}>
+                    <div className="post-bar bgclr">
+                        <div className="wordpressdevlp">
                             <h2>{item.title}</h2>
                             <h5 className="fw-semibold mb-3">{item.experience}</h5>
-                            <p><i class="la la-clock-o"></i>{new Date(item.createdAt).toLocaleString()}</p>
+                            <p><i className="la la-clock-o"></i>{new Date(item.createdAt).toLocaleString()}</p>
                         </div>
                         <br />
-                        <div class="row no-gutters">
-                            <div class="col-md-6 col-sm-12">
-                                <div class="cadidatesbtn">
-                                    <button type="button" class="btn btn-primary" onClick={() => showModal(item._id)}>
-                                        <span class="badge badge-light">{item.jobStatusCount}</span>Ứng viên
+                        <div className="row no-gutters">
+                            <div className="col-md-6 col-sm-12">
+                                <div className="cadidatesbtn">
+                                    <button type="button" className="btn btn-primary" onClick={() => showModal(item._id)}>
+                                        <span className="badge badge-light">{item.jobStatusCount}</span>Ứng viên
                                     </button>
                                     <Modal key={item._id} title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
                                         footer={
@@ -102,10 +102,10 @@ const ManageJobItem = () => {
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
-                                <ul class="bk-links bklink">
-                                    <li><a href="#" title=""><i class="la la-bookmark"></i></a></li>
-                                    <li><a href="#" title=""><i class="la la-envelope"></i></a></li>
+                            <div className="col-md-6 col-sm-12">
+                                <ul className="bk-links bklink">
+                                    <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
+                                    <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
                                 </ul>
                             </div>
                         </div>

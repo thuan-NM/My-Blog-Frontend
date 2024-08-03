@@ -23,7 +23,7 @@ function PostDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postResponse = await axios.get(`http://localhost:3001/posts/${postId}`);
+        const postResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/${postId}`);
         setPost(postResponse.data.data);
         const isAuthor = user._id === postResponse.data.data.author._id;
         setIsAuthor(isAuthor);
@@ -42,7 +42,7 @@ function PostDetail() {
   const handleOk = async () => {
     setIsModalOpen(false);
     // Fetch the updated post data
-    const updatedPostData = await axios.get(`http://localhost:3001/posts/${postId}`);
+    const updatedPostData = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/${postId}`);
     setPost(updatedPostData.data.data);
   };
   return (

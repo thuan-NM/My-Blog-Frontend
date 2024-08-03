@@ -13,7 +13,7 @@ const MostInterest = () => {
         () =>
             axios
                 .get(
-                    `http://localhost:3001/posts/mostinterest`)
+                    `https://my-blog-server-ua7q.onrender.com/posts/mostinterest`)
                 .then((response) => response.data),
     );
 

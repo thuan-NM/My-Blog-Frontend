@@ -32,7 +32,7 @@ const ApplyModal = ({ postId, onOk }) => {
     };
     const onFinish = async (values) => {
         try {
-            const response = await axios.post('http://localhost:3001/jobstatus', {
+            const response = await axios.post('https://my-blog-server-ua7q.onrender.com/jobstatus', {
                 postid: postId,
                 userid: user._id, // replace with actual user id
                 status: 'Applied', // replace with actual status

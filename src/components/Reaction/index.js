@@ -13,7 +13,7 @@ const ReactionItem = ({postId}) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${postId}`);
+        const reactionStatsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/reactions/${postId}`);
         setReactionStats(reactionStatsResponse.data.data);
       } catch (error) {
         console.error('Error fetching reaction stats:', error);
@@ -26,7 +26,7 @@ const ReactionItem = ({postId}) => {
   const handleReaction = async (reactionType) => {
     try {
       // Call the backend API to handle the reaction
-      await axios.post(`http://localhost:3001/reactions/${postId}`, {
+      await axios.post(`https://my-blog-server-ua7q.onrender.com/reactions/${postId}`, {
         userId: user._id, // Replace with the actual user ID (you may need to get it from authentication)
         reactionType,
       });

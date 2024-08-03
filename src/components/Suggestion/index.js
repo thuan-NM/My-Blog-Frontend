@@ -12,12 +12,19 @@ const Suggestions = () => {
         () =>
             axios
                 .get(
-                    `http://localhost:3001/users`)
+                    `https://my-blog-server-ua7q.onrender.com/users`)
                 .then((response) => response.data),
     );
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="process-comm">
+                <div className="spinner">
+                    <div className="bounce1"></div>
+                    <div className="bounce2"></div>
+                    <div className="bounce3"></div>
+                </div>
+            </div>)
     }
 
     if (error) {

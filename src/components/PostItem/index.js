@@ -40,7 +40,7 @@ const PostItem = ({ post, handleHashtags }) => {
   const handleReaction = async () => {
     try {
       // Call the backend API to handle the reaction
-      await axios.post(`http://localhost:3001/reactions/${post._id}`, {
+      await axios.post(`https://my-blog-server-ua7q.onrender.com/reactions/${post._id}`, {
         userId: user._id, // Replace with the actual user ID (you may need to get it from authentication)
       });
     } catch (error) {
@@ -52,8 +52,8 @@ const PostItem = ({ post, handleHashtags }) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        const reactionStatsResponse = await axios.get(`http://localhost:3001/reactions/${post._id}`);
-        const commentsResponse = await axios.get(`http://localhost:3001/comments/${post._id}`);
+        const reactionStatsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/reactions/${post._id}`);
+        const commentsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/comments/${post._id}`);
         setComments(commentsResponse.data.data);
         setReactionStats(reactionStatsResponse.data.data);
         setIsLoading(false);
@@ -62,7 +62,7 @@ const PostItem = ({ post, handleHashtags }) => {
             postid: post._id,
             userid: decodedToken.userId
           }
-          const response = await axios.get(`http://localhost:3001/jobstatus/checkUserApplied/`, { params: data });
+          const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/checkUserApplied/`, { params: data });
           setApplicationStatus(response.data.data);
         }
         else {
