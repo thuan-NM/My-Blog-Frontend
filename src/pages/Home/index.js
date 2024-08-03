@@ -26,7 +26,11 @@ function Home() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postResponse = await PostServices.getJobsList();
+        const postResponse = await axios.post(`https://my-blog-server-ua7q.onrender.com/posts/filter`, filter, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setPosts(postResponse.data);
         settotalPages(postResponse.totalPages);
         setIsLoading(false);
