@@ -26,11 +26,7 @@ function Home() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const postResponse = await axios.post(`https://my-blog-server-ua7q.onrender.com/posts/filter`, filter, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const postResponse = await PostServices.getJobsList();
         setPosts(postResponse.data);
         settotalPages(postResponse.totalPages);
         setIsLoading(false);
@@ -120,7 +116,7 @@ function Home() {
                     </div>
                   </div>
                   <div className="posts-section">
-                    {posts?.map((post, index) => (
+                    {posts.map((post, index) => (
                       <React.Fragment key={post._id}>
                         {index === 2 && (
                           <div className="top-profiles">

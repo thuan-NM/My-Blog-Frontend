@@ -21,20 +21,35 @@ const SignIn = () => {
 			username: username,
 			password: password,
 		};
-		try {
-			const res = await AuthServices.signIn(user)
-			setPassword("")
-			if(res.isSuccess === 1) {
-				const { user, token } = res;
-	 			login(user, token);
-				message.success(res.message)
-				navigate("/")
-			}
-		}
-		catch (error) {
-			console.log(error)
-			message.error(error.response.data.message)
-		}
+		// try {
+		// 	const res = await AuthServices.signIn(user)
+		// 	setPassword("")
+		// 	if(res.isSuccess === 1) {
+		// 		const { user, token } = res;
+	 	// 		login(user, token);
+		// 		message.success(res.message)
+		// 		navigate("/")
+		// 	}
+		// }
+		// catch (error) {
+		// 	console.log(error)
+		// 	message.error(error.response.data.message)
+		// }
+		axios
+			.post("https://my-blog-server-ua7q.onrender.com/auth/login", user)
+			.then((res) => {
+				setPassword("");
+				if (res.data.isSuccess === 1) {
+					const { user, token } = res.data;
+					login(user, token);
+					message.success(res.data.message)
+					navigate("/");
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+				message.error(error.response.data.message)
+			});
 	};
 	const handleLoginWithCompany = async (e) => {
 		e.preventDefault();
