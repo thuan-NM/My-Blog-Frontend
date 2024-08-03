@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class CommentServices {
-    constructor(baseURL = `/comments`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/comments`) {
         this.api = createApiClient(baseURL);
     }
     async getCommentsList() {

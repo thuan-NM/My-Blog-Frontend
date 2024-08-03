@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class UserServices {
-    constructor(baseURL = `/users`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/users`) {
         this.api = createApiClient(baseURL);
     }
     async getUsersList() {

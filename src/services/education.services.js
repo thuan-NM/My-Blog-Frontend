@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class ExperienceServices {
-    constructor(baseURL = `/educations`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/educations`) {
         this.api = createApiClient(baseURL);
     }
     async getEducationsWithUserId(id) {

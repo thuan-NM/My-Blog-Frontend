@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class CompanyServices {
-    constructor(baseURL = `/companies`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/companies`) {
         this.api = createApiClient(baseURL);
     }
     async getCompaniesList() {

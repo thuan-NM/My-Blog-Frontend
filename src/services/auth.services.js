@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class AuthServices {
-    constructor(baseURL = `/auth`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/auth`) {
         this.api = createApiClient(baseURL);
     }
     async signIn(data) {

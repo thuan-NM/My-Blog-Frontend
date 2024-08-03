@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class CompanyAuthServices {
-    constructor(baseURL = `/companyauth`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/companyauth`) {
         this.api = createApiClient(baseURL);
     }
     async signIn(data) {

@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class JobstatusServices {
-    constructor(baseURL = `/jobstatus`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/jobstatus`) {
         this.api = createApiClient(baseURL);
     }
     async getJobstatusList() {

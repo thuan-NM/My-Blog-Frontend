@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class ReactionServices {
-    constructor(baseURL = `/reactions`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL+`/reactions`) {
         this.api = createApiClient(baseURL);
     }
     async getReactionsWithPostId(id) {
