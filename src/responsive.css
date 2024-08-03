@@ -149,7 +149,8 @@
 	.comment_box form button {padding: 0 15px;}
 	.job-details {width: 80%;}
 	.cover-sec {height: 200px;}
-	.cover-sec img {height: 100%;object-fit: cover;}
+	.cover-sec img {height: 70% !important;object-fit: cover;}
+	.no-gutters div label {width: 30% !important;height: 100% !important; padding: 10px 3px !important;}
 	.star-descp > ul {width: 100%;margin-top: 10px;}
 	.like-com li {margin-right: 5px;}
 	.bk-links {width: 100%;margin-top: 15px;}

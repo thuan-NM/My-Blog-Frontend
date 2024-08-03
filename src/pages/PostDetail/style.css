@@ -10,6 +10,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
     
 }
+.cover-sec img {
+    /* max-height: 200px !important; */
+    z-index: 0;
+}
 .detail-container{
     background-color: antiquewhite;
     margin: 35px;
