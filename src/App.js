@@ -24,6 +24,7 @@ import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ChatBox from "./components/ChatBox";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 const queryClient = new QueryClient()
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
           {!isAuthPage&&<Header />}
+          <SpeedInsights />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutUs />} />
