@@ -116,7 +116,7 @@ function Home() {
                     </div>
                   </div>
                   <div className="posts-section">
-                    {posts.map((post, index) => (
+                    {posts?.map((post, index) => (
                       <React.Fragment key={post._id}>
                         {index === 2 && (
                           <div className="top-profiles">
