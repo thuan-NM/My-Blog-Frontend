@@ -1,39 +1,50 @@
 import { message } from "antd";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import educationServices from "../../services/education.services";
 
 const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, educations, setSelectEducation, selectedEducation, isEduEditOpen, setIsEduEditOpen }) => {
+	const navigate = useNavigate();
 
     const handleSelect = (exp) => {
         setIsEduEditOpen(!isEduEditOpen);
         setSelectEducation(exp);
     }
 
-    const handleDelete = (exp) => {
-        setSelectEducation(exp);
-        const token = localStorage.getItem("token");
-        axios
-            .delete(`https://my-blog-server-ua7q.onrender.com/educations/${exp._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                message.success(res.data.message);
-                if (res.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            })
-            .catch((error) => {
-                message.error(error.response.data.message);
-                if (error.response && error.response.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            });
+    const handleDelete = async (exp) => {
+        try {
+            setSelectEducation(exp);
+            const res = await educationServices.deleteEducation(exp._id)
+            message.success(res.message);
+            if (res.status === 401) {
+                navigate('/auth');
+            }
+        } catch (error) {
+            message.error(error.response.data.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/auth');
+            }
+        }
+        // axios
+        //     .delete(`https://my-blog-server-ua7q.onrender.com/educations/${exp._id}`, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     })
+        //     .then((res) => {
+        //         message.success(res.data.message);
+        //         if (res.status === 401) {
+        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        //             navigate("/auth");
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         message.error(error.response.data.message);
+        //         if (error.response && error.response.status === 401) {
+        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        //             navigate("/auth");
+        //         }
+        //     });
     }
 
     if (isLoading) {
@@ -54,7 +65,7 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                     <Link><button className="edit-info" onClick={() => { setIsEduModalOpen(!isEduModalOpen) }}><i className="bi bi-plus-circle-fill ms-2"></i></button></Link>)}
             </h3>
             {educations.map((education) => (
-                <div>
+                <div key={education._id}>
                     <h4>{education.degree} at {education.school}
                         {isAuthor && (
                             <>

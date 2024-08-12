@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import PostCreation from "../../components/PostCreation";
 import PostItem from "../../components/PostItem";
-import Pagination from "../../components/Pagination";
-import SearchBar from "../../components/SearchBar";
 import Suggestions from "../../components/Suggestion";
-import { useHashtags } from "../../contexts/HashtagContext";
-import { useSearch } from "../../contexts/SearchContext";
 import { useAuth } from "../../contexts/AuthContext";
 import "../../jquery.range.css"
 import { InputNumber, Slider, Switch } from "antd";
 import TopProfile from "../../components/TopProfile";
 import TopJob from "../../components/TopJob";
 import MostInterest from "../../components/MostInterest";
+import postServices from "../../services/post.services";
 
 
 function Jobs() {
@@ -22,7 +17,6 @@ function Jobs() {
     const [isJobModalOpen, setIsJobModalOpen] = useState(false);
     const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
-    const [suggestions, setSuggestions] = useState([]);
     const [totalPages, settotalPages] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth()
@@ -54,14 +48,10 @@ function Jobs() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await axios.post(`https://my-blog-server-ua7q.onrender.com/posts/filter`, filter, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
-                setSuggestions(suggestionResponse.data.data)
-                setPosts(postResponse.data.data);
+                const postResponse = await postServices.getFilterPost(filter,{
+                    Authorization: `Bearer ${token}`,
+                  });
+                setPosts(postResponse.data);
                 settotalPages(postResponse.data.totalPages)
                 setIsLoading(false);
             } catch (error) {

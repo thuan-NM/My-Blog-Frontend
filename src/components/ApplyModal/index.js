@@ -7,6 +7,7 @@ import {
     message,
 } from 'antd';
 import { useAuth } from '../../contexts/AuthContext';
+import jobstatusServices from '../../services/jobstatus.services';
 
 const ApplyModal = ({ postId, onOk }) => {
     const { user } = useAuth()
@@ -32,22 +33,20 @@ const ApplyModal = ({ postId, onOk }) => {
     };
     const onFinish = async (values) => {
         try {
-            const response = await axios.post('https://my-blog-server-ua7q.onrender.com/jobstatus', {
+            const response = await jobstatusServices.postJobstatus({
                 postid: postId,
                 userid: user._id, // replace with actual user id
                 status: 'Applied', // replace with actual status
                 candidateInfo: values,
             }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                Authorization: `Bearer ${token}`,
             });
 
-            if (response.data.isSuccess) {
+            if (response.isSuccess) {
                 message.success("Nộp thông tin ứng tuyển thành công");
                 onOk();
             } else {
-                throw new Error(response.data.message);
+                throw new Error(response.message);
             }
         } catch (error) {
             console.error('Failed to submit application:', error);

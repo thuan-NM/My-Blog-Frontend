@@ -5,6 +5,7 @@ import ImgCrop from 'antd-img-crop';
 import { message } from 'antd';
 import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
+import userServices from '../../services/user.services';
 
 const CoverPicture = ({ user }) => {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
@@ -22,15 +23,11 @@ const CoverPicture = ({ user }) => {
                 console.error('Please choose an image');
                 return;
             }
-
+            const token = localStorage.getItem('token')
             const formData = new FormData();
             formData.append('coverPicture', selectedCoverImage);
 
-            const response = await axios.post(`https://my-blog-server-ua7q.onrender.com/users/update-cover-picture/${user._id}`, formData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            });
+            const response = await userServices.updateCoverPictureWithId(formData,user._id)
             updateUser()
             // Reset the selected image
             setSelectedCoverImage(null);

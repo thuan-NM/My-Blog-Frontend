@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { UploadOutlined } from '@ant-design/icons';
-import axios from "axios";
 import { Upload, message } from 'antd';
+import postServices from "../../services/post.services";
 
 const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, handleShowProjectModal }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");
-  const [description, setDescription] = useState(""); 
+  const [description, setDescription] = useState("");
   const [typeOfJob, setTypeOfJob] = useState("Full Time");
   const [experience, setExperience] = useState("Fresher Developer");
   const [price, setPrice] = useState(0);
@@ -18,7 +18,7 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
   const [isModalFileOpen, setIsModalFileOpen] = useState(false);
   const { user } = useAuth();
 
-  const handleCreatePost = (e) => {
+  const handleCreatePost = async (e) => {
     e.preventDefault();
     const newPost = {
       title: title,
@@ -32,32 +32,35 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
       user: user,
     };
     const token = localStorage.getItem("token");
-    axios
-      .post("https://my-blog-server-ua7q.onrender.com/posts", newPost, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        message.success("Create a new post successful");
-        if (res.status === 401) {
-          // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-          navigate("/auth");
-        }
-        setDescription("");
-        setTitle("");
-        setSkills("");
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-          navigate("/auth");
-        }
+    try {
+      const response = await postServices.postJob(newPost,{
+        Authorization: `Bearer ${token}`,
       });
+
+      if (response.isSuccess) {
+          message.success("Create a new post successful");
+          if (response.status === 401) {
+              // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+              navigate("/auth");
+          }
+          setDescription("");
+          setTitle("");
+          setSkills("");
+      } else {
+          throw new Error(response.message);
+      }
+  } catch (error) {
+      console.error('Failed to submit application:', error);
+      if (error.response && error.response.status === 401) {
+          // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+          navigate("/auth");
+      }
+      message.error('Nộp thông tin ứng tuyển không thành công');
+  }
     if (isJobModalOpen == true) handleShowJobModal(e);
     else handleShowProjectModal(e)
   };
-const handleFile = (info) => {
+  const handleFile = (info) => {
     if (info.file.status === 'done') {
       setSelectedFile(info.file.originFileObj);
     }
@@ -117,14 +120,14 @@ const handleFile = (info) => {
               </div>
               <div className="col-lg-12 attach-file">
                 <Upload
-                    action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
-                    onChange={handleFile}
-                    data={{
-                      upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
-                    }}
-                  >
-                    {<UploadOutlined />}
-                  </Upload>
+                  action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
+                  onChange={handleFile}
+                  data={{
+                    upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
+                  }}
+                >
+                  {<UploadOutlined />}
+                </Upload>
               </div>
               <div className="col-lg-12">
                 <ul>

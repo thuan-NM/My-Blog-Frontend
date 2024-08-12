@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import jobstatusServices from "../../services/jobstatus.services";
 
 const CandidateManageModal = ({ candidates }) => {
     const token = localStorage.getItem("token")
@@ -20,12 +21,7 @@ const CandidateManageModal = ({ candidates }) => {
 
     const hired = async (candidateId) => {
         try {
-            await axios.put(`https://my-blog-server-ua7q.onrender.com/jobstatus/hire/${candidateId}`, { postid: candidates._id }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            // Refresh the list of candidates or show a success message
+            await jobstatusServices.hireWithUserId({ postid: candidates._id },candidateId)
         } catch (error) {
             console.error('Error hiring candidate:', error);
             // Show an error message
@@ -34,12 +30,7 @@ const CandidateManageModal = ({ candidates }) => {
 
     const denied = async (candidateId) => {
         try {
-            await axios.put(`https://my-blog-server-ua7q.onrender.com/jobstatus/deny/${candidateId}`, { postid: candidates._id }, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            // Refresh the list of candidates or show a success message
+            await jobstatusServices.denyWithUserId({ postid: candidates._id },candidateId)
         } catch (error) {
             console.error('Error denying candidate:', error);
             // Show an error message

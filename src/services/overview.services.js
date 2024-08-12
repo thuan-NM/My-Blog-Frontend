@@ -8,7 +8,10 @@ class OverviewServices {
         return (await this.api.get(`/${id}`)).data;
     }
     async postOverview(data) {
-        return (await this.api.post(`/`,data)).data;
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.post(`/`,data,{headers})).data;
     }
 }
 export default new OverviewServices();

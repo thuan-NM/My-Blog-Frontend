@@ -23,11 +23,13 @@ import EducationEdit from "../../components/EducationEdit";
 import ManageJob from "../../components/ManageJob";
 import { EuroCircleOutlined } from "@ant-design/icons"
 import CoverPicture from "../../components/CoverPicture";
+import postServices from "../../services/post.services";
+import overviewServices from "../../services/overview.services";
+import experienceServices from "../../services/experience.services";
+import educationServices from "../../services/education.services";
 
 function MyProfile() {
 	const { user, updateUser } = useAuth();
-	// const { handleHashtags } = useHashtags();
-	// const { handleRemoveFriend } = useFriend();
 	const storedToken = localStorage.getItem('token');
 	const decodedToken = jwtDecode(storedToken);
 	const [activeButton, setActiveButton] = useState("feed");
@@ -35,7 +37,6 @@ function MyProfile() {
 	const [overview, setOverview] = useState("");
 	const [experiences, setExperiences] = useState([])
 	const [educations, setEducations] = useState([])
-	const [suggestions, setSuggestions] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
 	const [isModalPicOpen, setIsModalPicOpen] = useState(false);
@@ -53,16 +54,14 @@ function MyProfile() {
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
-				const postResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/user/${decodedToken.userId}`)
-				const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
-				const overviewResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/overviews/${decodedToken.userId}`)
-				const experiencesResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/experiences/${decodedToken.userId}`)
-				const educationResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/educations/${decodedToken.userId}`)
-				setEducations(educationResponse.data.data)
-				setExperiences(experiencesResponse.data.data)
-				setOverview(overviewResponse.data.data)
-				setSuggestions(suggestionResponse.data.data)
-				setPosts(postResponse.data.data);
+				const postResponse = await postServices.getJobsWithUser(decodedToken.userId)
+				const overviewResponse = await overviewServices.getOverviewWithUserID(decodedToken.userId)
+				const experiencesResponse = await experienceServices.getExperiencesWithUserId(decodedToken.userId)
+				const educationResponse = await educationServices.getEducationsWithUserId(decodedToken.userId)
+				setEducations(educationResponse.data)
+				setExperiences(experiencesResponse.data)
+				setOverview(overviewResponse.data)
+				setPosts(postResponse.data);
 				setIsLoading(false);
 			} catch (error) {
 			}

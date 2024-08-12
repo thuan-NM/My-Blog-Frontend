@@ -5,6 +5,7 @@ import ImgCrop from 'antd-img-crop';
 import { message } from 'antd';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import userServices from '../../services/user.services';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -26,11 +27,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       const formData = new FormData();
       formData.append('profilePicture', selectedImage);
 
-      const response = await axios.post(`https://my-blog-server-ua7q.onrender.com/users/update-picture/${user._id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await userServices.updatePictureWithId(formData,user._id)
       updateUser()
       // Reset the selected image
       setSelectedImage(null);

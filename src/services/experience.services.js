@@ -8,13 +8,22 @@ class ExperienceServices {
         return (await this.api.get(`/${id}`)).data;
     }
     async postExperience(data) {
-        return (await this.api.post("/",data)).data;
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.post("/",data,{headers})).data;
     }
     async updateExperienceWithId(data,id) {
-        return (await this.api.put(`/${id}`,data)).data;
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.put(`/${id}`,data,{headers})).data;
     }
     async deleteExperience(id) {
-        return (await this.api.delete(`/${id}`)).data;
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.delete(`/${id}`,{headers})).data;
     }
 }
 export default new ExperienceServices();

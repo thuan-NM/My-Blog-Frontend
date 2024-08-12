@@ -1,7 +1,8 @@
 import { DatePicker, message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import educationServices from "../../services/education.services";
 
 const EducationEdit = ({user,isEduEditOpen,setIsEduEditOpen,selectedEducation}) => {
     const [school,setSchool] = useState("");
@@ -9,49 +10,41 @@ const EducationEdit = ({user,isEduEditOpen,setIsEduEditOpen,selectedEducation}) 
     const [to,setTo] = useState(null);
     const [degree,setDegree] = useState("");
     const [description,setDescription] =useState("");
+    const navigate = useNavigate();
 
     const handleModal = (e) => {
         e.preventDefault();
         setIsEduEditOpen(!isEduEditOpen)
     }
 
-    const handleEdit = (e) => {
-        e.preventDefault();
-        const newEdu = {
-            school: school,
-			from:from,
-            to:to,
-            degree:degree,
-            description:description,
-            // lay user -> author
-            user: user,
-        };
-        const token = localStorage.getItem("token");
-        axios
-            .put(`https://my-blog-server-ua7q.onrender.com/educations/${selectedEducation._id}`, newEdu, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                message.success(res.data.message);
-                setSchool("");
-				setFrom(null);
-				setTo(null);
-                setDegree("");
-				setDescription("");
-                if (res.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            })
-            .catch((error) => {
-                message.error(error.response.data.message);
-                if (error.response && error.response.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            });
+    const handleEdit = async (e) => {
+        try {
+            e.preventDefault();
+            const newEdu = {
+                school: school,
+                from:from,
+                to:to,
+                degree:degree,
+                description:description,
+                // lay user -> author
+                user: user,
+            };
+            const res = await educationServices.updateEducationWithId(newEdu,selectedEducation._id)
+            message.success(res.message);
+            if (res.status === 401) {
+                navigate('/auth');
+            }
+            setDegree("");
+            setDescription("");
+            setFrom("");
+            setSchool(null)
+            setTo(null)
+        } catch (error) {
+            message.error(error.response.data.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/auth');
+            }
+        }
         handleModal(e);
     }
 

@@ -1,38 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd"
+import experienceServices from "../../services/experience.services";
 
 const Experience = ({ isAuthor, setIsExpModalOpen, isExpModalOpen, isExpEditOpen, setIsExpEditOpen, setSelectExperience, selectedExperience, experiences }) => {
+    const navigate = useNavigate();
 
     const handleSelect = (exp) => {
         setIsExpEditOpen(!isExpEditOpen);
         setSelectExperience(exp);
     }
 
-    const handleDelete = (exp) => {
-        setSelectExperience(exp);
-        const token = localStorage.getItem("token");
-        axios
-            .delete(`https://my-blog-server-ua7q.onrender.com/experiences/${exp._id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                message.success(res.data.message);
-                if (res.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            })
-            .catch((error) => {
-                message.error(error.response.data.message);
-                if (error.response && error.response.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            });
+    const handleDelete = async (exp) => {
+        try {
+            setSelectExperience(exp);
+            const res = await experienceServices.deleteExperience(exp._id)
+            message.success(res.message);
+            if (res.status === 401) {
+                navigate('/auth');
+            }
+        } catch (error) {
+            message.error(error.response.data.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/auth');
+            }
+        }
     }
 
     return (

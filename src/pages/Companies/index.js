@@ -1,33 +1,28 @@
-import React, { useState } from "react";
-import axios from "axios";
-import SearchBar from "../../components/SearchBar";
-import { useQuery, useQueryClient } from "react-query";
-import Pagination from "../../components/Pagination";
+import React, { useEffect, useState } from "react";
 import { useFriend } from "../../contexts/FriendContext";
 import { useSearch } from "../../contexts/SearchContext";;
 import { useAuth } from "../../contexts/AuthContext";// Điều chỉnh đường dẫn tới auth-context của bạn
 import CompanyItem from "../../components/CompanyItem";
+import companyServices from "../../services/company.services";
 
 function Companies() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5;
   const { handleAcceptFriendRequest, handleRemoveFriend, handleSendFriendRequest } = useFriend();
   const { handleSearchFriend, searchTerm, searchResults, showFriendLists, setSearchTerm, setSearchResults, setShowFriendLists } = useSearch();
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  const { data, isLoading, error } = useQuery(
-    ["companies", currentPage, user],
-    () =>
-      axios
-        .get(
-          `https://my-blog-server-ua7q.onrender.com/companies?page=${currentPage}&pageSize=${pageSize}`
-        )
-        .then((response) => response.data),
-  );
+  const [data, setData] = useState([]);
+  useEffect(() => {
+      const fetchUsers = async () => {
+          try {
+              const response = await companyServices.getCompaniesList();
+              setData(response.data);
+              setIsLoading(false);
+          } catch (error) {
+              setIsLoading(false);
+          }
+      };
+      fetchUsers();
+  }, [data]);
 
   if (isLoading) {
     return (
@@ -40,18 +35,9 @@ function Companies() {
       </div>)
   }
 
-  if (error) {
-    return <p>Error fetching posts: {error.message}</p>;
-  }
-
-  if (data.data.length === 0 || data === null) {
-    return <p>No results found.</p>;
-  }
-
   if (user == null || user.friendRequests == null) {
     return <p>No results found1.</p>;
   }
-  const searchTermInfo = searchTerm;
   return (
     <section class="companies-info">
       <div class="container">
@@ -60,7 +46,7 @@ function Companies() {
         </div>
         <div class="companies-list">
           <div class="row">
-            {data.data.map((curCompany) =>
+            {data.map((curCompany) =>
             // Check if the user is logged in before displaying the information
             (user && user._id && user._id != curCompany._id && (
               <CompanyItem

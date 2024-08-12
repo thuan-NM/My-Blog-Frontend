@@ -1,48 +1,41 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd"
+import experienceServices from "../../services/experience.services";
 
 const ExperienceEdit = ({user,isExpEditOpen,setIsExpEditOpen,Exp}) => {
     const [subject,setSupject] = useState("");
     const [description,setDescription] = useState("");
+    const navigate = useNavigate();
 
 	const handleModal = (e) => {
         e.preventDefault();
         setIsExpEditOpen(!isExpEditOpen)
     }
 
-	const handleEdit = (e) => {
-        e.preventDefault();
-        const newExp = {
-            subject: subject,
-			description:description,
-            // lay user -> author
-            user: user,
-        };
-        const token = localStorage.getItem("token");
-        axios
-            .put(`https://my-blog-server-ua7q.onrender.com/experiences/${Exp._id}`, newExp, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                message.success(res.data.message);
-                setSupject("");
-				setDescription("");
-                if (res.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            })
-            .catch((error) => {
-                message.error(error.response.data.message);
-                if (error.response && error.response.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            });
+	const handleEdit = async (e) => {
+        try{
+            e.preventDefault();
+            const newExp = {
+                subject: subject,
+                description: description,
+                // lay user -> author
+                user: user,
+            };
+            const res = await experienceServices.updateExperienceWithId(newExp,Exp._id)
+            message.success(res.message);
+            if (res.status === 401) {
+                navigate('/auth');
+            }
+            setSupject("");
+            setDescription("");
+        } catch (error) {
+            message.error(error.response.data.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/auth');
+            }
+        }
         handleModal(e);
     }
 

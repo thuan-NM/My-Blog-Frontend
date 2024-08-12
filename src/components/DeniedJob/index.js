@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import jobstatusServices from "../../services/jobstatus.services";
 
 const DeniedJob = () => {
     const [posts, setPosts] = useState([]);
@@ -19,7 +20,8 @@ const DeniedJob = () => {
 
     const fetchPosts = async () => {
         try {
-            const jobstatusResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/applied`, { params: data });
+            const jobstatusResponse = await JobstatusServices.getJobsApplied(data);
+            //            axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/applied`, { params: data });
             setPosts(jobstatusResponse.data.data);
             setIsLoading(false);
         } catch (error) {

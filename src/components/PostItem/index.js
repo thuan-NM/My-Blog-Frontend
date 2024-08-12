@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, Space, message, Button, Modal } from 'antd';
+import { message, Button, Modal } from 'antd';
 import { Link } from 'react-router-dom';
 import { usePost } from '../../contexts/PostContext';
 import { useAuth } from '../../contexts/AuthContext';
 import Comment from '../Comment';
 import ApplyModal from '../ApplyModal';
-import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import reactionServices from '../../services/reaction.services';
+import commentServices from '../../services/comment.services';
+import jobstatusServices from '../../services/jobstatus.services';
 
 
 const PostItem = ({ post, handleHashtags }) => {
@@ -40,9 +42,7 @@ const PostItem = ({ post, handleHashtags }) => {
   const handleReaction = async () => {
     try {
       // Call the backend API to handle the reaction
-      await axios.post(`https://my-blog-server-ua7q.onrender.com/reactions/${post._id}`, {
-        userId: user._id, // Replace with the actual user ID (you may need to get it from authentication)
-      });
+      await reactionServices.postReaction(user._id,post._id)
     } catch (error) {
       console.error('Error handling reaction:', error);
       message.error('Failed');
@@ -52,18 +52,18 @@ const PostItem = ({ post, handleHashtags }) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        const reactionStatsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/reactions/${post._id}`);
-        const commentsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/comments/${post._id}`);
-        setComments(commentsResponse.data.data);
-        setReactionStats(reactionStatsResponse.data.data);
+        const reactionStatsResponse = await reactionServices.getReactionsWithPostId(post._id)
+        const commentsResponse = await commentServices.getCommentsWithPostId(post._id)
+        setComments(commentsResponse.data);
+        setReactionStats(reactionStatsResponse.data);
         setIsLoading(false);
         if (user != null && storedToken != null) {
           const data = {
             postid: post._id,
             userid: decodedToken.userId
           }
-          const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/checkUserApplied/`, { params: data });
-          setApplicationStatus(response.data.data);
+          const response = await jobstatusServices.getUsersAppliedJob(data);
+          setApplicationStatus(response.data);
         }
         else {
           setApplicationStatus("guest");

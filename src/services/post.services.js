@@ -19,11 +19,11 @@ class PostServices {
     async getJobsWithUser(id) {
         return (await this.api.get(`/user/${id}`)).data;
     }
-    async postJob(data) {
-        return (await this.api.post(`/`,data)).data
+    async postJob(data,header) {
+        return (await this.api.post(`/`,data,header)).data
     }
-    async getFilterPost(data) {
-        return (await this.api.post(`/filter`,data)).data
+    async getFilterPost(data,header) {
+        return (await this.api.post(`/filter`,data,header)).data
     }
     async updatePostWithId(data,id) {
         return (await this.api.put(`/${id}`,data)).data;

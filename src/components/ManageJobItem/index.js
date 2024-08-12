@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from 'antd';
 import CandidateManageModal from "../CandidateManageModal";
+import jobstatusServices from "../../services/jobstatus.services";
 
 const ManageJobItem = () => {
     const storedToken = localStorage.getItem('token');
@@ -14,8 +15,8 @@ const ManageJobItem = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const jobstatusResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/${decodedToken.userId}`)
-                setJobstatus(jobstatusResponse.data.data);
+                const jobstatusResponse = await jobstatusServices.getJobstatusWithUserId(decodedToken.userId)
+                setJobstatus(jobstatusResponse.data);
                 setIsLoading(false);
             } catch (error) {
             }

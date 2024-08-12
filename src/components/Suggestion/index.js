@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import userServices from "../../services/user.services";
 
 const Suggestions = () => {
-
+    const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
-    const { data, isLoading, error } = useQuery(
-        ["users", user],
-        () =>
-            axios
-                .get(
-                    `https://my-blog-server-ua7q.onrender.com/users`)
-                .then((response) => response.data),
-    );
-
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const usersResponse = await userServices.getUsersList();
+                setData(usersResponse.data);
+                setIsLoading(false);
+            } catch (error) {
+                setIsLoading(false);
+            }
+        };
+        fetchUsers();
+    }, [data]);
+    
     if (isLoading) {
         return (
             <div className="process-comm">
@@ -25,14 +31,6 @@ const Suggestions = () => {
                     <div className="bounce3"></div>
                 </div>
             </div>)
-    }
-
-    if (error) {
-        return <p>Error fetching posts: {error.message}</p>;
-    }
-
-    if (data.data.length === 0 || data === null) {
-        return <p>No results found.</p>;
     }
 
     if (user == null || user.friendRequests == null) {
@@ -45,7 +43,7 @@ const Suggestions = () => {
                 <i className="la la-ellipsis-v"></i>
             </div>
             <div className="suggestions-list">
-                {data.data.map((suggestion) => (user && user._id && user._id != suggestion._id && (
+                {data.map((suggestion) => (user && user._id && user._id != suggestion._id && (
                     <div className="suggestion-usd" key={suggestion._id} >
                         <Link to={`/userprofile/${suggestion._id}`}>
                             <img src={suggestion.profilePictureUrl || `images/userava.jpg`} />

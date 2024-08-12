@@ -1,32 +1,27 @@
-import axios from "axios";
-import React from "react";
-import { useQuery } from "react-query";
-import Slider from "react-slick";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import postServices from "../../services/post.services";
 
 const MostInterest = () => {
+    const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
-    const { data, isLoading, error } = useQuery(
-        ["posts"],
-        () =>
-            axios
-                .get(
-                    `https://my-blog-server-ua7q.onrender.com/posts/mostinterest`)
-                .then((response) => response.data),
-    );
-
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await postServices.getMostInterestJobs();
+                setData(response.data);
+                setIsLoading(false);
+            } catch (error) {
+                setIsLoading(false);
+            }
+        };
+        fetchUsers();
+    }, [data]);
     if (isLoading) {
         return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>Error fetching posts: {error.message}</p>;
-    }
-
-    if (data.data.length === 0 || data === null) {
-        return <p>No results found.</p>;
     }
 
     if (user == null || user.friendRequests == null) {
@@ -39,7 +34,7 @@ const MostInterest = () => {
                 <i className="la la-ellipsis-v"></i>
             </div>
             <div className="jobs-list">
-                {data.data.map((post) =>
+                {data.map((post) =>
                     <div className="job-info" key={post._id}>
                         <div className="job-details">
                             <h3>{post.title}</h3>

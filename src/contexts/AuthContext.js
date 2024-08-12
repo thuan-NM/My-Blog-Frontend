@@ -57,11 +57,9 @@ const AuthProvider = ({ children }) => {
 
       if (storedToken) {
         const decodedToken = jwtDecode(storedToken);
-        const response = await axios.get(`https://my-blog-server-ua7q.onrender.com/users/${decodedToken.userId}`, {
-          headers: { Authorization: `Bearer ${storedToken}` }
-        });
+        const response = await UserServices.getUsersWithId(decodedToken.userId)
 
-        const userData = response.data.data;
+        const userData = response.data;
         setUser(userData);
       }
     } catch (error) {

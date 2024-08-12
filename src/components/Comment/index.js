@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from '../../contexts/AuthContext';
 import { Input } from 'antd';
 import { Link } from "react-router-dom";
+import commentServices from "../../services/comment.services";
 
 const Comment = ({ postId }) => {
   const { user } = useAuth();
@@ -15,8 +16,8 @@ const Comment = ({ postId }) => {
   useEffect(() => {
     const fetchPostAndComments = async () => {
       try {
-        const commentsResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/comments/${postId}`);
-        setComments(commentsResponse.data.data);
+        const commentsResponse = await commentServices.getCommentsWithPostId(postId)
+        setComments(commentsResponse.data);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -29,13 +30,11 @@ const Comment = ({ postId }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://my-blog-server-ua7q.onrender.com/comments', {
+      await commentServices.postComment({
         user,
         postId,
         content: newComment,
-      });
-
-      // Clear the comment input field
+      })
       setNewComment("");
     } catch (error) {
       console.error('Error submitting comment:', error.message);

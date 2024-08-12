@@ -1,11 +1,10 @@
-import axios from "axios";
-import React from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { useAuth } from "../../contexts/AuthContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
+import userServices from "../../services/user.services";
 
 const TopProfile = () => {
     const settings = {
@@ -17,16 +16,21 @@ const TopProfile = () => {
         autoplaySpeed: 800,
         cssEase: "linear"
     };
+    const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
-    const { data, isLoading, error } = useQuery(
-        ["users", user],
-        () =>
-            axios
-                .get(
-                    `https://my-blog-server-ua7q.onrender.com/users`
-                )
-                .then((response) => response.data),
-    );
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const usersResponse = await userServices.getUsersList();
+                setData(usersResponse.data);
+                setIsLoading(false);
+            } catch (error) {
+                setIsLoading(false);
+            }
+        };
+        fetchUsers();
+    }, [data]);
 
     if (isLoading) {
         return (
@@ -39,21 +43,13 @@ const TopProfile = () => {
             </div>)
     }
 
-    if (error) {
-        return <p>Error fetching posts: {error.message}</p>;
-    }
-
-    if (data.data.length === 0 || data === null) {
-        return <p>No results found.</p>;
-    }
-
     if (user == null || user.friendRequests == null) {
         return <p>No results found1.</p>;
     }
     return (
         <div>
             <Slider {...settings}>
-                {data.data.map((curUser) =>
+                {data.map((curUser) =>
                 // Check if the user is logged in before displaying the information
                 (user && user._id && user._id != curUser._id && (
                     <div className="user-profy slick-slide" key={curUser._id}>

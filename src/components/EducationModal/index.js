@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd"
-import { DatePicker, Space } from 'antd';
+import { DatePicker } from 'antd';
+import educationServices from "../../services/education.services";
 
 
 const EducationModal = ({setIsLoading,user, setIsEduModalOpen, isEduModalOpen}) => {
@@ -11,51 +11,69 @@ const EducationModal = ({setIsLoading,user, setIsEduModalOpen, isEduModalOpen}) 
     const [to,setTo] = useState(null);
     const [degree,setDegree] = useState("");
     const [description,setDescription] =useState("");
+	const navigate = useNavigate();
 
 	const handleModal = (e) => {
         e.preventDefault();
         setIsEduModalOpen(!isEduModalOpen)
     }
 
-	const handleAdd = (e) => {
-        e.preventDefault();
-        const newEdu = {
-            school: school,
-            from:from,
-            to:to,
-            degree:degree,
-			description:description,
-            // lay user -> author
-            user: user,
-        };
-        const token = localStorage.getItem("token");
-        axios
-            .post("https://my-blog-server-ua7q.onrender.com/educations", newEdu, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                message.success(res.data.message);
-                setSchool("");
-				setFrom(null);
-                setTo(null);
-                setDegree("");
-				setDescription("");
-                setIsLoading(true);
-                if (res.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            })
-            .catch((error) => {
-                message.error(error.response.data.message);
-                if (error.response && error.response.status === 401) {
-                    // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-                    navigate("/auth");
-                }
-            });
+	const handleAdd = async (e) => {
+        try {
+            e.preventDefault();
+            const newEdu = {
+                school: school,
+                from:from,
+                to:to,
+                degree:degree,
+                description:description,
+                // lay user -> author
+                user: user,
+            };
+            const res = await educationServices.postEducation(newEdu)
+            message.success(res.message);
+            if (res.status === 401) {
+                navigate('/auth');
+            }
+            setDegree("");
+            setDescription("");
+            setFrom("");
+            setSchool(null)
+            setTo(null)
+        } catch (error) {
+            message.error(error.response.data.message);
+            if (error.response && error.response.status === 401) {
+                navigate('/auth');
+            }
+        }
         handleModal(e);
+        // axios
+        //     .post("https://my-blog-server-ua7q.onrender.com/educations", newEdu, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     })
+        //     .then((res) => {
+        //         message.success(res.data.message);
+        //         setSchool("");
+		// 		setFrom(null);
+        //         setTo(null);
+        //         setDegree("");
+		// 		setDescription("");
+        //         setIsLoading(true);
+        //         if (res.status === 401) {
+        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        //             navigate("/auth");
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         message.error(error.response.data.message);
+        //         if (error.response && error.response.status === 401) {
+        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+        //             navigate("/auth");
+        //         }
+        //     });
+        // handleModal(e);
     }
 
     return (
