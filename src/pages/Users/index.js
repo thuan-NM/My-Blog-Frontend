@@ -114,7 +114,7 @@ function Users() {
             (user && user._id && user._id != curUser._id && (
               <UserItem
                 key={curUser._id}
-                user={curUser}
+                userdata={curUser}
                 onAddFriend={() => { handleSendFriendRequest(curUser) }}
                 onRemoveFriend={() => { handleRemoveFriend(curUser._id) }}
                 isFriend={user.friend && user.friend.some((friend) => friend._id === curUser._id)}

@@ -14,6 +14,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import TopJob from "../../components/TopJob";
 import MostInterest from "../../components/MostInterest";
 import PostServices from "../../services/post.services"
+import UserCard from "../../components/UserCard";
 
 function Home() {
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
@@ -56,32 +57,7 @@ function Home() {
             <div className="row">
               <div className="col-lg-3 col-md-4 pd-left-none no-pd">
                 <div className="main-left-sidebar no-margin">
-                  {user && (<div className="user-data full-width">
-                    <div className="user-profile">
-                      <div className="username-dt">
-                        <div className="usr-pic">
-                          <img src={user.profilePictureUrl || `images/userava.jpg`} />
-                        </div>
-                      </div>
-                      <div className="user-specs">
-                        <h3>{user.companyname != null ? user.companyname : user.lastName}</h3>
-                        <span>Graphic Designer at Self Employed</span>
-                      </div>
-                    </div>
-                    <ul className="user-fw-status">
-                      <li>
-                        <h4>Đang theo dõi</h4>
-                        <span>34</span>
-                      </li>
-                      <li>
-                        <h4>Người theo dõi</h4>
-                        <span>155</span>
-                      </li>
-                      <li>
-                        <Link href="my-profile.html" title="">Xem trang cá nhân</Link>
-                      </li>
-                    </ul>
-                  </div>)}
+                  <UserCard user={user}/>
                   <Suggestions />
                   <div className="tags-sec full-width">
                     <ul>

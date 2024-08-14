@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
@@ -6,11 +6,32 @@ import { message } from 'antd';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import userServices from '../../services/user.services';
+import followServices from '../../services/follow.services';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const storedToken = localStorage.getItem('token');
   const decodedToken = jwtDecode(storedToken);
+  const [followers, setFollowers] = useState({})
+  const [following, setFollowing] = useState({})
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFollow = async () => {
+      try {
+        const followersResponse = await followServices.getFollowers(user._id);
+        const followingResponse = await followServices.getFollowing(user._id);
+        setFollowers(followersResponse.data);
+        setFollowing(followingResponse.data)
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+    fetchFollow();
+  }, [followers, following]);
+
+
   const handleImageChange = (info) => {
     if (info.file.status === 'done') {
       setSelectedImage(info.file.originFileObj);
@@ -27,7 +48,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       const formData = new FormData();
       formData.append('profilePicture', selectedImage);
 
-      const response = await userServices.updatePictureWithId(formData,user._id)
+      const response = await userServices.updatePictureWithId(formData, user._id)
       updateUser()
       // Reset the selected image
       setSelectedImage(null);
@@ -59,11 +80,12 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
     const imgWindow = window.open(src);
     imgWindow?.document.write(image.outerHTML);
   };
+
   return (
     <div className="user_profile">
       <div className="user-pro-img">
-        <img src={user.profilePictureUrl || `images/userava.jpg`}/>
-        {(user._id==decodedToken.userId)&&(<div className="add-dp" id="OpenImgUpload">
+        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+        {(user._id == decodedToken.userId) && (<div className="add-dp" id="OpenImgUpload">
           <label><i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i></label>
         </div>)}
         <div className={`post-popup job_post ${isModalPicOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
@@ -80,7 +102,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
                     upload_preset: "sudykqqg",
                   }}
                 >
-                {<UploadOutlined />}
+                  {<UploadOutlined />}
                 </Upload>
               </ImgCrop>
               <button className="submit-but" onClick={onSubmit}>Submit<i className="ms-2 bi bi-check-circle-fill"></i></button>
@@ -93,11 +115,11 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
         <ul className="flw-status">
           <li>
             <span>Đang theo dõi</span>
-            <b>34</b>
+            <b>{following.followingCount}</b>
           </li>
           <li>
             <span>Người theo dõi</span>
-            <b>155</b>
+            <b>{followers.followersCount}</b>
           </li>
         </ul>
       </div>
