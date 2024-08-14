@@ -1,9 +1,10 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
 import CandidateManageModal from "../CandidateManageModal";
 import jobstatusServices from "../../services/jobstatus.services";
+import postServices from "../../services/post.services";
 
 const ManageJobItem = () => {
     const storedToken = localStorage.getItem('token');
@@ -60,18 +61,13 @@ const ManageJobItem = () => {
 
     const handleDelete = async (postId) => {
         try {
-            await axios.delete(`https://my-blog-server-ua7q.onrender.com/posts/${postId}`, {
-                headers: {
-                    Authorization: `Bearer ${storedToken}`,
-                },
-            });
-            fetchPosts(); // Refetch the posts after a post is deleted
+            const res = await postServices.deletePostWithID(postId)
+            message.success(res.message)
         } catch (error) {
-            console.error('Error deleting job status:', error);
+            message.error(error.response.data.message)
+            console('Error deleting job status:', error);
         }
     };
-
-    console.log(jobstatus)
     return (
         <div className="tab-pane fade show active animate__animated animate__fast animate__fadeIn" id="mange" role="tabpanel" aria-labelledby="mange-tab">
             {jobstatus.map((item) =>
@@ -90,13 +86,13 @@ const ManageJobItem = () => {
                                     <button type="button" className="btn btn-primary" onClick={() => showModal(item._id)}>
                                         <span className="badge badge-light">{item.jobStatusCount}</span>Ứng viên
                                     </button>
-                                    <Modal key={item._id} title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
+                                    <Modal title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
                                         footer={
                                             <Button key="submit" onClick={handleOk}>
                                                 Đóng
                                             </Button>}
                                     >
-                                        <CandidateManageModal candidates={item} key={item._id} />
+                                        <CandidateManageModal candidates={item}/>
                                     </Modal>
                                     <a className="clrbtn" onClick={() => handleDelete(item._id)}>
                                         <i className="far fa-trash-alt"></i>

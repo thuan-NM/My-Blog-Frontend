@@ -7,11 +7,8 @@ const ChatComponent = ({ datauser }) => {
     const [message, setMessage] = useState('');
     const [receivedMessages, setReceivedMessages] = useState([]);
     const [isChatting, setIsChatting] = useState(false);
-    const newSocket = new WebSocket('wss://my-blog-server-ua7q.onrender.com?user-id=' + user._id);
-
-
+    const newSocket = new WebSocket('wss://my-blog-server-696m.onrender.com?user-id=' + user._id);
     useEffect(() => {
-
         newSocket.onopen = () => {
             setSocket(newSocket);
             const data = {
@@ -31,11 +28,11 @@ const ChatComponent = ({ datauser }) => {
             setSocket(null);
         };
 
-        return () => {
-            if (socket) {
-                socket.close();
-            }
-        };
+        // return () => {
+        //     if (socket) {
+        //         socket.close();
+        //     }
+        // };
     }, []);
 
     const sendMessage = (e) => {
@@ -58,7 +55,6 @@ const ChatComponent = ({ datauser }) => {
     const filteredMessages = receivedMessages.filter(
         (msg) => msg.sender === datauser._id || msg.receiver === datauser._id
     );
-    console.log(filteredMessages)
     return (
         <div className="chatbox">
             <div className="chat-mg" onClick={handleChat}>

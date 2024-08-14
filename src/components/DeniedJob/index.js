@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import jobstatusServices from "../../services/jobstatus.services";
+import { message } from "antd";
 
 const DeniedJob = () => {
     const [posts, setPosts] = useState([]);
@@ -20,9 +21,8 @@ const DeniedJob = () => {
 
     const fetchPosts = async () => {
         try {
-            const jobstatusResponse = await JobstatusServices.getJobsApplied(data);
-            //            axios.get(`https://my-blog-server-ua7q.onrender.com/jobstatus/applied`, { params: data });
-            setPosts(jobstatusResponse.data.data);
+            const jobstatusResponse = await jobstatusServices.getJobsApplied(data);
+            setPosts(jobstatusResponse.data);
             setIsLoading(false);
         } catch (error) {
             console.error('Error :', error);
@@ -31,13 +31,12 @@ const DeniedJob = () => {
 
     const handleDelete = async (postId) => {
         try {
-            await axios.delete(`https://my-blog-server-ua7q.onrender.com/jobstatus/${postId}`, {
-                headers: {
-                    Authorization: `Bearer ${storedToken}`,
-                },
-            });
-            fetchPosts(); // Refetch the posts after a post is deleted
+            const res = await jobstatusServices.deleteJobstatusWithID(postId) 
+            console.log(res)
+            message.success(res.data.message)
+            fetchPosts();
         } catch (error) {
+            message.error(error.response.data.message)
             console.error('Error deleting job status:', error);
         }
     };

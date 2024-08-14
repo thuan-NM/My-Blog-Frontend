@@ -7,7 +7,7 @@ class JobstatusServices {
     async getJobstatusList() {
         return (await this.api.get("/")).data;
     }
-    async getJobsApplied() {
+    async getJobsApplied(params) {
         return (await this.api.get("/applied", { params })).data;
     }
     async getUsersAppliedJob(data) {
@@ -35,7 +35,10 @@ class JobstatusServices {
         return (await this.api.put(`/${id}`, data)).data;
     }
     async deleteJobstatusWithID(id) {
-        return (await this.api.delete(`/${id}`))
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+        return (await this.api.delete(`/${id}`,{headers}))
     }
 }
 export default new JobstatusServices();

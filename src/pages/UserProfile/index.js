@@ -20,9 +20,13 @@ import ExperienceModal from "../../components/ExperienceModal";
 import ExperienceEdit from "../../components/ExperienceEdit";
 import EducationModal from "../../components/EducationModal";
 import EducationEdit from "../../components/EducationEdit";
-import ManageJob from "../../components/ManageJob";
 import { EuroCircleOutlined } from "@ant-design/icons"
 import { useParams, useNavigate } from "react-router-dom";
+import postServices from "../../services/post.services";
+import overviewServices from "../../services/overview.services";
+import experienceServices from "../../services/experience.services";
+import educationServices from "../../services/education.services";
+import userServices from "../../services/user.services";
 
 function UserProfile() {
   const { id } = useParams();
@@ -53,19 +57,17 @@ function UserProfile() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const userres = await axios.get(`https://my-blog-server-ua7q.onrender.com/users/${id}`)
-        const postResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/posts/user/${id}`)
-        const suggestionResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/users`);
-        const overviewResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/overviews/${id}`)
-        const experiencesResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/experiences/${id}`)
-        const educationResponse = await axios.get(`https://my-blog-server-ua7q.onrender.com/educations/${id}`)
-        setUser(userres.data.data)
-        setEducations(educationResponse.data.data)
-        setExperiences(experiencesResponse.data.data)
-        setOverview(overviewResponse.data.data)
-        setSuggestions(suggestionResponse.data.data)
-        setPosts(postResponse.data.data);
-        setIsLoading(false);
+        const userres = await userServices.getUsersWithId(id)
+        const postResponse = await postServices.getJobsWithUser(id)
+				const overviewResponse = await overviewServices.getOverviewWithUserID(id)
+				const experiencesResponse = await experienceServices.getExperiencesWithUserId(id)
+				const educationResponse = await educationServices.getEducationsWithUserId(id)
+				setEducations(educationResponse.data)
+				setExperiences(experiencesResponse.data)
+				setOverview(overviewResponse.data)
+				setPosts(postResponse.data);
+        setUser(userres.data)
+				setIsLoading(false);
       } catch (error) {
       }
     };

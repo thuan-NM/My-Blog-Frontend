@@ -8,7 +8,6 @@ const Header = () => {
 	const [isOpened, setIsOpened] = useState(false);
 	const [isNotiOpened, setIsNotiOpened] = useState(false);
 	const [isRpsActive, setIsRpsActive] = useState(false);
-	//const {handleSearchPost,searchTerm,searchResults,showPostListsWithSearch,setSearchTerm,setSearchResults,setShowPostListsWithSearch} = useSearch();
 	const { user, logout } = useAuth();
 	const storedToken = localStorage.getItem('token');
 	const handleOpenMenu = () => {
@@ -25,11 +24,7 @@ const Header = () => {
 					<div className="logo">
 						<Link to={"/"}><img src="images/logo.png" alt="" /></Link>
 					</div>
-					<SearchBar
-					// searchTerm={searchTerm}
-					// setSearchTerm={setSearchTerm}
-					// handleSearch={handleSearchPost}
-					/>
+					<SearchBar/>
 					<nav className={`${isRpsActive?"active":""}`}>
 						<ul>
 							<li>

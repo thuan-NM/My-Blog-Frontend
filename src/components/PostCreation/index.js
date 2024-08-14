@@ -31,11 +31,8 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
       // lay user -> author
       user: user,
     };
-    const token = localStorage.getItem("token");
     try {
-      const response = await postServices.postJob(newPost,{
-        Authorization: `Bearer ${token}`,
-      });
+      const response = await postServices.postJob(newPost);
 
       if (response.isSuccess) {
           message.success("Create a new post successful");

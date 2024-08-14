@@ -20,7 +20,10 @@ class PostServices {
         return (await this.api.get(`/user/${id}`)).data;
     }
     async postJob(data,header) {
-        return (await this.api.post(`/`,data,header)).data
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+        return (await this.api.post(`/`,data,{headers})).data
     }
     async getFilterPost(data,header) {
         return (await this.api.post(`/filter`,data,header)).data
@@ -29,7 +32,10 @@ class PostServices {
         return (await this.api.put(`/${id}`,data)).data;
     }
     async deletePostWithID(id){
-        return (await this.api.delete(`/${id}`))
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+        return (await this.api.delete(`/${id}`,{headers})).data
     }
 }
 export default new PostServices();

@@ -25,26 +25,6 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                 navigate('/auth');
             }
         }
-        // axios
-        //     .delete(`https://my-blog-server-ua7q.onrender.com/educations/${exp._id}`, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         message.success(res.data.message);
-        //         if (res.status === 401) {
-        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-        //             navigate("/auth");
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         message.error(error.response.data.message);
-        //         if (error.response && error.response.status === 401) {
-        //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-        //             navigate("/auth");
-        //         }
-        //     });
     }
 
     if (isLoading) {
