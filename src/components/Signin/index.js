@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { message } from "antd"
 import AuthServices from "../../services/auth.services"
 import CompanyAuthServices from "../../services/companyAuth.services";
+import GoogleLoginComponent from "../GoogleLogin";
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -147,7 +148,7 @@ const SignIn = () => {
 				<h4>Đăng nhập bằng tài khoản khác</h4>
 				<ul>
 					<li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Đăng nhập bằng Facebook</a></li>
-					<li><a href="#" title="" className="tw"><i className="fa fa-twitter"></i>Đăng nhập bằng Twitter</a></li>
+					<li><GoogleLoginComponent/></li>
 				</ul>
 			</div>
 		</div>

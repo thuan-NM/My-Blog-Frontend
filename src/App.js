@@ -1,4 +1,4 @@
-import { Routes, Route ,useLocation} from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "font-awesome/css/font-awesome.min.css";
@@ -18,13 +18,14 @@ import PostDetail from "./pages/PostDetail";
 import Users from "./pages/Users";
 import AboutUs from "./pages/AboutUs";
 import MyProfile from "./pages/MyProfile";
-import UserProfile from "./pages/UserProfile"; 
+import UserProfile from "./pages/UserProfile";
 import Jobs from "./pages/Jobs";
 import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ChatBox from "./components/ChatBox";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import GoogleLoginComponent from "./components/GoogleLogin";
 const queryClient = new QueryClient()
 
 function App() {
@@ -35,21 +36,21 @@ function App() {
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
-          {!isAuthPage&&<Header />}
-          <SpeedInsights />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/posts/:postId" element={<PostDetail />} />
-            <Route path="/myprofile" element={<MyProfile />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/companies" element={<Companies/>}/>
-            <Route path="/jobs" element={<Jobs/>}/>
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<h1>Page not found</h1>} />
-            <Route path="/userprofile/:id" element={<UserProfile />} />
-          </Routes>
-          {!isAuthPage&&<ChatBox />}
+        {!isAuthPage && <Header />}
+        <SpeedInsights />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/posts/:postId" element={<PostDetail />} />
+          <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<h1>Page not found</h1>} />
+          <Route path="/userprofile/:id" element={<UserProfile />} />
+        </Routes>
+        {!isAuthPage && <ChatBox />}
       </QueryClientProvider>
     </div>
   );

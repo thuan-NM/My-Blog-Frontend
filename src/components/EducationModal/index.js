@@ -86,12 +86,12 @@ const EducationModal = ({setIsLoading,user, setIsEduModalOpen, isEduModalOpen}) 
 						<div className="row mb-4">
 							<div className="col-lg-6 no-left-pd">
 								<div className="datefm">
-                                    <DatePicker onChange={(date) => setFrom(date ? date.format('MM/YYYY') : null)} />
+                                    <DatePicker onChange={(date) => setFrom(date)} />
 								</div>
 							</div>
 							<div className="col-lg-6 no-righ-pd">
 								<div className="datefm">
-                                    <DatePicker onChange={(date) => setTo(date ? date.format('MM/YYYY') : null)} />
+                                    <DatePicker onChange={(date) => setTo(date)} />
 								</div>
 							</div>
 						</div>

@@ -37,7 +37,7 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                 </div>
             </div>)
     }
-
+    
     return (
         <div className="user-profile-ov animate__animated zoomIn">
             <h3><Link className="ed-box-open">Học vấn</Link>
@@ -54,7 +54,7 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                             </>
                         )}
                     </h4>
-                    <span>{education.from} - {education.to}</span>
+                    <span>{education.from.split('T')[0]} {"=>"} {education.to.split('T')[0]}</span>
                     <p>{education.description}</p>
                 </div>
             ))}
