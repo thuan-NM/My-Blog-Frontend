@@ -7,6 +7,9 @@ class AuthServices {
     async signIn(data) {
         return (await this.api.post("/login", data)).data;
     }
+    async signInWithGoogle(data) {
+        return (await this.api.post("/loginwithgoogle", {id:data})).data;
+    }
     async signUp(data) {
         return (await this.api.post("/register", data)).data;
     }
