@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
           else {
             const response = await CompanyServices.getCompanyWithId(decodedToken.companyId)
             const userData = response.data;
+            console.log("this:",userData)
             setUser(userData);
           }
         }
@@ -55,20 +56,29 @@ const AuthProvider = ({ children }) => {
     try {
       const storedToken = localStorage.getItem('token');
 
-      if (storedToken) {
-        const decodedToken = jwtDecode(storedToken);
-        const response = await UserServices.getUsersWithId(decodedToken.userId)
+    if (storedToken) {
+      const decodedToken = jwtDecode(storedToken);
 
+      // Nếu tồn tại `companyId` trong token, tức là đây là một công ty
+      if (decodedToken.companyId) {
+        const response = await CompanyServices.getCompanyWithId(decodedToken.companyId);
+        const companyData = response.data;
+        setUser(companyData); // Cập nhật dữ liệu của công ty
+      } 
+      // Nếu tồn tại `userId` trong token, tức là đây là một người dùng
+      else if (decodedToken.userId) {
+        const response = await UserServices.getUsersWithId(decodedToken.userId);
         const userData = response.data;
-        setUser(userData);
+        setUser(userData); // Cập nhật dữ liệu của người dùng
       }
+    }
     } catch (error) {
       console.error('Error updating user data:', error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUser}}>
       {children}
     </AuthContext.Provider>
   );
