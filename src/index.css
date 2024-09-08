@@ -322,6 +322,7 @@ nav ul li:hover>ul,
 .sign_in_sec form input,
 .sign_in_sec form select,
 .sign_in_sec form button,
+.verifybutton,
 .signin-tab button,
 .signup-tab button,
 .login-resources ul li button,
@@ -2880,6 +2881,35 @@ select {
 	font-weight: 500;
 	margin-top: 30px;
 	cursor: pointer;
+}
+
+.verifybutton {
+	color: #ffffff;
+	font-size: 18px;
+	background-color: #e44d3a;
+	padding: 12px 27px;
+	border: 0;
+	font-weight: 500;
+	margin-top: 30px;
+	cursor: pointer;
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -13px;
+	-ms-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
+	transition: all 0.2s ease-out;
+}
+.icon-success{
+	color: #01b13f;
+}
+.verifybutton:hover {
+	color: #ffffff;
+	background-color: #db7769;
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -13px;
+	-moz-transition: all 0.2s ease-in;
+	-ms-transition: all 0.2s ease-in;
+	-o-transition: all 0.2s ease-in;
+	transition: all 0.2s ease-in;
 }
 
 .checky-sec {
