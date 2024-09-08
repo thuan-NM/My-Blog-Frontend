@@ -28,13 +28,15 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 import GoogleLoginComponent from "./components/GoogleLogin";
 import MyCompanyProfile from "./pages/MyCompanyProfile";
 import VerifyEmail from "./pages/VerifyEmail";
+import SignUpCompany from "./components/SignUpCompany";
+import CompanyAuth from "./pages/CompanyAuth";
 const queryClient = new QueryClient()
 
 function App() {
   const location = useLocation();
 
   // Kiểm tra xem đang ở trang đăng nhập hoặc đăng ký
-  const isAuthPage = location.pathname.includes("/auth");
+  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth");
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
@@ -53,8 +55,9 @@ function App() {
           <Route path="/userprofile/:id" element={<UserProfile />} />
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
+          <Route path="/companyauth" element={<CompanyAuth />} />
         </Routes>
-        {!isAuthPage && <ChatBox/>}
+        {!isAuthPage && <ChatBox />}
       </QueryClientProvider>
     </div>
   );

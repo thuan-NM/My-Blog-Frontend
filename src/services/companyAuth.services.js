@@ -8,6 +8,7 @@ class CompanyAuthServices {
         return (await this.api.post("/login", data)).data;
     }
     async signUp(data) {
+        console.log(data)
         return (await this.api.post("/register", data)).data;
     }
     async changePassword(data) {

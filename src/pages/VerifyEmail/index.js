@@ -14,7 +14,8 @@ function VerifyEmail() {
         const verifyEmail = async () => {
             try {
                 const response = await axios.get(`http://localhost:3001/auth/verify-email?token=${token}`);
-                setMessage(response.data.message);
+                // const res = await axios.get(`http://localhost:3001/companyauth/verify-email?token=${token}`);
+                setMessage(res.data.message);
             } catch (error) {
                 setMessage('Failed to verify email. Invalid or expired token.');
             }
