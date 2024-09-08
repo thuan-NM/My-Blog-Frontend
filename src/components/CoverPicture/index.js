@@ -6,6 +6,8 @@ import { message } from 'antd';
 import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
 import userServices from '../../services/user.services';
+import companyServices from '../../services/company.services';
+import { jwtDecode } from "jwt-decode";
 
 const CoverPicture = ({ user }) => {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
@@ -24,11 +26,16 @@ const CoverPicture = ({ user }) => {
                 return;
             }
             const token = localStorage.getItem('token')
+            const decodedToken = jwtDecode(token);
             const formData = new FormData();
             formData.append('coverPicture', selectedCoverImage);
 
-            const response = await userServices.updateCoverPictureWithId(formData,user._id)
-            updateUser()
+            if (decodedToken.companyId) {
+                const response = await companyServices.updateCoverPictureWithId(formData, user._id);
+            } else {
+                const response = await userServices.updateCoverPictureWithId(formData, user._id);
+            }
+            updateUser();
             // Reset the selected image
             setSelectedCoverImage(null);
             message.success("Change cover picture success!");
@@ -43,7 +50,7 @@ const CoverPicture = ({ user }) => {
             }
         }
         setIsModalCoverPicOpen(!isModalCoverPicOpen);
-    };
+    };  
 
     return (
         <><section className="cover-sec">
