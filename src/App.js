@@ -26,6 +26,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import ChatBox from "./components/ChatBox";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import GoogleLoginComponent from "./components/GoogleLogin";
+import MyCompanyProfile from "./pages/MyCompanyProfile";
 const queryClient = new QueryClient()
 
 function App() {
@@ -49,8 +50,9 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="*" element={<h1>Page not found</h1>} />
           <Route path="/userprofile/:id" element={<UserProfile />} />
+          <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
         </Routes>
-        {!isAuthPage && <ChatBox />}
+        {!isAuthPage}
       </QueryClientProvider>
     </div>
   );
