@@ -15,7 +15,6 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [followers, setFollowers] = useState({})
   const [following, setFollowing] = useState({})
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const fetchFollow = async () => {
       try {
@@ -29,7 +28,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       }
     };
     fetchFollow();
-  }, [followers, following]);
+  }, [followers, following, user]);
 
 
   const handleImageChange = (info) => {
