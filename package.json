@@ -44,7 +44,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://my-blog-server-ua7q.onrender.com",
+  "options": {
+    "allowedHosts": ["localhost", ".localhost"],
+    "proxy": "https://my-blog-server-ua7q.onrender.com"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
