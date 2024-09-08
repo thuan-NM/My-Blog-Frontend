@@ -2666,7 +2666,7 @@ select {
 .cmp-info {
 	float: left;
 	width: 100%;
-	padding: 70px 5px 92px 5px;
+	padding: 63px 5px 82px 5px;
 }
 
 .cm-logo {
@@ -4497,8 +4497,9 @@ a:hover {
 	margin-bottom: 20px;
 }
 
-.no-pdd {
+.step_btn{
 	padding: 0;
+	margin: 14px 14px !important;
 }
 
 .inpt-field.pd-moree input {
@@ -8404,4 +8405,78 @@ ul#myTab {
 .ant-picker-dropdown {
 	z-index: 10010 !important;
 	/* Đảm bảo overlay hiển thị trên DatePicker */
+}
+
+
+.company_signup_tab {
+	float: left;
+	width: 100%;
+	text-align: center;
+	padding: 15px 0;
+	margin-bottom: 20px;
+	position: relative;
+	margin-top: -30px;
+	border-radius: 3px !important;
+}
+
+.company_signup_tab>i {
+	position: absolute;
+	top: 15px;
+	left: 13px;
+	color: #000;
+	font-size: 14px;
+}
+
+.company_signup_tab h2 {
+	color: #000000;
+	font-size: 14px;
+	font-weight: 500;
+	margin-bottom: 15px;
+}
+
+.company_signup_tab ul {
+	float: left;
+	width: 100%;
+	padding: 0px;
+}
+
+.company_signup_tab ul li {
+	display: inline-block;
+	margin-right: -4px;
+}
+
+.company_signup_tab ul li a {
+	color: #000000;
+	font-size: 14px;
+	font-weight: 500;
+	background-color: #e5e5e5;
+	padding: 10px 15px;
+	-webkit-border-radius: 3px 0px 0px 3px;
+	-moz-border-radius: 3px 0px 0px 3px;
+	-ms-border-radius: 3px 0px 0px 3px;
+	-o-border-radius: 3px 0px 0px 3px;
+	border-radius: 3px 0px 0px 3px;
+	display: inline-block;
+}
+
+.company_signup_tab ul li.current button {
+	background-color: #e44d3a;
+	color: #fff;
+}
+
+.company_signup_tab button {
+	border: none;
+	padding: 14px;
+	background-color: whitesmoke;
+}
+
+.company_signup_tab ul li:last-child button {
+	-webkit-border-radius: 0px 3px 3px 0px;
+	-moz-border-radius: 0px 3px 3px 0px;
+	-ms-border-radius: 0px 3px 3px 0px;
+	-o-border-radius: 0px 3px 3px 0px;
+	border-radius: 0px 3px 3px 0px;
+}
+.hidden {
+	visibility: hidden !important;
 }
