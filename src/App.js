@@ -54,7 +54,7 @@ function App() {
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
         </Routes>
-        {!isAuthPage}
+        {!isAuthPage && <ChatBox/>}
       </QueryClientProvider>
     </div>
   );
