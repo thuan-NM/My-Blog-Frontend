@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
 import SearchBar from "../SearchBar";
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
 	const [isOpened, setIsOpened] = useState(false);
@@ -10,6 +11,15 @@ const Header = () => {
 	const [isRpsActive, setIsRpsActive] = useState(false);
 	const { user, logout } = useAuth();
 	const storedToken = localStorage.getItem('token');
+	let decodedToken = null;
+	if (storedToken) {
+		try {
+			decodedToken = jwtDecode(storedToken); // decode token
+		} catch (error) {
+			console.error("Invalid token:", error);
+		}
+	}
+
 	const handleOpenMenu = () => {
 		setIsOpened(!isOpened);
 	}
@@ -131,7 +141,8 @@ const Header = () => {
 								<i className="la la-sort-down"></i>
 							</div>
 							<div className={`user-account-settingss ${isOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`}>
-								<h3>Trang cá nhân<Link to={"/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
+								{/* <h3>Trang cá nhân<Link to={"/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3> */}
+								<h3>Trang cá nhân<Link to={decodedToken.companyId ? "/mycompanyprofile" : "/myprofile"} onClick={handleOpenMenu}><i className="ms-5 bi bi-arrow-right-circle"></i></Link></h3>
 								<h3>Trạng thái hoạt động</h3>
 								<ul className="on-off-status">
 									<li>
