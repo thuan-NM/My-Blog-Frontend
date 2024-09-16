@@ -42,7 +42,7 @@ const PostItem = ({ post, handleHashtags }) => {
   const handleReaction = async () => {
     try {
       // Call the backend API to handle the reaction
-      await reactionServices.postReaction(user._id,post._id)
+      await reactionServices.postReaction(user._id, post._id)
     } catch (error) {
       console.error('Error handling reaction:', error);
       message.error('Failed');
@@ -86,6 +86,9 @@ const PostItem = ({ post, handleHashtags }) => {
         </div>
       </div>)
   }
+
+  const paragraphs = post.description.split('\n')
+
   return (
     <div className="post-bar">
       <div className="post_topbar">
@@ -107,7 +110,7 @@ const PostItem = ({ post, handleHashtags }) => {
           <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
           <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
           {
-            (user._id !== post.author.userdata._id)&&(applicationStatus!="guest") ? (
+            (user._id !== post.author.userdata._id) && (applicationStatus != "guest") ? (
               <li>
                 <Button
                   className="bid_now"
@@ -127,7 +130,10 @@ const PostItem = ({ post, handleHashtags }) => {
           <li><a href="#" title="">{post.typeOfJob}</a></li>
           <li><span>${post.price} / giờ</span></li>
         </ul>
-        <p>{post.description}</p>
+        {paragraphs.map((p) => (
+          <p>- {p}</p>
+        ))}
+        {/* <p>{post.description}</p> */}
         <ul className="skill-tags">
           {post.skills.map((item) => (
             <li onClick={() => handleHashtags(item)} key={item}>
