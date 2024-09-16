@@ -6,6 +6,7 @@ import { message } from 'antd';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import userServices from '../../services/user.services';
+import companyServices from '../../services/company.services';
 import followServices from '../../services/follow.services';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
@@ -47,8 +48,13 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       const formData = new FormData();
       formData.append('profilePicture', selectedImage);
 
-      const response = await userServices.updatePictureWithId(formData, user._id)
-      updateUser()
+      // Determine whether to use userServices or companyServices based on the token
+      if (decodedToken.companyId) {
+        const response = await companyServices.updatePictureWithId(formData, user._id);
+      } else {
+        const response = await userServices.updatePictureWithId(formData, user._id);
+      }
+      updateUser();
       // Reset the selected image
       setSelectedImage(null);
       message.success("Change picture success!");
@@ -84,9 +90,13 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `images/userava.jpg`} />
-        {(user._id == decodedToken.userId) && (<div className="add-dp" id="OpenImgUpload">
-          <label><i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i></label>
-        </div>)}
+        {(user._id === decodedToken.userId || user._id === decodedToken.companyId) && (
+          <div className="add-dp" id="OpenImgUpload">
+            <label>
+              <i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i>
+            </label>
+          </div>
+        )}
         <div className={`post-popup job_post ${isModalPicOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
           <div className="post-project">
             <h3>Update Picture</h3>
