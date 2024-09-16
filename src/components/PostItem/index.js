@@ -131,7 +131,7 @@ const PostItem = ({ post, handleHashtags }) => {
           <li><span>${post.price} / giờ</span></li>
         </ul>
         {paragraphs.map((p) => (
-          <p>- {p}</p>
+          <p key={p}>- {p}</p>
         ))}
         {/* <p>{post.description}</p> */}
         <ul className="skill-tags">
