@@ -27,6 +27,7 @@ import postServices from "../../services/post.services";
 import overviewServices from "../../services/overview.services";
 import experienceServices from "../../services/experience.services";
 import educationServices from "../../services/education.services";
+import companyServices from "../../services/company.services";
 
 function MyCompanyProfile() {
   const { user, updateUser } = useAuth();
