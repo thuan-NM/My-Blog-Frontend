@@ -27,6 +27,7 @@ import postServices from "../../services/post.services";
 import overviewServices from "../../services/overview.services";
 import experienceServices from "../../services/experience.services";
 import educationServices from "../../services/education.services";
+import companyServices from "../../services/company.services";
 
 function MyCompanyProfile() {
 	const { user, updateUser } = useAuth();
@@ -54,6 +55,7 @@ function MyCompanyProfile() {
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
+				const response = await companyServices.getCompaniesList();
 				// const postResponse = await postServices.getJobsWithUser(decodedToken.userId)
 				// const overviewResponse = await overviewServices.getOverviewWithUserID(decodedToken.userId)
 				// const experiencesResponse = await experienceServices.getExperiencesWithUserId(decodedToken.userId)
