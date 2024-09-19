@@ -14,7 +14,7 @@ const ConversationBox = ({ datauser, isChatting, setIsChatting }) => {
   useEffect(() => {
     const roomId = [user._id, datauser._id].sort().join("_"); // Tạo room ID duy nhất cho cuộc trò chuyện
 
-    socketRef.current = io("https://my-blog-server-696m.onrender.com", {
+    socketRef.current = io("http://localhost:3001", {
       query: { userId: user._id },
     });
 
@@ -37,7 +37,7 @@ const ConversationBox = ({ datauser, isChatting, setIsChatting }) => {
     // Lấy tất cả tin nhắn từ cơ sở dữ liệu khi mở cuộc trò chuyện
     const fetchMessages = async () => {
       try {
-        const response = await axios.get(`https://my-blog-server-696m.onrender.com/messages/${roomId}`);
+        const response = await axios.get(`http://localhost:3001/messages/${roomId}`);
         setReceivedMessages(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -73,7 +73,12 @@ const ConversationBox = ({ datauser, isChatting, setIsChatting }) => {
   };
 
   return (
-    <div className={`conversation-box ${isChatting ? "active animate__zoomIn" : "animate__zoomOut"}`}>
+    <div
+      className={`conversation-box ${isChatting
+        ? "active animate__animated animate__faster zoomIn"
+        : "animate__animated animate__faster zoomOut"
+        }`}
+    >
       <div className="con-title mg-3">
         <div className="chat-user-info">
           <img src={datauser.profilePictureUrl || `images/userava.jpg`} alt="" />
