@@ -30,7 +30,7 @@ import educationServices from "../../services/education.services";
 import companyServices from "../../services/company.services";
 
 function MyCompanyProfile() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, role } = useAuth();
   const storedToken = localStorage.getItem("token");
   const decodedToken = jwtDecode(storedToken);
   const [activeButton, setActiveButton] = useState("feed");
@@ -56,12 +56,12 @@ function MyCompanyProfile() {
     const fetchPost = async () => {
       try {
         // const postResponse = await postServices.getJobsWithUser(decodedToken.userId)
-        // const overviewResponse = await overviewServices.getOverviewWithUserID(decodedToken.userId)
+        const overviewResponse = await overviewServices.getOverviewWithCompanyID(decodedToken.companyId)
         // const experiencesResponse = await experienceServices.getExperiencesWithUserId(decodedToken.userId)
         // const educationResponse = await educationServices.getEducationsWithUserId(decodedToken.userId)
         // setEducations(educationResponse.data)
         // setExperiences(experiencesResponse.data)
-        // setOverview(overviewResponse.data)
+        setOverview(overviewResponse.data)
         // setPosts(postResponse.data);
         setIsLoading(false);
       } catch (error) {}
@@ -69,7 +69,7 @@ function MyCompanyProfile() {
     fetchPost();
   }, [posts, user, overview, experiences, educations]);
 
-  if (isLoading) {
+  if (!user) {
     return (
       <div className="process-comm">
         <div className="spinner">
@@ -422,6 +422,7 @@ function MyCompanyProfile() {
                       />
                       <OverviewModal
                         user={user}
+                        role={role}
                         isOverviewModalOpen={isOverviewModalOpen}
                         setIsOverviewModalOpen={setIsOverviewModalOpen}
                         setOverview={setOverview}
