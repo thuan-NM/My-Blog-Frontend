@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
-import ImgCrop from 'antd-img-crop';
+import { Upload } from 'antd';
 import { message } from 'antd';
-import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
 import userServices from '../../services/user.services';
 import companyServices from '../../services/company.services';
-import { jwtDecode } from "jwt-decode";
 
 const CoverPicture = ({ user }) => {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
     const [isModalCoverPicOpen, setIsModalCoverPicOpen] = useState(false);
-    const { updateUser } = useAuth();
+    const { updateUser,role } = useAuth();
     const handleCoverImageChange = (info) => {
         if (info.file.status === 'done') {
             setSelectedCoverImage(info.file.originFileObj);
@@ -25,12 +22,10 @@ const CoverPicture = ({ user }) => {
                 console.error('Please choose an image');
                 return;
             }
-            const token = localStorage.getItem('token')
-            const decodedToken = jwtDecode(token);
             const formData = new FormData();
             formData.append('coverPicture', selectedCoverImage);
 
-            if (decodedToken.companyId) {
+            if (role =="company") {
                 const response = await companyServices.updateCoverPictureWithId(formData, user._id);
             } else {
                 const response = await userServices.updateCoverPictureWithId(formData, user._id);
