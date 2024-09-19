@@ -1348,8 +1348,27 @@ main {
 	border-right: 1px solid #e4e4e4;
 	border-bottom: 1px solid #e4e4e4;
 	margin-bottom: 20px;
-	padding: 20px;
+	padding: 20px !important;
 	box-shadow: 0px 2px #e4e4e4;
+	-webkit-transition: all 0.4s ease-out;
+	-moz-transition: all 0.4s ease-out;
+	-ms-transition: all 0.4s ease-out;
+	-o-transition: all 0.4s ease-out;
+	transition: all 0.4s ease-out;
+}
+
+.post-bar:hover {
+	transform: scale(1.005);
+	-webkit-transition: all 0.2s ease-in;
+	-moz-transition: all 0.2s ease-in;
+	-ms-transition: all 0.2s ease-in;
+	-o-transition: all 0.2s ease-in;
+	transition: all 0.2s ease-in;
+	box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+.ant-card-body {
+	padding: 10px !important;
 }
 
 .ant-modal-body .post-bar {
@@ -1397,12 +1416,17 @@ main {
 }
 
 .usy-dt img {
+	width: 55px;
+	height: 55px;
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
-	border-radius: 100px;
-	margin-top: 2px;
+	border-radius: 100%;
+	background-color: transparent;
+	padding: 6px !important;
+	object-fit: scale-down;
+	border: 2px solid #bdbdbd;
 }
 
 .ed-opts {
@@ -1465,8 +1489,9 @@ main {
 
 .usy-name {
 	float: left;
-	margin-left: 20px !important;
-	height: 100% !important;
+	margin-left: 10px !important;
+	max-width: 85%;
+	min-width: 70%;
 }
 
 .usy-name h3 {
@@ -1475,7 +1500,14 @@ main {
 	text-transform: capitalize;
 	font-weight: 600;
 	margin-bottom: 5px;
-	margin-top: 2px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+
 }
 
 .ant-modal-body .usy-name h3 {
@@ -1668,13 +1700,13 @@ main {
 	font-weight: 600;
 }
 
-.job_descp > p {
-    color: #666666;
-    font-size: 15px;
-    line-height: 24px;
+.job_descp>p {
+	color: #666666;
+	font-size: 15px;
+	line-height: 24px;
 	font-weight: 600 !important;
-    margin-bottom: 5px;
-    white-space: pre-line !important; 
+	margin-bottom: 5px;
+	white-space: pre-line !important;
 }
 
 .job_descp>p a {
@@ -1699,9 +1731,23 @@ main {
 
 .skill-tags li a {
 	display: inline-block;
-	color: #b2b2b2 !important;
+	color: #9d9c9c !important;
 	font-size: 14px;
 	background-color: #f1f1f1;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	padding: 7px 15px;
+	font-weight: 500;
+}
+
+.skill-tags li a.worktype {
+	display: inline-block;
+	color: #35A355 !important;
+	font-size: 14px;
+	background-color: #E6FFF3;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	-ms-border-radius: 30px;
@@ -1720,7 +1766,6 @@ main {
 
 .like-com {
 	float: left;
-	margin-top: 20px;
 }
 
 /* .like-com li {
@@ -1732,8 +1777,6 @@ main {
 	font-size: 14px;
 	font-weight: 500;
 	float: left;
-	margin-top: 6px;
-	margin-right: 5px;
 	-webkit-transition: all 0.15s ease-out !important;
 	-moz-transition: all 0.15s ease-out !important;
 	-ms-transition: all 0.15s ease-out !important;
@@ -1766,9 +1809,7 @@ main {
 
 .like-com button i {
 	margin-right: 2px;
-	font-size: 18px;
-	position: relative;
-	top: 2px;
+	font-size: 30px;
 }
 
 .like-com button i.active {
@@ -2331,6 +2372,24 @@ main {
 	text-overflow: ellipsis;
 	word-wrap: break-word;
 	white-space: pre-wrap;
+}
+
+.job_description {
+	color: #686868;
+	line-height: 20px;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	margin-left: 5px;
+}
+
+.job-description p {
+	font-size: 16px !important;
 }
 
 .hr-rate {
@@ -2901,9 +2960,11 @@ select {
 	-o-transition: all 0.2s ease-out;
 	transition: all 0.2s ease-out;
 }
-.icon-success{
+
+.icon-success {
 	color: #01b13f;
 }
+
 .verifybutton:hover {
 	color: #ffffff;
 	background-color: #db7769;
@@ -4499,7 +4560,7 @@ a:hover {
 	margin-bottom: 20px;
 }
 
-.step_btn{
+.step_btn {
 	padding: 0;
 	margin: 14px 14px !important;
 }
@@ -4954,14 +5015,14 @@ a:hover {
 }
 
 .chatbox {
-	
+
 	margin-right: 13px;
 	position: relative;
 }
 
 .chat-mg {
 	display: inline-block;
-	
+
 }
 
 .chat-mg img {
@@ -8467,6 +8528,7 @@ ul#myTab {
 	-o-border-radius: 0px 3px 3px 0px;
 	border-radius: 0px 3px 3px 0px;
 }
+
 .hidden {
 	visibility: hidden !important;
 }
@@ -8474,17 +8536,19 @@ ul#myTab {
 .chat-bubble {
 	display: inline-block;
 	position: relative;
-}
-
-.chat-bubble img {
-	width: 70px;
-	height: 70px;
+	width: 80px;
+	height: 80px;
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
-	border-radius: 100px;
+	border-radius: 100%;
 	background-color: white;
+}
+
+.chat-bubble img {
+	object-fit: scale-down !important;
+	padding: 10px;
 }
 
 .conversations-list {
@@ -8552,8 +8616,8 @@ ul#myTab {
 	background-color: #fcfcfc;
 	display: flex;
 	flex-direction: row;
-	
-	padding:4px;
+
+	padding: 4px;
 	border-bottom: 1px solid #c1c4c7;
 	-webkit-transition: all 0.3s ease-out;
 	-moz-transition: all 0.3s ease-out;
@@ -8615,4 +8679,22 @@ ul#myTab {
 
 .conversations-active {
 	background-color: #c5c0c6;
+}
+
+.clockitem {
+	width: 15px;
+	height: 15px;
+	margin: 0px !important;
+	margin-right: 5px !important;
+}
+
+.priceitem {
+	color: black !important;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.price {
+	color: grey !important;
+	font-size: 16px;
 }

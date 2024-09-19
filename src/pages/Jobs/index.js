@@ -23,19 +23,15 @@ function Jobs() {
     const [minInputValue, setMinInputValue] = useState(0)
     const [maxInputValue, setMaxInputValue] = useState(500000)
     const [skills, setSkills] = useState("");
-    const [typeOfJob, setTypeOfJob] = useState("");
     const [workType, setWorkType] = useState("");
-    const [country, setCountry] = useState("");
+    const [location, setLocation] = useState("");
     const [input, setInput] = useState(true);
-    const [experience, setExperience] = useState("");
     const defaultFilter = {
         skills: [""],
-        typeOfJob: "",
         workType: "",
         minInputValue: 0,
         maxInputValue: 500000,
-        country: "",
-        experience: ""
+        location: "",
     }
     const [filter, setFilter] = useState(defaultFilter);
 
@@ -48,9 +44,9 @@ function Jobs() {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const postResponse = await postServices.getFilterPost(filter,{
+                const postResponse = await postServices.getFilterPost(filter, {
                     Authorization: `Bearer ${token}`,
-                  });
+                });
                 setPosts(postResponse.data);
                 settotalPages(postResponse.data.totalPages)
                 setIsLoading(false);
@@ -88,12 +84,10 @@ function Jobs() {
         e.preventDefault()
         const newfilter = {
             skills: skills.split(","),
-            typeOfJob: typeOfJob,
             workType: workType,
             minInputValue: minInputValue,
             maxInputValue: maxInputValue,
-            country: country,
-            experience: experience,
+            location: location,
         }
         setFilter(newfilter)
     }
@@ -131,7 +125,7 @@ function Jobs() {
                                                     <input type="text" name="search-skills" placeholder="Tìm skills ..." value={skills} onChange={(e) => { setSkills(e.target.value) }} />
                                                 </form>
                                             </div>
-                                            <div className="filter-dd">
+                                            {/* <div className="filter-dd">
                                                 <div className="filter-ttl">
                                                     <h3>Loại hợp đồng</h3>
                                                     <button onClick={() => setTypeOfJob("")}>Xóa</button>
@@ -145,7 +139,7 @@ function Jobs() {
                                                     </select>
                                                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                 </form>
-                                            </div>
+                                            </div> */}
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
                                                     <h3>Loại hình công việc</h3>
@@ -154,7 +148,7 @@ function Jobs() {
                                                 <form className="job-tp">
                                                     <select onChange={(e) => setWorkType(e.target.value)} value={workType}>
                                                         <option>Chọn loại hình</option>
-                                                        <option>Onsite</option>
+                                                        <option>At office</option>
                                                         <option>Remote</option>
                                                         <option>Hybrid</option>
                                                     </select>
@@ -188,7 +182,7 @@ function Jobs() {
                                                     <h4>1000+</h4>
                                                 </div>
                                             </div>
-                                            <div className="filter-dd">
+                                            {/* <div className="filter-dd">
                                                 <div className="filter-ttl">
                                                     <h3>Kinh nghiệm</h3>
                                                     <button onClick={() => { setExperience("") }}>Xóa</button>
@@ -205,22 +199,22 @@ function Jobs() {
                                                     </select>
                                                     <i className="fa fa-ellipsis-v" aria-hidden="true"></i>
                                                 </form>
-                                            </div>
+                                            </div> */}
                                             <div className="filter-dd">
                                                 <div className="filter-ttl">
                                                     <h3>Khu vực</h3>
-                                                    <button onClick={() => { setCountry("") }}>Xóa</button>
+                                                    <button onClick={() => { setLocation("") }}>Xóa</button>
                                                 </div>
                                                 <form className="job-tp">
                                                     {input ? (
-                                                        <select onChange={(e) => { setCountry(e.target.value) }} value={country}>
+                                                        <select onChange={(e) => { setCountry(e.target.value) }} value={location}>
                                                             <option value={""}>Chọn một khu vực</option>
                                                             <option>Mỹ</option>
                                                             <option>Anh</option>
                                                             <option>Việt Nam</option>
                                                         </select>
                                                     ) : (
-                                                        <input placeholder="Nhập tên khu vực" value={country} onChange={(e) => { setCountry(e.target.value) }}></input>
+                                                        <input placeholder="Nhập tên khu vực" value={location} onChange={(e) => { setLocation(e.target.value) }}></input>
                                                     )}
                                                     <button className="search-btn" onClick={handleFilter}>Lọc</button>
                                                 </form>
@@ -264,7 +258,7 @@ function Jobs() {
                                                                 <TopProfile />
                                                             </div>
                                                         </div>)}
-                                                    <PostItem post={post}></PostItem>
+                                                    <PostItem post={post} key={post._id}></PostItem>
                                                 </React.Fragment>
                                             ))}
                                         </div>

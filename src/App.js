@@ -58,7 +58,7 @@ function App() {
           <Route path="/companyauth" element={<CompanyAuth />} />
         </Routes>
         {!isAuthPage}
-        {/* {!isAuthPage && <ChatBox />} */}
+        {!isAuthPage && <ChatBox />}
       </QueryClientProvider>
     </div>
   );

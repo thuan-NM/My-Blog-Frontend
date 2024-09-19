@@ -4,14 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import ConversationBox from "../ConversationBox";
 
 const ChatComponent = ({ datauser, activeConversation, setActiveConversation }) => {
-  const { user } = useAuth();
-  const [socket, setSocket] = useState(null);
-  const [message, setMessage] = useState("");
-  const [receivedMessages, setReceivedMessages] = useState([]);
-
-  const newSocket = new WebSocket(
-    "wss://my-blog-server-696m.onrender.com?user-id=" + user._id
-  );
 
   const handleChat = (e) => {
     e.preventDefault();
