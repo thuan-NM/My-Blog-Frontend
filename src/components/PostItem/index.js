@@ -6,10 +6,10 @@ import { useAuth } from '../../contexts/AuthContext';
 import Comment from '../Comment';
 import ApplyModal from '../ApplyModal';
 import { jwtDecode } from 'jwt-decode';
+import { Avatar, Card, Flex } from 'antd';
 import reactionServices from '../../services/reaction.services';
 import commentServices from '../../services/comment.services';
 import jobstatusServices from '../../services/jobstatus.services';
-
 
 const PostItem = ({ post, handleHashtags }) => {
   const { handleDelete } = usePost();
@@ -90,81 +90,130 @@ const PostItem = ({ post, handleHashtags }) => {
   const paragraphs = post.description.split('\n')
 
   return (
-    <div className="post-bar">
-      <div className="post_topbar">
-        <Link to={`/userprofile/${post.author.userdata._id}`} className="usy-dt">
-          <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
-            height="40" />
-          <div className="usy-name">
-            <h3>{post.author.userdata.firstName} {post.author.userdata.lastName}</h3>
-            <span><img src="images/clock.png" alt="" />{new Date(post.createdAt).toLocaleString()}</span>
-          </div>
-        </Link>
-      </div>
-      <div className="epi-sec">
-        <ul className="descp">
-          <li><img src="images/icon8.png" alt="" /><span>{post.experience}</span></li>
-          <li><img src="images/icon9.png" alt="" /><span>{post.author.userdata.country}</span></li>
-        </ul>
-        <ul className="bk-links">
-          <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
-          <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
-          {
-            (user._id !== post.author.userdata._id) && (applicationStatus != "guest") ? (
-              <li>
-                <Button
-                  className="bid_now"
-                  onClick={showModal}
-                  disabled={applicationStatus && applicationStatus !== 'Denied'}
-                >
-                  {applicationStatus && applicationStatus !== 'Denied' ? 'Đã nộp' : 'Ứng tuyển'}
-                </Button>
-              </li>
-            ) : <li></li>
-          }
-        </ul>
-      </div>
-      <div className="job_descp">
-        <h3>{post.title}</h3>
-        <ul className="job-dt">
-          <li><a href="#" title="">{post.typeOfJob}</a></li>
-          <li><span>${post.price} / giờ</span></li>
-        </ul>
-        {paragraphs.map((p) => (
-          <p key={p}>- {p}</p>
-        ))}
-        {/* <p>{post.description}</p> */}
-        <ul className="skill-tags">
-          {post.skills.map((item) => (
-            <li onClick={() => handleHashtags(item)} key={item}>
-              <a>{item}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="job-status-bar">
-        <div className="like-com">
-          <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i>Yêu thích</button>
-          <span className="ms-1 me-4">{reactionStats.totalReactions}</span>
-          <button onClick={() => setIsCommentFieldOpen(!isCommentFieldOpen)}><i className="fas fa-comment-alt"></i>Bình luận {comments.totalComments}</button>
-        </div>
-        <a href="#"><i className="fas fa-eye"></i>Lượt xem: 50</a>
-      </div>
-      {isCommentFieldOpen && <Comment postId={post._id} />}
-      <>
-        <Modal
-          title="Thông tin ứng tuyển"
-          open={open}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          width={800}
-          footer={[]}
-        >
-          <ApplyModal postId={post._id} onOk={handleOk} />
-        </Modal>
-      </>
+    // <div className="post-bar">
+    //   <div className="post_topbar">
+    //     <Link to={`/userprofile/${post.author.userdata._id}`} className="usy-dt">
+    //       <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
+    //         height="40" />
+    //       <div className="usy-name">
+    //         <h3>{post.author.userdata.firstName} {post.author.userdata.lastName}</h3>
+    //         <span><img src="images/clock.png" alt="" />{new Date(post.createdAt).toLocaleString()}</span>
+    //       </div>
+    //     </Link>
+    //   </div>
+    //   <div className="epi-sec">
+    //     <ul className="descp">
+    //       <li><img src="images/icon8.png" alt="" /><span>{post.experience}</span></li>
+    //       <li><img src="images/icon9.png" alt="" /><span>{post.author.userdata.country}</span></li>
+    //     </ul>
+    //     <ul className="bk-links">
+    //       <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
+    //       <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
+    //       {
+    //         (user._id !== post.author.userdata._id) && (applicationStatus != "guest") ? (
+    //           <li>
+    //             <Button
+    //               className="bid_now"
+    //               onClick={showModal}
+    //               disabled={applicationStatus && applicationStatus !== 'Denied'}
+    //             >
+    //               {applicationStatus && applicationStatus !== 'Denied' ? 'Đã nộp' : 'Ứng tuyển'}
+    //             </Button>
+    //           </li>
+    //         ) : <li></li>
+    //       }
+    //     </ul>
+    //   </div>
+    //   <div className="job_descp">
+    //     <h3>{post.title}</h3>
+    //     <ul className="job-dt">
+    //       <li><a href="#" title="">{post.typeOfJob}</a></li>
+    //       <li><span>{post.price} / giờ</span></li>
+    //     </ul>
+    //     {/* {paragraphs.map((p) => (
+    //       <p key={p}>- {p}</p>
+    //     ))} */}
+    //     {/* <p>{post.description}</p> */}
+    //     <ul className="skill-tags">
+    //       {post.skills.map((item) => (
+    //         <li onClick={() => handleHashtags(item)} key={item}>
+    //           <a>{item}</a>
+    //         </li>
+    //       ))}
+    //     </ul>
+    //   </div>
+    //   <div className="job-status-bar">
+    //     <div className="like-com">
+    //       <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i>Yêu thích</button>
+    //       <span className="ms-1 me-4">{reactionStats.totalReactions}</span>
+    //       <button onClick={() => setIsCommentFieldOpen(!isCommentFieldOpen)}><i className="fas fa-comment-alt"></i>Bình luận {comments.totalComments}</button>
+    //     </div>
+    //     <a href="#"><i className="fas fa-eye"></i>Lượt xem: 50</a>
+    //   </div>
+    //   {isCommentFieldOpen && <Comment postId={post._id} />}
+    //   <>
+    //     <Modal
+    //       title="Thông tin ứng tuyển"
+    //       open={open}
+    //       onOk={handleOk}
+    //       onCancel={handleCancel}
+    //       width={800}
+    //       footer={[]}
+    //     >
+    //       <ApplyModal postId={post._id} onOk={handleOk} />
+    //     </Modal>
+    //   </>
 
-    </div>
+    // </div>
+    <Card
+      bordered={false}
+      className='post-bar'>
+      <div className='d-flex flex-column'>
+        <div className='d-flex justify-content-between align-items-center'>
+          <div>
+            <Link to={`/userprofile/${post.author.userdata._id}`} className="usy-dt">
+              <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
+                height="40" />
+              <div className="usy-name">
+                <h3>{post.title}</h3>
+                <span>{post.author.userdata.companyname}</span>
+              </div>
+            </Link>
+          </div>
+          <div className="like-com">
+            <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i></button>
+          </div>
+        </div>
+        <hr className='border-2 border-dark-subtle' />
+        <div>
+          <ul className="skill-tags">
+            {post.skills.map((item) => (
+              <li onClick={() => handleHashtags(item)} key={item}>
+                <a>{item}</a>
+              </li>
+            ))}
+            <li><a className='worktype'>
+              {post.workType}
+            </a></li>
+          </ul>
+        </div>
+        <div className='job_description'>
+          {paragraphs.map((p) => (
+            <p  key={p}>- {p}</p>
+          ))}
+        </div>
+        <hr className='border-2 border-dark-subtle' />
+        <div className='d-flex justify-content-between mx-2'>
+          <div>
+            <li><span className='price'><strong className='priceitem'>${post.price}/</strong>giờ</span></li>
+          </div>
+          <div className='d-flex align-items-center'>
+            <img src="images/clock.png" className='clockitem' width={15} height={15} />
+            <span className='ml-3 price'>{new Date(post.createdAt).toLocaleString()}</span>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };
 
