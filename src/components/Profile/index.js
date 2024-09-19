@@ -6,6 +6,7 @@ import { message } from 'antd';
 import userServices from '../../services/user.services';
 import companyServices from '../../services/company.services';
 import followServices from '../../services/follow.services';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -87,7 +88,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `images/userava.jpg`} />
-        {(user._id === decodedToken.userId || user._id === decodedToken.companyId) && (
+        {(user._id === user.userId || user._id === user.companyId) && (
           <div className="add-dp" id="OpenImgUpload">
             <label>
               <i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i>
