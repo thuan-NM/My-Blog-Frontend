@@ -24,7 +24,7 @@ const MostInterest = () => {
         return <p>Loading...</p>;
     }
 
-    if (user == null || user.friendRequests == null) {
+    if (user == null) {
         return <p>No results found1.</p>;
     }
     return (

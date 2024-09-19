@@ -4654,7 +4654,7 @@ a:hover {
 }
 
 .company-up-info h3 {
-	align-self: ;
+	align-self:center;
 	height: 25px;
 	color: #000000;
 	font-size: 18px;
@@ -8708,4 +8708,22 @@ ul#myTab {
 	background-color: #f8f8f8;
 	object-fit: contain;
 	border-radius: 100%;
+}
+
+.clockitem {
+	width: 15px;
+	height: 15px;
+	margin: 0px !important;
+	margin-right: 5px !important;
+}
+
+.priceitem {
+	color: black !important;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.price {
+	color: grey !important;
+	font-size: 16px;
 }

@@ -22,7 +22,8 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [totalPages, settotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth()
+  const { user, role } = useAuth()
+  console.log(role)
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -38,8 +39,15 @@ function Home() {
     fetchPost();
   }, [posts]);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
+  if (isLoading || role == null) {
+    return (
+      <div className="process-comm">
+        <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      </div>)
   }
   const handleShowJobModal = (e) => {
     e.preventDefault();
@@ -57,7 +65,7 @@ function Home() {
             <div className="row">
               <div className="col-lg-3 col-md-4 pd-left-none no-pd">
                 <div className="main-left-sidebar no-margin">
-                  <UserCard user={user}/>
+                  <UserCard user={user} />
                   <Suggestions />
                   <div className="tags-sec full-width">
                     <ul>
@@ -80,17 +88,20 @@ function Home() {
               </div>
               <div className="col-lg-6 col-md-8 no-pd">
                 <div className="main-ws-sec">
-                  <div className="post-topbar">
-                    <div className="user-picy">
-                      <img src={user.profilePictureUrl || `images/userava.jpg`} />
-                    </div>
-                    <div className="post-st">
-                      <ul>
-                        <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
-                        <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
-                      </ul>
-                    </div>
-                  </div>
+                  {role === "company" ?
+                    (<div className="post-topbar">
+                      <div className="user-picy">
+                        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+                      </div>
+                      <div className="post-st">
+                        <ul>
+                          <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
+                          <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
+                        </ul>
+                      </div>
+                    </div>) : (<div className="post-topbar"><div className="user-picy">
+                      <img src="images/myfavicon.png" alt="" />
+                    </div></div>)}
                   <div className="posts-section">
                     {posts.map((post, index) => (
                       <React.Fragment key={post._id}>

@@ -43,8 +43,15 @@ const AuthProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const login = (userData, token) => {
+  const login = async (userData, token) => {
     setUser(userData);
+    if (!userData.companyId) {
+      setRole('user');
+    }
+    else {
+      setRole('company')
+
+    }
     localStorage.setItem('token', token);
     updateUser();
   };

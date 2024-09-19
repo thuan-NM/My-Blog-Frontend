@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Upload } from 'antd';
+import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { message } from 'antd';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
 import userServices from '../../services/user.services';
 import companyServices from '../../services/company.services';
 import followServices from '../../services/follow.services';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const storedToken = localStorage.getItem('token');
-  const decodedToken = jwtDecode(storedToken);
   const [followers, setFollowers] = useState({})
   const [following, setFollowing] = useState({})
   const [isLoading, setIsLoading] = useState(true);
+  const { role } = useAuth();
   useEffect(() => {
     const fetchFollow = async () => {
       try {
@@ -49,7 +46,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       formData.append('profilePicture', selectedImage);
 
       // Determine whether to use userServices or companyServices based on the token
-      if (decodedToken.companyId) {
+      if (role=="company") {
         const response = await companyServices.updatePictureWithId(formData, user._id);
       } else {
         const response = await userServices.updatePictureWithId(formData, user._id);

@@ -24,6 +24,7 @@ const TopProfile = () => {
             try {
                 const usersResponse = await userServices.getUsersList();
                 setData(usersResponse.data);
+                console.log(usersResponse.data)
                 setIsLoading(false);
             } catch (error) {
                 setIsLoading(false);
@@ -43,7 +44,7 @@ const TopProfile = () => {
             </div>)
     }
 
-    if (user == null || user.friendRequests == null) {
+    if (user == null || isLoading) {
         return <p>No results found1.</p>;
     }
     return (
