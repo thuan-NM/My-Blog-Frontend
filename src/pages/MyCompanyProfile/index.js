@@ -69,7 +69,7 @@ function MyCompanyProfile() {
     fetchPost();
   }, [posts, user, overview, experiences, educations]);
 
-  if (!user) {
+  if (!user||isLoading) {
     return (
       <div className="process-comm">
         <div className="spinner">
@@ -81,9 +81,6 @@ function MyCompanyProfile() {
     );
   }
 
-  if (user == null) {
-    return <p>No results found1.</p>;
-  }
   return (
     <div
       className={`${
@@ -320,13 +317,6 @@ function MyCompanyProfile() {
                               <PostItem key={post._id} post={post} />
                             )
                         )}
-                        <div className="process-comm">
-                          <div className="spinner">
-                            <div className="bounce1"></div>
-                            <div className="bounce2"></div>
-                            <div className="bounce3"></div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                     <div

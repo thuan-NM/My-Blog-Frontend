@@ -38,7 +38,7 @@ function Home() {
     };
     fetchPost();
   }, [posts]);
-
+  
   if (isLoading || role == null) {
     return (
       <div className="process-comm">
