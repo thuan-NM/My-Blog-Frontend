@@ -35,17 +35,17 @@ function Companies() {
       </div>)
   }
 
-  if (user == null || user.friendRequests == null) {
+  if (user == null) {
     return <p>No results found1.</p>;
   }
   return (
-    <section class="companies-info">
-      <div class="container">
-        <div class="company-title">
+    <section className="companies-info">
+      <div className="container">
+        <div className="company-title">
           <h3>All Companies</h3>
         </div>
-        <div class="companies-list">
-          <div class="row">
+        <div className="companies-list">
+          <div className="row">
             {data.map((curCompany) =>
             // Check if the user is logged in before displaying the information
             (user && user._id && user._id != curCompany._id && (
@@ -60,11 +60,11 @@ function Companies() {
             )}
           </div>
         </div>
-        <div class="process-comm">
-          <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+        <div className="process-comm">
+          <div className="spinner">
+            <div className="bounce1"></div>
+            <div className="bounce2"></div>
+            <div className="bounce3"></div>
           </div>
         </div>
       </div>
