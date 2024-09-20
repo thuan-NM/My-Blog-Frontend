@@ -19,6 +19,9 @@ class PostServices {
     async getJobsWithUser(id) {
         return (await this.api.get(`/user/${id}`)).data;
     }
+    async getJobsWithId(id) {
+        return (await this.api.get(`/${id}`)).data;
+    }
     async postJob(data,header) {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

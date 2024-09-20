@@ -30,6 +30,7 @@ import MyCompanyProfile from "./pages/MyCompanyProfile";
 import VerifyEmail from "./pages/VerifyEmail";
 import SignUpCompany from "./components/SignUpCompany";
 import CompanyAuth from "./pages/CompanyAuth";
+import JobDetail from "./pages/JobDetail";
 const queryClient = new QueryClient()
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
           <Route path="/companyauth" element={<CompanyAuth />} />
+          <Route path="/jobdetail/:postId" element={<JobDetail/>}/>
         </Routes>
         {!isAuthPage}
         {!isAuthPage && <ChatBox />}
