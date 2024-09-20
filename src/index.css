@@ -34,7 +34,7 @@
 								Fonts
 ===================================================================================== */
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
 /* ================================================================================== 
 										Reset Css
@@ -146,7 +146,8 @@ section {
 
 body {
 	line-height: 1;
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Lexend', sans-serif;
+	font-style: normal;
 	overflow-x: hidden;
 	font-weight: 400;
 	background-color: #f2f2f2 !important;
@@ -318,6 +319,7 @@ nav ul li:hover>ul,
 .post-project-fields form ul li button,
 .post-project-fields form ul li a,
 .signin-pop,
+.job-recomend,
 .sign-control,
 .sign_in_sec form input,
 .sign_in_sec form select,
@@ -336,6 +338,7 @@ nav ul li:hover>ul,
 .overview-edit form select,
 .overview-edit button,
 .file-submit,
+.detail_sec,
 .billing-method,
 .lt-sec>a,
 .add-billing-method,
@@ -3420,11 +3423,11 @@ a {
 
 .user-pro-img>img {
 	background-color: #f8f8f8;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: contain !important;
-    border-radius: 100% !important;
-    background-color: #fff;
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: contain !important;
+	border-radius: 100% !important;
+	background-color: #fff;
 }
 
 .user-pro-img .add-dp {
@@ -4654,7 +4657,7 @@ a:hover {
 }
 
 .company-up-info h3 {
-	align-self:center;
+	align-self: center;
 	height: 25px;
 	color: #000000;
 	font-size: 18px;
@@ -8697,8 +8700,8 @@ ul#myTab {
 }
 
 .company-item-avt {
-	width:130px;
-	height:130px;
+	width: 130px;
+	height: 130px;
 	margin-bottom: 10px;
 }
 
@@ -8726,4 +8729,236 @@ ul#myTab {
 .price {
 	color: grey !important;
 	font-size: 16px;
+}
+
+.job-recomend {
+	padding: 12px;
+	margin: 12px 0px;
+}
+
+.job_picture img {
+	width: 55px;
+	height: 55px;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	-ms-border-radius: 100px;
+	-o-border-radius: 100px;
+	border-radius: 100%;
+	background-color: transparent;
+	padding: 6px !important;
+	object-fit: scale-down;
+	border: 2px solid #bdbdbd;
+}
+
+.job_recomend_dt {
+	float: left;
+	margin-left: 10px !important;
+	max-width: 70%;
+	min-width: 55%;
+}
+
+.job_recomend_dt h3 {
+	color: #000000;
+	font-size: 12px;
+	text-transform: capitalize;
+	font-weight: 600;
+	margin-bottom: 5px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+}
+
+.job_recomend_dt span {
+	color: #b2b2b2;
+	font-size: 12px;
+	text-transform: capitalize;
+	font-weight: 600;
+	margin-bottom: 5px;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre-wrap
+}
+
+.job_recomend_dt img {
+	margin-top: 4px;
+	margin-right: 6px;
+}
+
+.job_recomend_dt .bklink img {
+	margin-top: 1px;
+	margin-right: 6px;
+}
+
+.job_reco-skills {
+	float: left;
+	width: 100%;
+	margin-bottom: 15px;
+
+}
+
+.job_reco-skills li {
+	display: inline-block;
+	margin-right: 6px;
+	margin-bottom: 10px;
+}
+
+.job_reco-skills li a {
+	display: inline-block;
+	color: #9d9c9c !important;
+	font-size: 10px;
+	background-color: #f1f1f1;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	padding: 5px 8px;
+	font-weight: 500;
+}
+
+.job_reco-skills li a.worktype {
+	display: inline-block;
+	color: #35A355 !important;
+	font-size: 10px;
+	background-color: #E6FFF3;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	padding: 5px 8px;
+	font-weight: 500;
+}
+
+.job_description_recomend {
+	color: #686868;
+	line-height: 20px;
+	text-align: left;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	margin-left: 5px;
+}
+
+.detail_sec {
+	padding: 30px 26px;
+	background-color: white !important;
+}
+
+.detail_sec h2 {
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 42px;
+	color: rgb(18, 18, 18);
+	margin-bottom: 20px;
+}
+
+.detail_sec .detail_companyname {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 24px;
+	color: rgb(65, 64, 66);
+	margin-bottom: 20px;
+}
+
+.detail_sec .detail_companyname i {
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 24px;
+	color: #BDBDBD !important;
+	margin-right: 8px;
+}
+
+.detail_sec .detail_price {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 27px;
+	color: rgb(65, 64, 66);
+	margin-bottom: 20px;
+	text-decoration: underline;
+}
+
+.detail_sec .detail_price i {
+	margin-right: 10px;
+}
+
+.detail_sec .apply_job {
+	font-size: 18px;
+	width: 92%;
+	padding: 14px;
+	border-radius: 4px;
+	border: none;
+	background-color: #E44D3A !important;
+	color: white;
+}
+
+.detail_sec .react_button {
+	color: #414042;
+	border: none;
+	background-color: transparent;
+	font-size: 48px
+}
+
+.detail_sec .job_skills {
+	margin-left: 12px;
+	float: left;
+	width: 100%;
+}
+
+.detail_sec .job_skills li {
+	display: inline-block;
+	margin-right: 12px;
+}
+
+.detail_sec .job_skills li a {
+	display: inline-block;
+	color: #9d9c9c !important;
+	font-size: 14px;
+	background-color: #f1f1f1;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	-ms-border-radius: 30px;
+	-o-border-radius: 30px;
+	border-radius: 30px;
+	padding: 8px 12px;
+	font-weight: 500;
+}
+
+.detail_sec_title {
+	font-size: 22px;
+	line-height: 33px;
+	font-weight: 700;
+	color: rgb(18, 18, 18);
+}
+
+.detail_sec .detail_job_description ul {
+	display: block;
+	list-style-type: disc;
+	margin-block-start: 0.5em;
+	margin-block-end: 0em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 20px;
+	unicode-bidi: isolate
+}
+
+.detail_sec .detail_job_description li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+	unicode-bidi: isolate;
+	font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8 !important;
 }
