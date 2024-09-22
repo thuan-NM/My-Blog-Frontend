@@ -39,43 +39,37 @@ const Header = () => {
 						<ul>
 							<li>
 								<Link to={"/"} title="">
-									<span><img src="images/icon1.png" alt="" /></span>
+									<span><i className="bi bi-house-door-fill"></i></span>
 									Trang chủ
 								</Link>
 							</li>
 							<li>
 								<Link to={"/companies"}>
-									<span><img src="images/icon2.png" alt="" /></span>
+									<span><i className="bi bi-building-fill"></i></span>
 									Công ty
 								</Link>
 							</li>
 							<li>
 								<a href="projects.html" title="">
-									<span><img src="images/icon3.png" alt="" /></span>
-									Dự án
+									<span><i className="bi bi-signal"></i></span>
+									Forum
 								</a>
 							</li>
 							<li>
 								<Link to={"/users"}>
-									<span><img src="images/icon4.png" alt="" /></span>
+									<span><i className="bi bi-people-fill"></i></span>
 									Người dùng
 								</Link>
 							</li>
 							<li>
 								<Link to={"/jobs"}>
-									<span><img src="images/icon5.png" alt="" /></span>
+									<span><i className="bi bi-briefcase-fill"></i></span>
 									Công việc
 								</Link>
 							</li>
 							<li>
-								<a href="#" title="" className="not-box-openm">
-									<span><img src="images/icon6.png" alt="" /></span>
-									Tin nhắn
-								</a>
-							</li>
-							<li>
 								<Link className="not-box-open" onClick={() => setIsNotiOpened(!isNotiOpened)}>
-									<span><img src="images/icon7.png" alt="" /></span>
+									<span><i className="bi bi-bell-fill"></i></span>
 									Thông báo
 								</Link>
 								<div className={`notification-box noti ${isNotiOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`} id="notification">
@@ -164,15 +158,8 @@ const Header = () => {
 										</div>
 									</li>
 								</ul>
-								<h3>Tùy chỉnh trạng thái</h3>
-								<div className="search_form">
-									<form>
-										<input type="text" name="search" />
-										<button type="submit">Ok</button>
-									</form>
-								</div>
 								<h3>Cài đặt</h3>
-								<ul className="us-links mb-3">
+								<ul className="us-links">
 									<li><a href="profile-account-setting.html" title="">Cài đặt tài khoản</a></li>
 									<li><a href="#" title="">Quyền riêng tư</a></li>
 									<li><a href="#" title="">Câu hỏi thường gặp</a></li>

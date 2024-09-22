@@ -18,7 +18,7 @@ const CompanyItem = ({ company, onAddFriend, onRemoveFriend, isFriend, viewed, i
             <li><a href="#" title="" className="message-us"><i className="fa fa-envelope"></i></a></li>
           </ul>
         </div>
-        <Link to={`/companyprofile/${company._id}`}>Xem trang cá nhân</Link>
+        <Link to={`/companyprofile/${company._id}`}>Xem</Link>
       </div>
     </div>
   );
