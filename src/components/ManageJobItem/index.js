@@ -5,6 +5,7 @@ import { Button, message, Modal } from 'antd';
 import CandidateManageModal from "../CandidateManageModal";
 import jobstatusServices from "../../services/jobstatus.services";
 import postServices from "../../services/post.services";
+import {ExclamationCircleOutlined } from "@ant-design/icons"
 
 const ManageJobItem = () => {
     const storedToken = localStorage.getItem('token');
@@ -35,13 +36,9 @@ const ManageJobItem = () => {
     if (jobstatus.length == 0) {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
-                <h1 className="nobody">
-                    Không có bất cứ gì!
-                </h1>
-                <div className="spinner">
-                    <div className="bounce1"></div>
-                    <div className="bounce2"></div>
-                    <div className="bounce3"></div>
+                <div className="nobody">
+                <ExclamationCircleOutlined />
+                    Không có kết quả
                 </div>
             </div>
         )
@@ -92,7 +89,7 @@ const ManageJobItem = () => {
                                                 Đóng
                                             </Button>}
                                     >
-                                        <CandidateManageModal candidates={item}/>
+                                        <CandidateManageModal candidates={item} />
                                     </Modal>
                                     <a className="clrbtn" onClick={() => handleDelete(item._id)}>
                                         <i className="far fa-trash-alt"></i>

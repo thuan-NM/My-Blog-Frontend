@@ -33,9 +33,7 @@
 /* ================================================================================== 
 								Fonts
 ===================================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 /* ================================================================================== 
 										Reset Css
 ===================================================================================== */
@@ -146,7 +144,7 @@ section {
 
 body {
 	line-height: 1;
-	font-family: 'Lexend', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	font-style: normal;
 	overflow-x: hidden;
 	font-weight: 400;
@@ -583,6 +581,10 @@ nav ul ul li a {
 	font-size: 16px;
 }
 
+nav ul li a span{
+	margin-bottom: 8px !important;
+}
+
 .notification-box.msg p {
 	line-height: 20px;
 	font-size: 14px;
@@ -907,6 +909,12 @@ nav>ul>li>a:hover {
 	color: #000;
 }
 
+.tc button {
+	padding: 10px 10px !important;
+	font-weight: 600;
+	font-size: 14px;
+}
+
 .user-info img {
 	width: 34px;
 	height: 34px;
@@ -953,7 +961,7 @@ nav>ul>li>a:hover {
 main {
 	float: left;
 	width: 100%;
-	padding: 60px 0;
+	padding: 20px 0;
 }
 
 .main-section {
@@ -1064,7 +1072,7 @@ main {
 
 .user-fw-status li h4 {
 	color: #686868;
-	font-size: 20px;
+	font-size: 17px;
 	margin-bottom: 10px;
 }
 
@@ -1099,10 +1107,10 @@ main {
 
 .sd-title i {
 	float: right;
-	color: #b7b7b7;
+	color: black;
 	font-size: 24px;
 	position: absolute;
-	right: 5px;
+	right: 20px;
 	top: 18px;
 }
 
@@ -1115,7 +1123,10 @@ main {
 .suggestion-usd {
 	float: left;
 	width: 100%;
-	padding: 15px 20px;
+	padding: 15px 20px; 
+	display: flex;
+	align-items: center !important;
+	justify-content: space-between;
 }
 
 .suggestion-usd img {
@@ -1124,31 +1135,38 @@ main {
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
 	border-radius: 100px;
-	width: 35px !important;
-	height: 35px !important;
+	width: 40px !important;
+	height: 40px !important;
 }
 
 .sgt-text {
 	float: left;
+	width: 80%;
 	padding-left: 10px;
 }
 
 .sgt-text h4 {
 	color: #000000;
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 600;
 	margin-bottom: 4px;
+	white-space: nowrap;        
+    overflow: hidden;           
+    text-overflow: ellipsis;
 }
 
 .sgt-text span {
 	color: #686868;
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .suggestion-usd>span {
 	float: right;
-	margin-top: 4px;
 	position: relative;
+}
+
+.suggestion-usd div{
+	width: 85%;
 }
 
 .suggestion-usd>span i {
@@ -1159,7 +1177,8 @@ main {
 	border: 1px solid #e5e5e5;
 	text-align: center;
 	line-height: 30px;
-	font-weight: 700;
+	font-weight: 600;
+
 	cursor: pointer;
 }
 
@@ -1173,13 +1192,14 @@ main {
 	float: left;
 	width: 100%;
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 20px;
 }
 
 .view-more>a {
 	color: #e44d3a;
 	font-size: 14px;
-	font-weight: 700;
+	margin-top: 24px;
+	font-weight: 600;
 }
 
 .view-more>a:hover {
@@ -1404,7 +1424,13 @@ main {
 .nobody {
 	margin: 40px 0px;
 	font-size: 20px;
+	font-weight: 500;
 	text-align: center;
+}
+
+.nobody span{
+	font-size: 20px !important;
+	margin-right: 10px;
 }
 
 .rep-post {
@@ -2267,9 +2293,14 @@ main {
 	width: 100%;
 }
 
+.suggestions {
+	margin-top: 0px !important; 
+}
+
 .widget {
 	float: left;
 	width: 100%;
+	margin-top: 20px;
 	background-color: #fff;
 	border-left: 1px solid #e4e4e4;
 	border-right: 1px solid #e4e4e4;
@@ -2282,8 +2313,13 @@ main {
 	box-shadow: 0px 2px #e4e4e4;
 }
 
+.widget-jobs{
+	margin-top: 0px !important;
+}
+
 .widget-about {
 	text-align: center;
+	margin-top: 0px !important;
 }
 
 .widget-about img {
@@ -2857,8 +2893,8 @@ select {
 
 .sign_in_sec h3 {
 	color: #000000;
-	font-size: 18px;
-	font-weight: 600;
+	font-size: 16px;
+	font-weight: 500;
 	position: relative;
 	padding-bottom: 10px;
 	margin-bottom: 30px;
@@ -2914,7 +2950,7 @@ select {
 	position: absolute;
 	top: 50%;
 	right: 15px;
-	font-weight: 700;
+	font-weight: 600;
 	color: #666666;
 	font-size: 15px;
 	-webkit-transform: translateY(-50%);
@@ -2948,7 +2984,7 @@ select {
 	background-color: #e44d3a;
 	padding: 8px 27px;
 	border: 0;
-	font-weight: 500;
+	font-weight: 400;
 	margin-top: 30px;
 	cursor: pointer;
 }
@@ -3208,7 +3244,7 @@ select {
 .login-resources h4 {
 	color: #000000;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 500;
 	margin-bottom: 30px;
 	text-transform: uppercase;
 }
@@ -3264,6 +3300,8 @@ select {
 	border: none;
 	padding: 6px;
 	background-color: whitesmoke;
+	font-size: 14px;
+	font-weight: 500;
 }
 
 .signin-tab {
@@ -3543,7 +3581,7 @@ a {
 
 .flw-status li {
 	display: inline-block;
-	margin-right: 50px;
+	margin-right: 20px;
 }
 
 .flw-status li:last-child {
@@ -3552,8 +3590,8 @@ a {
 
 .flw-status li span {
 	color: #686868;
-	font-size: 20px;
-	font-weight: 500;
+	font-size: 17px;
+	font-weight: 400;
 	margin-bottom: 15px;
 	display: block;
 }
@@ -3561,7 +3599,7 @@ a {
 .flw-status li b {
 	color: #000000;
 	font-size: 20px;
-	font-weight: 600;
+	font-weight: 500;
 }
 
 /* ================== social_links ============= */
@@ -3641,9 +3679,13 @@ a {
 .user-tab-sec h3 {
 	color: #000000;
 	font-size: 24px;
-	font-weight: 600;
+	font-weight: 500;
 	text-transform: capitalize;
 	margin-bottom: 15px;
+}
+
+.user-tab-sec hr {
+	margin: 3px;
 }
 
 .star-descp {
@@ -3672,8 +3714,8 @@ a {
 .star-descp span {
 	float: left;
 	color: #686868;
-	font-size: 18px;
-	font-weight: 600;
+	font-size: 16px;
+	font-weight: 400;
 	margin-right: 20px;
 }
 
@@ -3704,7 +3746,7 @@ a {
 
 .tab-feed ul li {
 	display: inline-block;
-	margin-right: 35px;
+	margin-right: 10px !important;
 	text-align: center;
 }
 
@@ -3713,7 +3755,7 @@ a {
 }
 
 .tab-feed.st2 ul li {
-	margin-right: 17px;
+	margin-right: 21px !important;
 }
 
 .tab-feed ul li:last-child {
@@ -3737,8 +3779,8 @@ a {
 .tab-feed ul li span {
 	display: block;
 	color: #b2b2b2;
-	font-weight: 400;
-	font-size: 16px;
+	font-weight: 500;
+	font-size: 15px;
 }
 
 .tab-feed ul li:last-child {
@@ -3750,16 +3792,15 @@ a {
 
 .message-btn {
 	float: right;
-	margin-top: 20px;
 	margin-bottom: 30px;
 }
 
 .message-btn a {
 	display: inline-block;
 	color: #ffffff;
-	font-size: 16px;
+	font-size: 14px;
 	background-color: #e44d3a;
-	padding: 12px;
+	padding: 14px;
 	font-weight: 500;
 }
 
@@ -5509,7 +5550,7 @@ a:hover {
 	font-size: 20px;
 	position: relative;
 	top: 2px;
-	font-weight: 700;
+	font-weight: 600;
 	width: 40px;
 }
 
@@ -8554,19 +8595,19 @@ ul#myTab {
 .chat-bubble {
 	display: inline-block;
 	position: relative;
-	width: 80px;
-	height: 80px;
+	width: 70px;
+	height: 70px;
 	-webkit-border-radius: 100px;
 	-moz-border-radius: 100px;
 	-ms-border-radius: 100px;
 	-o-border-radius: 100px;
 	border-radius: 100%;
 	background-color: white;
+	padding: 15px;
 }
 
 .chat-bubble img {
-	object-fit: scale-down !important;
-	padding: 10px;
+	object-fit: scale-down !important;	
 }
 
 .conversations-list {
@@ -8859,7 +8900,7 @@ ul#myTab {
 
 .detail_sec h2 {
 	font-size: 28px;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 42px;
 	color: rgb(18, 18, 18);
 	margin-bottom: 20px;
@@ -8883,7 +8924,7 @@ ul#myTab {
 
 .detail_sec .detail_price {
 	font-size: 18px;
-	font-weight: 700;
+	font-weight: 600;
 	line-height: 27px;
 	color: rgb(65, 64, 66);
 	margin-bottom: 20px;
@@ -8898,7 +8939,7 @@ ul#myTab {
 	font-size: 18px;
 	width: 92%;
 	padding: 14px;
-	border-radius: 4px;
+	border-radius: 4px !important;
 	border: none;
 	background-color: #E44D3A !important;
 	color: white;
@@ -8939,7 +8980,7 @@ ul#myTab {
 .detail_sec_title {
 	font-size: 22px;
 	line-height: 33px;
-	font-weight: 700;
+	font-weight: 600;
 	color: rgb(18, 18, 18);
 }
 
@@ -8959,6 +9000,6 @@ ul#myTab {
 	text-align: -webkit-match-parent;
 	unicode-bidi: isolate;
 	font-size: 16px;
-    font-weight: 400;
-    line-height: 1.8 !important;
+	font-weight: 400;
+	line-height: 1.8 !important;
 }

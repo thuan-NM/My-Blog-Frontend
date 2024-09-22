@@ -124,13 +124,13 @@ function Home() {
               <div className="col-lg-3 pd-right-none no-pd">
                 <div className="right-sidebar">
                   <div className="widget widget-about">
-                    {/* <img src="images/myfavicon.png" alt="" />
+                    <img src="images/myfavicon.png" alt="" />
                     <h3>Theo Dõi Ngay Meow IT</h3>
                     <span>Lương chỉ được trả theo số giờ làm</span>
                     <div className="sign_link">
                       <h3><Link to={"/auth"} title="">Đăng Ký Ngay</Link></h3>
                       <Link to={"/about"} title="">Xem thêm</Link>
-                    </div> */}
+                    </div>
                   </div>
                   <TopJob />
                   <MostInterest />
