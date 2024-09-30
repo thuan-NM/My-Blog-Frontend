@@ -24,7 +24,6 @@ const TopProfile = () => {
             try {
                 const usersResponse = await userServices.getUsersList();
                 setData(usersResponse.data);
-                console.log(usersResponse.data)
                 setIsLoading(false);
             } catch (error) {
                 setIsLoading(false);

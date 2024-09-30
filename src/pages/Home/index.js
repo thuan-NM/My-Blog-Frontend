@@ -23,7 +23,6 @@ function Home() {
   const [totalPages, settotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const { user, role } = useAuth()
-  console.log(role)
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -39,7 +38,7 @@ function Home() {
     fetchPost();
   }, [posts]);
   
-  if (isLoading || role == null) {
+  if (isLoading) {
     return (
       <div className="process-comm">
         <div className="spinner">
