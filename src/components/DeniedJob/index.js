@@ -3,6 +3,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import jobstatusServices from "../../services/jobstatus.services";
 import { message } from "antd";
+import {ExclamationCircleOutlined } from "@ant-design/icons"
 
 const DeniedJob = () => {
     const [posts, setPosts] = useState([]);
@@ -51,13 +52,9 @@ const DeniedJob = () => {
     if (posts.length == 0) {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
-                <h1 className="nobody">
-                    Không có công việc nào bị từ chối.
-                </h1>
-                <div className="spinner">
-                    <div className="bounce1"></div>
-                    <div className="bounce2"></div>
-                    <div className="bounce3"></div>
+                <div className="nobody">
+                <ExclamationCircleOutlined />
+                    Không có kết quả
                 </div>
             </div>
         )

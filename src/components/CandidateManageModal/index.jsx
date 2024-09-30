@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import jobstatusServices from "../../services/jobstatus.services";
 import { message } from "antd";
+import { Link } from "react-router-dom";
 
 const CandidateManageModal = ({ candidates }) => {
     const token = localStorage.getItem("token")
@@ -52,7 +53,7 @@ const CandidateManageModal = ({ candidates }) => {
                     <div className="post_topbar applied-post">
                         <div className="usy-dtt usy-dt">
                             <div className="usy-sec">
-                                <img src={candidate.user.profilePictureUrl || `images/userava.jpg`} width={45} height={45} />
+                                <img src={candidate.user.profilePictureUrl || `../images/userava.jpg`} width={45} height={45} />
                                 <div className="usy-name">
                                     <h3>{candidate.user.firstName} {candidate.user.lastName}</h3>
                                     <div className="epi-sec epi2">
@@ -61,7 +62,8 @@ const CandidateManageModal = ({ candidates }) => {
                             </div>
                             <div className="devepbtn appliedinfo noreply">
                                 <button className="clrbtn" onClick={() => hired(candidate.user._id)}>Tuyển</button>
-                                <button className="clrbtn" >Xem trang cá nhân</button>
+                                <Link to={`/userprofile/${candidate.user._id}`} className="clrbtn" >Xem trang cá nhân</Link>
+                                {/* <button className="clrbtn" >Xem trang cá nhân</button> */}
                                 <button className="clrbtn" onClick={() => denied(candidate.user._id)}>
                                     Từ chối
                                 </button>

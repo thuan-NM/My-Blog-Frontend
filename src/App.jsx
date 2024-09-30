@@ -31,13 +31,15 @@ import MyCompanyProfile from "./pages/MyCompanyProfile";
 import VerifyEmail from "./pages/VerifyEmail";
 import SignUpCompany from "./components/SignUpCompany";
 import CompanyAuth from "./pages/CompanyAuth";
+import JobDetail from "./pages/JobDetail";
+import Job_Application from "./pages/Job_Applications";
 const queryClient = new QueryClient()
 
 function App() {
   const location = useLocation();
 
   // Kiểm tra xem đang ở trang đăng nhập hoặc đăng ký
-  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth");
+  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth") ||location.pathname.includes("/jobapplication");
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
@@ -58,6 +60,8 @@ function App() {
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
           <Route path="/companyauth" element={<CompanyAuth />} />
+          <Route path="/jobdetail/:postId" element={<JobDetail />} />
+          <Route path="/jobapplication/:postId" element={<Job_Application />} />
         </Routes>
         {/* {!isAuthPage} */}
         {!isAuthPage && <ChatBox />}
