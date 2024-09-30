@@ -1,7 +1,7 @@
 import createApiClient from "./api";
 
 class PostServices {
-    constructor(baseURL = process.env.REACT_APP_API_URL+`/posts`) {
+    constructor(baseURL = process.env.REACT_APP_API_URL + `/posts`) {
         this.api = createApiClient(baseURL);
     }
     async getJobsList() {
@@ -22,23 +22,26 @@ class PostServices {
     async getJobsWithId(id) {
         return (await this.api.get(`/${id}`)).data;
     }
-    async postJob(data,header) {
+    async getRelatedJobsWithId(id) {
+        return (await this.api.get(`/related/${id}`)).data;
+    }
+    async postJob(data, header) {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         }
-        return (await this.api.post(`/`,data,{headers})).data
+        return (await this.api.post(`/`, data, { headers })).data
     }
-    async getFilterPost(data,header) {
-        return (await this.api.post(`/filter`,data,header)).data
+    async getFilterPost(data, header) {
+        return (await this.api.post(`/filter`, data, header)).data
     }
-    async updatePostWithId(data,id) {
-        return (await this.api.put(`/${id}`,data)).data;
+    async updatePostWithId(data, id) {
+        return (await this.api.put(`/${id}`, data)).data;
     }
-    async deletePostWithID(id){
+    async deletePostWithID(id) {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         }
-        return (await this.api.delete(`/${id}`,{headers})).data
+        return (await this.api.delete(`/${id}`, { headers })).data
     }
 }
 export default new PostServices();
