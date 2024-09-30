@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { message, Button, Modal } from 'antd';
+import { message } from 'antd';
 import { Link } from 'react-router-dom';
-import { usePost } from '../../contexts/PostContext';
 import { useAuth } from '../../contexts/AuthContext';
-import Comment from '../Comment';
-import ApplyModal from '../ApplyModal';
 import { jwtDecode } from 'jwt-decode';
-import { Avatar, Card, Flex } from 'antd';
+import { Card } from 'antd';
 import reactionServices from '../../services/reaction.services';
 import commentServices from '../../services/comment.services';
-import jobstatusServices from '../../services/jobstatus.services';
 
 const PostItem = ({ post, handleHashtags }) => {
   const [comments, setComments] = useState([]);
@@ -27,7 +23,7 @@ const PostItem = ({ post, handleHashtags }) => {
 
   const handleReaction = async () => {
     try {
-      await reactionServices.postReaction(user._id, post._id)
+      await reactionServices.postReaction(user._id, post._id);
     } catch (error) {
       console.error('Error handling reaction:', error);
       message.error('Failed');
@@ -37,12 +33,11 @@ const PostItem = ({ post, handleHashtags }) => {
   useEffect(() => {
     const fetchReactionStats = async () => {
       try {
-        const reactionStatsResponse = await reactionServices.getReactionsWithPostId(post._id)
-        const commentsResponse = await commentServices.getCommentsWithPostId(post._id)
+        const reactionStatsResponse = await reactionServices.getReactionsWithPostId(post._id);
+        const commentsResponse = await commentServices.getCommentsWithPostId(post._id);
         setComments(commentsResponse.data);
         setReactionStats(reactionStatsResponse.data);
         setIsLoading(false);
-
       } catch (error) {
         console.error('Error fetching reaction stats:', error);
       }
@@ -50,6 +45,11 @@ const PostItem = ({ post, handleHashtags }) => {
 
     fetchReactionStats();
   }, [comments, reactionStats]);
+
+  // Cuộn lên đầu khi component được render
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading || !user) {
     return (
@@ -59,21 +59,24 @@ const PostItem = ({ post, handleHashtags }) => {
           <div className="bounce2"></div>
           <div className="bounce3"></div>
         </div>
-      </div>)
+      </div>
+    );
   }
 
-  const paragraphs = post.description.split('\n')
+  const paragraphs = post.description.split('\n');
 
   return (
-    <Card
-      bordered={false}
-      className='post-bar'>
-      <div className='d-flex flex-column'>
-        <div className='d-flex justify-content-between align-items-center'>
+    <Card bordered={false} className="post-bar">
+      <div className="d-flex flex-column">
+        <div className="d-flex justify-content-between align-items-center">
           <div>
-            <Link to={`/companyprofile/${post.author.userdata._id}`} className="usy-dt">
-              <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
-                height="40" />
+            <Link to={`/jobdetail/${post._id}`} className="usy-dt" onClick={() => window.scrollTo(0, 0)}>
+              <img
+                src={post.author.userdata.profilePictureUrl || 'images/userava.jpg'}
+                alt=""
+                width="40"
+                height="40"
+              />
               <div className="usy-name">
                 <h3>{post.title}</h3>
                 <span>{post.author.userdata.companyname}</span>
@@ -81,10 +84,17 @@ const PostItem = ({ post, handleHashtags }) => {
             </Link>
           </div>
           <div className="like-com">
-            <button className={`${reactionStats.reactions.some(reaction => reaction.userId === user._id) ? "active" : ""}`} onClick={handleReaction}><i className={`fas fa-heart`}></i></button>
+            <button
+              className={`${
+                reactionStats.reactions.some((reaction) => reaction.userId === user._id) ? 'active' : ''
+              }`}
+              onClick={handleReaction}
+            >
+              <i className="fas fa-heart"></i>
+            </button>
           </div>
         </div>
-        <hr className='border-2 border-dark-subtle' />
+        <hr className="border-2 border-dark-subtle" />
         <div>
           <ul className="skill-tags">
             {post.skills.map((item) => (
@@ -92,24 +102,28 @@ const PostItem = ({ post, handleHashtags }) => {
                 <a>{item}</a>
               </li>
             ))}
-            <li><a className='worktype'>
-              {post.workType}
-            </a></li>
+            <li>
+              <a className="worktype">{post.workType}</a>
+            </li>
           </ul>
         </div>
-        <div className='job_description'>
+        <div className="job_description">
           {paragraphs.map((p) => (
-            <p  key={p}>- {p}</p>
+            <p key={p}>- {p}</p>
           ))}
         </div>
-        <hr className='border-2 border-dark-subtle' />
-        <div className='d-flex justify-content-between mx-2'>
+        <hr className="border-2 border-dark-subtle" />
+        <div className="d-flex justify-content-between mx-2">
           <div>
-            <li><span className='price'><strong className='priceitem'>${post.price}/</strong>giờ</span></li>
+            <li>
+              <span className="price">
+                <strong className="priceitem">${post.price}/</strong>giờ
+              </span>
+            </li>
           </div>
-          <div className='d-flex align-items-center'>
-            <img src="images/clock.png" className='clockitem' width={15} height={15} />
-            <span className='ml-3 price'>{new Date(post.createdAt).toLocaleString()}</span>
+          <div className="d-flex align-items-center">
+            <img src="images/clock.png" className="clockitem" width={15} height={15} />
+            <span className="ml-3 price">{new Date(post.createdAt).toLocaleString()}</span>
           </div>
         </div>
       </div>

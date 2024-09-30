@@ -5,6 +5,7 @@ import { Button, message, Modal } from 'antd';
 import CandidateManageModal from "../CandidateManageModal";
 import jobstatusServices from "../../services/jobstatus.services";
 import postServices from "../../services/post.services";
+import {ExclamationCircleOutlined } from "@ant-design/icons"
 
 const ManageJobItem = () => {
     const storedToken = localStorage.getItem('token');
@@ -16,7 +17,7 @@ const ManageJobItem = () => {
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const jobstatusResponse = await jobstatusServices.getJobstatusWithUserId(decodedToken.userId)
+                const jobstatusResponse = await jobstatusServices.getJobstatusWithUserId(decodedToken.companyId)
                 setJobstatus(jobstatusResponse.data);
                 setIsLoading(false);
             } catch (error) {
@@ -24,7 +25,10 @@ const ManageJobItem = () => {
         };
         fetchPost();
     }, [jobstatus]);
-    if (isLoading) {
+    
+    console.log(jobstatus)
+
+    if (isLoading || jobstatus) {
         <div className="spinner animate__animated animate__fast animate__fadeIn">
             <div className="bounce1"></div>
             <div className="bounce2"></div>
@@ -35,13 +39,9 @@ const ManageJobItem = () => {
     if (jobstatus.length == 0) {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
-                <h1 className="nobody">
-                    Không có bất cứ gì!
-                </h1>
-                <div className="spinner">
-                    <div className="bounce1"></div>
-                    <div className="bounce2"></div>
-                    <div className="bounce3"></div>
+                <div className="nobody">
+                <ExclamationCircleOutlined />
+                    Không có kết quả
                 </div>
             </div>
         )
@@ -76,13 +76,12 @@ const ManageJobItem = () => {
                     <div className="post-bar bgclr">
                         <div className="wordpressdevlp">
                             <h2>{item.title}</h2>
-                            <h5 className="fw-semibold mb-3">{item.experience}</h5>
-                            <p><i className="la la-clock-o"></i>{new Date(item.createdAt).toLocaleString()}</p>
+                            <p className="flex items-center"><i className="la la-clock-o"></i>{new Date(item.createdAt).toLocaleString()}</p>
                         </div>
                         <br />
                         <div className="row no-gutters">
                             <div className="col-md-6 col-sm-12">
-                                <div className="cadidatesbtn">
+                                <div className="cadidatesbtn ">
                                     <button type="button" className="btn btn-primary" onClick={() => showModal(item._id)}>
                                         <span className="badge badge-light">{item.jobStatusCount}</span>Ứng viên
                                     </button>
@@ -92,7 +91,7 @@ const ManageJobItem = () => {
                                                 Đóng
                                             </Button>}
                                     >
-                                        <CandidateManageModal candidates={item}/>
+                                        <CandidateManageModal candidates={item} />
                                     </Modal>
                                     <a className="clrbtn" onClick={() => handleDelete(item._id)}>
                                         <i className="far fa-trash-alt"></i>
@@ -101,8 +100,8 @@ const ManageJobItem = () => {
                             </div>
                             <div className="col-md-6 col-sm-12">
                                 <ul className="bk-links bklink">
-                                    <li><a href="#" title=""><i className="la la-bookmark"></i></a></li>
-                                    <li><a href="#" title=""><i className="la la-envelope"></i></a></li>
+                                    <li></li>
+                                    <li></li>
                                 </ul>
                             </div>
                         </div>

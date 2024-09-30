@@ -123,7 +123,7 @@ function Home() {
               <div className="col-lg-3 pd-right-none no-pd">
                 <div className="right-sidebar">
                   <div className="widget widget-about">
-                    <img src="images/myfavicon.png" alt="" />
+                    <img className="!mx-auto" src="images/myfavicon.png" alt="" />
                     <h3>Theo Dõi Ngay Meow IT</h3>
                     <span>Lương chỉ được trả theo số giờ làm</span>
                     <div className="sign_link">

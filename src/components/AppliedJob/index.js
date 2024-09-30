@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import jobstatusServices from "../../services/jobstatus.services";
+import {ExclamationCircleOutlined } from "@ant-design/icons"
 
 const AppliedJob = () => {
     const [posts, setPosts] = useState([]);
@@ -30,7 +31,7 @@ const AppliedJob = () => {
 
     const handleDelete = async (postId) => {
         try {
-            const res = await jobstatusServices.deleteJobstatusWithID(postId) 
+            const res = await jobstatusServices.deleteJobstatusWithID(postId)
             console.log(res)
             message.success(res.data.message)
             fetchPosts(); // Refetch the posts after a post is deleted
@@ -50,13 +51,9 @@ const AppliedJob = () => {
     if (posts.length == 0) {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
-                <h1 className="nobody">
-                    Bạn đang không ứng tuyển công việc nào.
-                </h1>
-                <div className="spinner">
-                    <div className="bounce1"></div>
-                    <div className="bounce2"></div>
-                    <div className="bounce3"></div>
+                <div className="nobody">
+                <ExclamationCircleOutlined />
+                    Không có kết quả
                 </div>
             </div>
         )

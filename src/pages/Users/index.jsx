@@ -44,64 +44,7 @@ function Users() {
   }
   const searchTermInfo = searchTerm;
   return (
-    // <div className="m-3">
-    //   <SearchBar
-    //     searchTerm={searchTerm}
-    //     setSearchTerm={setSearchTerm}
-    //     handleSearch={handleSearchFriend}
-    //   />
-    //   {user.friendRequests.map((request) => (
-    //       <FriendRequest
-    //             key={request._id}
-    //             request={request}
-    //             onAcceptFriend={() => handleAcceptFriendRequest(request, true)}
-    //             onDeclineFriend={() => handleAcceptFriendRequest(request, false)}
-    //         />
-    //   ))}
-    //   {showFriendLists && (
-    //     <>
-    //       {data.data.map((curUser) => 
-    //         // Check if the user is logged in before displaying the information
-    //         ( user && user._id && user._id != curUser._id && (
-    //             <UserItem
-    //                 key={curUser._id}
-    //                 user={curUser}
-    //                 onAddFriend={() => {handleSendFriendRequest(curUser)}}
-    //                 onRemoveFriend={() => {handleRemoveFriend(curUser._id)}}
-    //                 isFriend={user.friend && user.friend.some((friend) => friend._id === curUser._id)}
-    //             />
-    //         ))
-    //       )} 
-    //     </>
-    //   )}
-    //   {(!showFriendLists && searchResults.length == 0) &&(
-    //     <div className="d-flex justify-content-center my-5">
-    //       <h3 className="searchstate me-1">Nothing found, try searching again </h3>
-    //       <button className="btn-close-search" onClick={() => {setSearchResults([]),setShowFriendLists(true),setCurrentPage(1)}}>X</button>
-    //     </div>
-    //   )}
-    //   {searchResults.length>0 && (
-    //     <>
-    //       <div className="d-flex">
-    //         <button className="btn-back" onClick={() => {setSearchResults([]),setShowFriendLists(true),setCurrentPage(1)}}><i className="bi bi-chevron-compact-left text-center" ></i><p className="text-center">Back</p></button>
-    //       </div>
-    //       {searchResults.map((result) => (
-    //         <UserItem
-    //           key={result._id}
-    //           user={result}
-    //           onAddFriend={() => handleSendFriendRequest(result)}
-    //           isFriend={user.friend && user.friend.some((friend) => friend._id === result._id)}
-    //         />
-    //       ))}
-    //     </>
-    //   )}
-    //   <Pagination
-    //     page={currentPage}
-    //     pageSize={pageSize}
-    //     totalPages={data.totalPages}
-    //     onPageChange={handlePageChange}
-    //   />
-    // </div>
+
     <section className="companies-info">
       <div className="container">
         <div className="company-title">
