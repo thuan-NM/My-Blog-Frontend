@@ -72,7 +72,7 @@ const Suggestions = () => {
                 {data.map((suggestion) => (
                     <div className="suggestion-usd" key={suggestion._id}>
                         <Link to={`/userprofile/${suggestion._id}`}>
-                            <img src={suggestion.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
+                            <img src={suggestion.profilePictureUrl || `../images/userava.jpg`} alt="Profile" />
                         </Link>
                         <Link to={`/userprofile/${suggestion._id}`} className="sgt-text">
                             <h4>{suggestion.firstName} {suggestion.lastName}</h4>

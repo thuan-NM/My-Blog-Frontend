@@ -85,7 +85,7 @@ function MyProfile() {
 	}
 	return (
 		<div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
-			<CoverPicture user={user}/>
+			<CoverPicture user={user} isAuthor={isAuthor}/>
 			<main>
 				<div className="main-section">
 					<div className="container">

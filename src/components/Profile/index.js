@@ -7,6 +7,7 @@ import userServices from '../../services/user.services';
 import companyServices from '../../services/company.services';
 import followServices from '../../services/follow.services';
 import { useAuth } from '../../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -130,16 +131,17 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
           </li>
         </ul>
       </div>
-      <ul className="social_links">
-        <li><a href="#" title=""><i className="la la-globe"></i> www.example.com</a></li>
-        <li><a href="#" title=""><i className="fab fa-facebook-square"></i> Http://www.facebook.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-twitter"></i> Http://www.Twitter.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-google-plus-square"></i> Http://www.googleplus.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-behance-square"></i> Http://www.behance.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-pinterest"></i> Http://www.pinterest.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-instagram"></i> Http://www.instagram.com/john...</a></li>
-        <li><a href="#" title=""><i className="fab fa-youtube"></i> Http://www.youtube.com/john...</a></li>
-      </ul>
+      {role === "company" && (
+        <ul className="social_links">
+          {user.socialMediaLinks.websiteUrl && (
+            <li><Link target="_blank" to={`${user.socialMediaLinks.websiteUrl}`} title=""><i className="la la-globe"></i>{user.socialMediaLinks.websiteUrl}</Link></li>
+          )}
+          {user.socialMediaLinks.facebook && (
+            <li><Link target="_blank" to={`${user.socialMediaLinks.facebook}`} title=""><i className="fab fa-facebook-square"></i>{user.socialMediaLinks.facebook}</Link></li>
+          )}
+        </ul>
+      )}
+
     </div>
   );
 };

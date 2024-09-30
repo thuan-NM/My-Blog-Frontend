@@ -7,6 +7,7 @@ import overviewServices from "../../services/overview.services";
 const OverviewModal = ({
   user,
   role,
+  overview,
   isOverviewModalOpen,
   setIsOverviewModalOpen,
   setOverview,
@@ -40,6 +41,7 @@ const OverviewModal = ({
       if (res.status === 401) {
         navigate("/auth");
       }
+      setOverview(newOverview);
       setOverviewdata("");
     } catch (error) {
       message.error(error.response.data.message);
@@ -61,10 +63,9 @@ const OverviewModal = ({
         <h3>Tổng quan</h3>
         <span>5000 ký tự</span>
         <form>
-          <textarea
-            onChange={(e) => setOverviewdata(e.target.value)}
-          ></textarea>
-          <button className="save" onClick={handleEdit}>
+          <textarea onChange={(e) => setOverviewdata(e.target.value)} defaultValue={overview.data || ""}>
+          </textarea>
+          <button className="" onClick={handleEdit}>
             Lưu
           </button>
           <button className="cancel" onClick={handleModal}>

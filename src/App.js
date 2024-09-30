@@ -19,6 +19,7 @@ import Users from "./pages/Users";
 import AboutUs from "./pages/AboutUs";
 import MyProfile from "./pages/MyProfile";
 import UserProfile from "./pages/UserProfile";
+import CompanyProfile from "./pages/CompanyProfile";
 import Jobs from "./pages/Jobs";
 import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
@@ -53,11 +54,12 @@ function App() {
           <Route path="/auth" element={<Auth />} />
           <Route path="*" element={<h1>Page not found</h1>} />
           <Route path="/userprofile/:id" element={<UserProfile />} />
+          <Route path="/companyprofile/:id" element={<CompanyProfile />} />
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
           <Route path="/companyauth" element={<CompanyAuth />} />
         </Routes>
-        {!isAuthPage}
+        {/* {!isAuthPage} */}
         {!isAuthPage && <ChatBox />}
       </QueryClientProvider>
     </div>

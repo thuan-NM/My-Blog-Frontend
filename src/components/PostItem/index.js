@@ -71,7 +71,7 @@ const PostItem = ({ post, handleHashtags }) => {
       <div className='d-flex flex-column'>
         <div className='d-flex justify-content-between align-items-center'>
           <div>
-            <Link to={`/userprofile/${post.author.userdata._id}`} className="usy-dt">
+            <Link to={`/companyprofile/${post.author.userdata._id}`} className="usy-dt">
               <img src={post.author.userdata.profilePictureUrl || `images/userava.jpg`} alt="" width="40"
                 height="40" />
               <div className="usy-name">
