@@ -59,15 +59,15 @@ function UserProfile() {
       try {
         const userres = await userServices.getUsersWithId(id)
         const postResponse = await postServices.getJobsWithUser(id)
-				const overviewResponse = await overviewServices.getOverviewWithUserID(id)
-				const experiencesResponse = await experienceServices.getExperiencesWithUserId(id)
-				const educationResponse = await educationServices.getEducationsWithUserId(id)
-				setEducations(educationResponse.data)
-				setExperiences(experiencesResponse.data)
-				setOverview(overviewResponse.data)
-				setPosts(postResponse.data);
+        const overviewResponse = await overviewServices.getOverviewWithUserID(id)
+        const experiencesResponse = await experienceServices.getExperiencesWithUserId(id)
+        const educationResponse = await educationServices.getEducationsWithUserId(id)
+        setEducations(educationResponse.data)
+        setExperiences(experiencesResponse.data)
+        setOverview(overviewResponse.data)
+        setPosts(postResponse.data);
         setUser(userres.data)
-				setIsLoading(false);
+        setIsLoading(false);
       } catch (error) {
       }
     };
@@ -75,15 +75,15 @@ function UserProfile() {
   }, [posts, user, overview, experiences, educations]);
 
   if (isLoading) {
-		return (
-		  <div className="process-comm">
-			<div className="spinner">
-			  <div className="bounce1"></div>
-			  <div className="bounce2"></div>
-			  <div className="bounce3"></div>
-			</div>
-		  </div>)
-	  }
+    return (
+      <div className="process-comm">
+        <div className="spinner">
+          <div className="bounce1"></div>
+          <div className="bounce2"></div>
+          <div className="bounce3"></div>
+        </div>
+      </div>)
+  }
 
   return (
     <div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
