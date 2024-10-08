@@ -81,7 +81,7 @@ const ConversationBox = ({ datauser, isChatting, setIsChatting }) => {
     >
       <div className="con-title mg-3">
         <div className="chat-user-info">
-          <img src={datauser.profilePictureUrl || `images/userava.jpg`} alt="" />
+          <img src={datauser.profilePictureUrl || `../images/userava.jpg`} alt="" />
           <h3>{datauser.lastName} <span className="status-info"></span></h3>
         </div>
         <div className="st-icons">

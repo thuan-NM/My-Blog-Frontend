@@ -40,7 +40,7 @@ const UserItem = ({ userdata, onAddFriend, onRemoveFriend, isFriend, viewed, isA
     <div className="col-lg-3 col-md-4 col-sm-6 col-12">
       <div className="company_profile_info">
         <div className="company-up-info">
-          <img src={userdata.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
+          <img src={userdata.profilePictureUrl || `../images/userava.jpg`} alt="Profile" />
           <h3>{userdata.lastName}</h3>
           <h4>Graphic Designer</h4>
           <ul>

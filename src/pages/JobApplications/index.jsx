@@ -12,12 +12,13 @@ const JobApplication = () => {
     const { user } = useAuth();
     const { postId } = useParams();
     const [job, setJob] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isFormDirty, setIsFormDirty] = useState(false); // Track if form is dirty
-    const [isModalVisible, setIsModalVisible] = useState(false); // Control the modal
+    const [isFormDirty, setIsFormDirty] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const navigate = useNavigate();
-    const token = localStorage.getItem('token'); // Get token from local storage
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -33,70 +34,80 @@ const JobApplication = () => {
     }, [postId]);
 
     const onFinish = async (values) => {
+        setIsSubmitting(true);  // Start form submission
         try {
-            const response = await jobstatusServices.postJobstatus({
-                postid: postId,
-                userid: user._id, // Replace with actual user id
-                status: 'Applied', // Replace with actual status
-                candidateInfo: values,
-            }, {
+            if (fileList.length === 0) {
+                message.error("Vui lòng tải lên CV của bạn!");
+                setIsSubmitting(false);
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('cv', fileList[0].originFileObj);  // Gửi file CV
+            formData.append('postid', postId);
+            formData.append('userid', user._id);
+            formData.append('status', 'Applied');
+            formData.append('coverLetter', values.coverLetter);  // Only send cover letter
+
+            const response = await jobstatusServices.postJobstatus(formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                }
+                    "Content-Type": "multipart/form-data", // Đặt header multipart
+                },
             });
 
             if (response.isSuccess) {
-                message.success("Nộp thông tin ứng tuyển thành công");
-                setIsFormDirty(false); // Reset the form dirty status after submit
-                navigate(`/jobdetail/${job._id}`); // Redirect after successful submission
+                message.success("Đã ứng tuyển thành công! Vui lòng đợi xét duyệt.");
+                setIsFormDirty(false);
+                navigate(`/jobdetail/${job._id}`);
             } else {
                 throw new Error(response.message);
             }
         } catch (error) {
             console.error('Failed to submit application:', error);
-            message.error('Nộp thông tin ứng tuyển không thành công');
+            message.error('Submission failed');
+        } finally {
+            setIsSubmitting(false);  // Stop form submission
         }
     };
 
-    // File upload validation and control
     const uploadProps = {
         beforeUpload: (file) => {
             const isValidFileType = file.type === 'application/pdf' ||
                 file.type === 'application/msword' ||
                 file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
             if (!isValidFileType) {
-                message.error(`${file.name} không phải định dạng file hợp lệ.`);
+                message.error(`${file.name} is not a valid file format.`);
                 return Upload.LIST_IGNORE;
             }
             if (file.size / 1024 / 1024 > 3) {
-                message.error('File phải nhỏ hơn 3MB.');
+                message.error('File must be smaller than 3MB.');
                 return Upload.LIST_IGNORE;
             }
             return true;
         },
         onChange: ({ fileList: newFileList }) => {
             setFileList(newFileList);
-            setIsFormDirty(true); // Mark form as dirty when file is uploaded
+            setIsFormDirty(true);
         },
         fileList,
         maxCount: 1,
     };
 
-    // Check if form is dirty before navigating back
     const handleBackClick = (e) => {
         if (isFormDirty) {
-            e.preventDefault(); // Prevent navigation
-            setIsModalVisible(true); // Show the modal
+            e.preventDefault();
+            setIsModalVisible(true);
         }
     };
 
     const handleConfirmBack = () => {
         setIsModalVisible(false);
-        navigate(`/jobdetail/${job._id}`); // Proceed with the back navigation
+        navigate(`/jobdetail/${job._id}`);
     };
 
     const handleCancelBack = () => {
-        setIsModalVisible(false); // Simply close the modal
+        setIsModalVisible(false);
     };
 
     if (isLoading || user == null) {
@@ -110,6 +121,7 @@ const JobApplication = () => {
             </div>
         );
     }
+
 
     return (
         <div className="wrapper relative z-10">
@@ -144,7 +156,7 @@ const JobApplication = () => {
                                     label={<strong className="text-md font-semibold">Họ và Tên</strong>}
                                     rules={[{ required: true, message: 'Vui lòng nhập họ và tên của bạn!' }]}
                                 >
-                                    <Input placeholder="Nhập họ và tên" className="p-2 !z-10" disabled={true}/>
+                                    <Input placeholder="Nhập họ và tên" className="p-2 !z-10" disabled={true} />
                                 </Form.Item>
 
                                 {/* Tải lên CV */}
@@ -159,7 +171,7 @@ const JobApplication = () => {
                                             data={{
                                                 upload_preset: "sudykqqg",
                                             }}>
-                                            <Button icon={<UploadOutlined />}>Tải lên CV mới</Button>
+                                            <Button icon={<UploadOutlined />}>Upload New CV</Button>
                                         </Upload>
                                         <Typography.Text type="secondary">
                                             Hỗ trợ định dạng .doc, .docx, .pdf, không chứa mật khẩu bảo vệ, dung lượng dưới 3MB
@@ -181,8 +193,8 @@ const JobApplication = () => {
                                 </Form.Item>
 
                                 <Form.Item>
-                                    <Button htmlType="submit" block>
-                                        Gửi CV của tôi
+                                    <Button type="primary" htmlType="submit" block loading={isSubmitting}>
+                                        {isSubmitting ? 'Đang gửi...' : 'Gửi CV của tôi'}
                                     </Button>
                                 </Form.Item>
                             </Form>
