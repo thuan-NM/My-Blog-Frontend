@@ -1,23 +1,21 @@
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import { Button, message, Modal } from 'antd';
-import CandidateManageModal from "../CandidateManageModal";
+import { message } from 'antd';
 import jobstatusServices from "../../services/jobstatus.services";
 import postServices from "../../services/post.services";
-import {ExclamationCircleOutlined } from "@ant-design/icons"
+import { ExclamationCircleOutlined } from "@ant-design/icons"
+import { Link } from "react-router-dom";
 
 const ManageJobItem = () => {
     const storedToken = localStorage.getItem('token');
     const decodedToken = jwtDecode(storedToken);
     const [isLoading, setIsLoading] = useState(true);
     const [jobstatus, setJobstatus] = useState([])
-    const [openModalId, setOpenModalId] = useState(null);
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const jobstatusResponse = await jobstatusServices.getJobstatusWithUserId(decodedToken.companyId)
+                const jobstatusResponse = await jobstatusServices.getJobstatusWithAuthorId(decodedToken.companyId)
                 setJobstatus(jobstatusResponse.data);
                 setIsLoading(false);
             } catch (error) {
@@ -25,8 +23,6 @@ const ManageJobItem = () => {
         };
         fetchPost();
     }, [jobstatus]);
-    
-    console.log(jobstatus)
 
     if (isLoading || jobstatus) {
         <div className="spinner animate__animated animate__fast animate__fadeIn">
@@ -40,25 +36,12 @@ const ManageJobItem = () => {
         return (
             <div className="animate__animated animate__fast animate__fadeIn">
                 <div className="nobody">
-                <ExclamationCircleOutlined />
+                    <ExclamationCircleOutlined />
                     Không có kết quả
                 </div>
             </div>
         )
     }
-
-    const showModal = (id) => {
-        setOpenModalId(id);
-    };
-
-    const handleOk = () => {
-        setOpenModalId(null);
-    };
-
-    const handleCancel = () => {
-        setOpenModalId(null);
-    };
-
     const handleDelete = async (postId) => {
         try {
             const res = await postServices.deletePostWithID(postId)
@@ -82,17 +65,17 @@ const ManageJobItem = () => {
                         <div className="row no-gutters">
                             <div className="col-md-6 col-sm-12">
                                 <div className="cadidatesbtn ">
-                                    <button type="button" className="btn btn-primary" onClick={() => showModal(item._id)}>
+                                    <Link to={`/viewcandidate/${item._id}`} type="button" className="btn btn-primary !bg-[#e44d3a] outline-none border-none" >
                                         <span className="badge badge-light">{item.jobStatusCount}</span>Ứng viên
-                                    </button>
-                                    <Modal title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
+                                    </Link>
+                                    {/* <Modal title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
                                         footer={
                                             <Button key="submit" onClick={handleOk}>
                                                 Đóng
                                             </Button>}
                                     >
                                         <CandidateManageModal candidates={item} />
-                                    </Modal>
+                                    </Modal> */}
                                     <a className="clrbtn" onClick={() => handleDelete(item._id)}>
                                         <i className="far fa-trash-alt"></i>
                                     </a>

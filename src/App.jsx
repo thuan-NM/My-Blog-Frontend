@@ -14,25 +14,25 @@ import "./responsive.css"
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import PostDetail from "./pages/PostDetail";
 import Users from "./pages/Users";
 import AboutUs from "./pages/AboutUs";
 import MyProfile from "./pages/MyProfile";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import Jobs from "./pages/Jobs";
-import Footer from "./components/Footer";
 import Companies from "./pages/Companies"
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ChatBox from "./components/ChatBox";
 import { SpeedInsights } from "@vercel/speed-insights/react"
-import GoogleLoginComponent from "./components/GoogleLogin";
 import MyCompanyProfile from "./pages/MyCompanyProfile";
 import VerifyEmail from "./pages/VerifyEmail";
-import SignUpCompany from "./components/SignUpCompany";
 import CompanyAuth from "./pages/CompanyAuth";
 import JobDetail from "./pages/JobDetail";
-import Job_Application from "./pages/Job_Applications";
+import JobApplication from "./pages/JobApplications";
+import CandidateList from "./pages/CandidatesList";
+import ConfirmInterview from "./pages/ConfirmInterview";
+import ConfirmationSuccess from "./components/ConfirmationSuccess";
+
 import JobCreation from "./pages/JobCreation";
 const queryClient = new QueryClient()
 
@@ -49,7 +49,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
-          <Route path="/posts/:postId" element={<PostDetail />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/users" element={<Users />} />
           <Route path="/companies" element={<Companies />} />
@@ -62,7 +61,10 @@ function App() {
           <Route path="/auth/verifyemail" element={<VerifyEmail />} />
           <Route path="/companyauth" element={<CompanyAuth />} />
           <Route path="/jobdetail/:postId" element={<JobDetail />} />
-          <Route path="/jobapplication/:postId" element={<Job_Application />} />
+          <Route path="/jobapplication/:postId" element={<JobApplication />} />
+          <Route path="/viewcandidate/:postId" element={<CandidateList />} />
+          <Route path="/interview/confirm/:token" element={<ConfirmInterview />} /> {/* Confirmation route */}
+          <Route path="/confirmation-success" element={<ConfirmationSuccess />} />
           <Route path="/jobcreation" element={<JobCreation />} />
         </Routes>
         {/* {!isAuthPage} */}

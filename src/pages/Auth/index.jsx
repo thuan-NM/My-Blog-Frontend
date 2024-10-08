@@ -42,7 +42,7 @@ function Register() {
                       <button title="">Đăng ký</button>
                     </li>
                   </ul>
-                  {currentTab == "tab-1"?<SignIn/>:<SignUp setCurrentTab={setCurrentTab}/>}
+                  {currentTab == "tab-1" ? <SignIn /> : <SignUp setCurrentTab={setCurrentTab} />}
                 </div>
               </div>
             </div>
