@@ -32,7 +32,7 @@ const Header = () => {
 			<div className="container">
 				<div className="header-data">
 					<div className="logo">
-						<Link to={"/"}><img src="images/logo.png" alt="" /></Link>
+						<Link to={"/"}><img src="../images/logo.png" alt="" /></Link>
 					</div>
 					<SearchBar/>
 					<nav className={`${isRpsActive?"active":""}`}>

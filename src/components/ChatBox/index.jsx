@@ -47,7 +47,7 @@ const ChatBox = () => {
     );
   }
 
-  if (!user || !user.friendRequests) {
+  if (!user) {
     return (
       <div className="process-comm">
         <div className="spinner">
@@ -61,7 +61,7 @@ const ChatBox = () => {
   return (
     <div className="chatbox-list">
       <div className="chat-bubble" onClick={handleChat}>
-        <img src={`images/chat.png`} alt="" />
+        <img src={`../images/chat.png`} alt="" />
       </div>
       <div
         className={`conversations-list ${

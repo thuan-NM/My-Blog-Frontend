@@ -20,9 +20,10 @@ const CoverPicture = ({ user, isAuthor }) => {
     const onSubmitCoverImage = async () => {
         try {
             if (!selectedCoverImage) {
-                console.error('Please choose an image');
+                console.error('Vui lòng chọn ảnh');
                 return;
             }
+
             const formData = new FormData();
             formData.append('coverPicture', selectedCoverImage);
 
@@ -31,19 +32,20 @@ const CoverPicture = ({ user, isAuthor }) => {
             } else {
                 await userServices.updateCoverPictureWithId(formData, user._id);
             }
-            updateUser();
-            setSelectedCoverImage(null);
-            message.success("Change cover picture success!");
+            message.success("Đổi ảnh bìa thành công!");
+            updateUser();  // Cập nhật dữ liệu người dùng
+            setSelectedCoverImage(null);  // Reset sau khi upload thành công
         } catch (error) {
             if (error.response && error.response.status === 500) {
-                console.error('Internal Server Error:', error.response.data);
+                console.error('Lỗi Server:', error.response.data);
             } else {
-                message.error("Change cover picture fail!", error);
-                console.error('Error updating cover picture:', error);
+                message.error("Đổi ảnh bìa thất bại!", error);
+                console.error('Lỗi khi cập nhật ảnh bìa:', error);
             }
         }
         setIsModalCoverPicOpen(!isModalCoverPicOpen);
     };
+
 
     return (
         <>
@@ -73,6 +75,7 @@ const CoverPicture = ({ user, isAuthor }) => {
                                     action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
                                     listType="picture-card"
                                     onChange={handleCoverImageChange}
+                                    maxCount={1} 
                                     data={{
                                         upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
                                     }}

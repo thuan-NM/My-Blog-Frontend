@@ -1416,13 +1416,12 @@
         float: left;
     }
     
-    .usy-dtt {
+    .usy-dt {
         float: none !important;
         display: flex !important;
         gap: 12px;
         justify-content: space-between !important;
         padding-bottom: 10px;
-        border-bottom: 1px #c3c3c3 solid;
     }
     
     .usy-dt img {
@@ -8878,11 +8877,10 @@
     
     .detail_sec .apply_job {
         font-size: 18px;
-        width: 92%;
         padding: 14px;
         border-radius: 4px !important;
         border: none;
-        background-color: #E44D3A !important;
+        background-color: #E44D3A;
         color: white;
     }
     

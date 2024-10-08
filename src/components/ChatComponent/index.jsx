@@ -21,7 +21,7 @@ const ChatComponent = ({ datauser, activeConversation, setActiveConversation }) 
       <div className={`conversations-item ${activeConversation === datauser._id ? "conversations-active" : ""}`} onClick={handleChat}>
         <div className="conversations-avatar">
           <img
-            src={datauser.profilePictureUrl || 'images/userava.jpg'}
+            src={datauser.profilePictureUrl || '../images/userava.jpg'}
             alt=""
           />
         </div>

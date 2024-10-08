@@ -79,7 +79,7 @@ function Home() {
                       <li><a href="#" title="">Chính sách bản quyền</a></li>
                     </ul>
                     <div className="cp-sec">
-                      <img src="images/myfavicon.png" alt="" width={30} height={30} />
+                      <img src="../images/myfavicon.png" alt="" width={30} height={30} />
                       <p>Copyright 2019</p>
                     </div>
                   </div>
@@ -99,7 +99,7 @@ function Home() {
                         </ul>
                       </div>
                     </div>) : (<div className="post-topbar"><div className="user-picy">
-                      <img src="images/myfavicon.png" alt="" />
+                      <img src="../images/myfavicon.png" alt="" />
                     </div></div>)}
                   <div className="posts-section">
                     {posts.map((post, index) => (
