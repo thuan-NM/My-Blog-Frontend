@@ -15,7 +15,10 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
         try {
             setSelectEducation(exp);
             const res = await educationServices.deleteEducation(exp._id)
-            message.success(res.message);
+            message.success({
+                content: res.message,
+                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+              });
             if (res.status === 401) {
                 navigate('/auth');
             }

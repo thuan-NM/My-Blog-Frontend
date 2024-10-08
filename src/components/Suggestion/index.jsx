@@ -65,7 +65,7 @@ const Suggestions = () => {
     return (
         <div className="widget suggestions full-width">
             <div className="sd-title">
-                <i class="bi bi-person-plus-fill"></i>
+                <i className="bi bi-person-plus-fill"></i>
                 <h3>Gợi ý </h3>
                 <i className="la la-ellipsis-v"></i>
             </div>
@@ -74,7 +74,7 @@ const Suggestions = () => {
                     <div className="suggestion-usd" key={suggestion._id}>
                         <div className="d-flex align-items-center">
                             <Link to={`/userprofile/${suggestion._id}`}>
-                                <img src={suggestion.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
+                                <img src={suggestion.profilePictureUrl || `../images/userava.jpg`} alt="Profile" />
                             </Link>
                             <Link to={`/userprofile/${suggestion._id}`} className="sgt-text">
                                 <h4>{suggestion.firstName} {suggestion.lastName}</h4>

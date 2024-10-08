@@ -39,16 +39,14 @@ const UserItem = ({ userdata, onAddFriend, onRemoveFriend, isFriend, viewed, isA
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 col-12">
       <div className="company_profile_info">
-        <div className="company-up-info">
+        <div className="company-up-info !w-full">
           <img src={userdata.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
           <h3>{userdata.lastName}</h3>
           <h4>Graphic Designer</h4>
-          <ul>
-            <li><button onClick={handleFollowToggle} className={!isFollowing?`follow`:`unfollow`}>
+          <ul className="!w-full">
+            <li className="!w-full"><button onClick={handleFollowToggle} className={`${!isFollowing?`follow`:`unfollow`} !w-9/12 py-1 h-auto`}>
               {isFollowing ? 'Hủy theo dõi' : 'Theo dõi'}
             </button></li>
-            <li><a href="#" title="" className="message-us"><i className="fa fa-envelope"></i></a></li>
-            <li><a href="#" title="" className="hire-us">Tuyển dụng</a></li>
           </ul>
         </div>
         <Link to={`/userprofile/${userdata._id}`}>Xem trang cá nhân</Link>

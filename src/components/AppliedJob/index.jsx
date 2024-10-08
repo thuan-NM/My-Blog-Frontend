@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import jobstatusServices from "../../services/jobstatus.services";
-import { message } from "antd";
 import {ExclamationCircleOutlined } from "@ant-design/icons"
 
-const DeniedJob = () => {
+const AppliedJob = () => {
     const [posts, setPosts] = useState([]);
     const storedToken = localStorage.getItem('token');
     const decodedToken = jwtDecode(storedToken);
@@ -13,7 +12,7 @@ const DeniedJob = () => {
 
     const data = {
         userId: decodedToken.userId,
-        statusdata: "Denied"
+        statusdata: "Applied"
     }
 
     useEffect(() => {
@@ -32,10 +31,13 @@ const DeniedJob = () => {
 
     const handleDelete = async (postId) => {
         try {
-            const res = await jobstatusServices.deleteJobstatusWithID(postId) 
+            const res = await jobstatusServices.deleteJobstatusWithID(postId)
             console.log(res)
-            message.success(res.data.message)
-            fetchPosts();
+            message.success({
+                content: res.data.message,
+                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+              });
+            fetchPosts(); // Refetch the posts after a post is deleted
         } catch (error) {
             message.error(error.response.data.message)
             console.error('Error deleting job status:', error);
@@ -70,6 +72,9 @@ const DeniedJob = () => {
                                 <p><i className="la la-clock-o"></i>Đăng vào {new Date(post.createdAt).toLocaleString()} bởi {post.author.userdata.firstName} {post.author.userdata.lastName}</p>
                             </div>
                         </div>
+                        <div className="ed-opts">
+                            <a href="#" title="" className="ed-opts-open"><i className="la la-ellipsis-v"></i></a>
+                        </div>
                     </div>
                     <ul className="savedjob-info saved-info">
                         <li>
@@ -85,7 +90,7 @@ const DeniedJob = () => {
                             <p>{post.price}$/giờ</p>
                         </li>
                         <div className="devepbtn saved-btn ">
-                            <button className="clrbtn" disabled>Đã bị từ chối</button>
+                            <button className="clrbtn" disabled>Đã ứng tuyển</button>
                             <button className="clrbtn" onClick={() => handleDelete(post.status._id)}>
                                 <i className="far fa-trash-alt"></i>
                             </button>
@@ -97,4 +102,4 @@ const DeniedJob = () => {
     )
 }
 
-export default DeniedJob;
+export default AppliedJob;

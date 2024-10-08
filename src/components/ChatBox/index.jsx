@@ -47,7 +47,7 @@ const ChatBox = () => {
     );
   }
 
-  if (!user || !user.friendRequests) {
+  if (!user) {
     return (
       <div className="process-comm">
         <div className="spinner">

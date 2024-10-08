@@ -14,7 +14,6 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   const [followers, setFollowers] = useState({})
   const [following, setFollowing] = useState({})
   const [isLoading, setIsLoading] = useState(true);
-  const { role } = useAuth();
   useEffect(() => {
     const fetchFollow = async () => {
       try {
@@ -88,7 +87,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
   return (
     <div className="user_profile">
       <div className="user-pro-img">
-        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+        <img src={user.profilePictureUrl || `../images/userava.jpg`} />
         {(user._id === user.userId || user._id === user.companyId) && (
           <div className="add-dp" id="OpenImgUpload">
             <label>
@@ -131,7 +130,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
           </li>
         </ul>
       </div>
-      {role === "company" && (
+      {user.companyname && (
         <ul className="social_links">
           {user.socialMediaLinks.websiteUrl && (
             <li><Link target="_blank" to={`${user.socialMediaLinks.websiteUrl}`} title=""><i className="la la-globe"></i>{user.socialMediaLinks.websiteUrl}</Link></li>

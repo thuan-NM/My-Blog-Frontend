@@ -33,6 +33,7 @@ import SignUpCompany from "./components/SignUpCompany";
 import CompanyAuth from "./pages/CompanyAuth";
 import JobDetail from "./pages/JobDetail";
 import Job_Application from "./pages/Job_Applications";
+import JobCreation from "./pages/JobCreation";
 const queryClient = new QueryClient()
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path="/companyauth" element={<CompanyAuth />} />
           <Route path="/jobdetail/:postId" element={<JobDetail />} />
           <Route path="/jobapplication/:postId" element={<Job_Application />} />
+          <Route path="/jobcreation" element={<JobCreation />} />
         </Routes>
         {/* {!isAuthPage} */}
         {!isAuthPage && <ChatBox />}
