@@ -35,7 +35,7 @@ const CandidateList = () => {
         fetchCandidate();
     }, [postId]);
 
-    if (candidates.length === 0 || isLoading) {
+    if (isLoading) {
         return (
             <div className="process-comm">
                 <div className="spinner">
@@ -136,6 +136,25 @@ const CandidateList = () => {
                                                 </Dropdown>
                                             </div>
                                         </div>
+                                        <hr className="!border-2 !border-neutral-400" />
+                                        <div>
+                                            <div className="text-lg font-semibold mb-2">
+                                                Lời giới thiệu:
+                                            </div>
+                                            <div className="ml-4">
+                                                - {candidate.coverLetter}
+                                            </div>
+                                            <div className="flex justify-end">
+                                                <Link
+                                                    to={candidate.cv}
+                                                    target="_blank"
+                                                    className="clrbtn mt-2 !underline hover:!underline hover:!text-neutral-400 text-black"
+                                                >
+                                                    Xem CV ứng viên
+                                                </Link>
+                                            </div>
+                                        </div>
+                                        <hr className="!border-2 !border-neutral-400" />
                                     </div>
                                 );
                             })}
