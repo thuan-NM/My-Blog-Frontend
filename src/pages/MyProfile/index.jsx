@@ -34,7 +34,7 @@ function MyProfile() {
 	const decodedToken = jwtDecode(storedToken);
 	const [activeButton, setActiveButton] = useState("feed");
 	const [posts, setPosts] = useState([]);
-	const [overview, setOverview] = useState("");
+	const [overview, setOverview] = useState([]);
 	const [experiences, setExperiences] = useState([])
 	const [educations, setEducations] = useState([])
 	const [isLoading, setIsLoading] = useState(true);
@@ -218,14 +218,14 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
-											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} isAuthor={isAuthor} />
+											{/* <Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} isAuthor={isAuthor} />
 											<OverviewModal user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} setOverview={setOverview}/>
 											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} isAuthor={isAuthor} />
 											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
 											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} isAuthor={isAuthor} />
 											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
-											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} />
+											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} /> */}
 										</div>
 										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">

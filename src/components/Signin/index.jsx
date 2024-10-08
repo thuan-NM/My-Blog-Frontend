@@ -25,9 +25,9 @@ const SignIn = () => {
 		try {
 			const res = await AuthServices.signIn(user)
 			setPassword("")
-			if(res.isSuccess === 1) {
+			if (res.isSuccess === 1) {
 				const { user, token } = res;
-	 			login(user, token);
+				login(user, token);
 				message.success(res.message)
 				navigate("/")
 			}
@@ -46,9 +46,9 @@ const SignIn = () => {
 		try {
 			const res = await CompanyAuthServices.signIn(company)
 			setCompanyPassword("")
-			if(res.isSuccess === 1) {
+			if (res.isSuccess === 1) {
 				const { company, token } = res;
-	 			login(company, token);
+				login(company, token);
 				message.success(res.message)
 				navigate("/")
 			}
@@ -64,7 +64,7 @@ const SignIn = () => {
 	return (
 		<div className={`sign_in_sec animated fadeIn`} id="tab-1">
 			<div className="signin-tab">
-				<h3>Đăng nhập {currentTabSignUp=="tab-3"?"bằng người dùng":"bằng công ty"}</h3>
+				<h3>Đăng nhập {currentTabSignUp == "tab-3" ? "bằng người dùng" : "bằng công ty"}</h3>
 				<ul>
 					<li data-tab="tab-3"
 						className={`animated fadeIn ${currentTabSignUp == "tab-3" ? "current" : ""}`}>
@@ -148,7 +148,7 @@ const SignIn = () => {
 				<h4>Đăng nhập bằng tài khoản khác</h4>
 				<ul>
 					<li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Đăng nhập bằng Facebook</a></li>
-					<li><GoogleLoginComponent/></li>
+					<li><GoogleLoginComponent /></li>
 				</ul>
 			</div>
 		</div>

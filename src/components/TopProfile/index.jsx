@@ -53,7 +53,7 @@ const TopProfile = () => {
                 // Check if the user is logged in before displaying the information
                 (user && user._id && user._id != curUser._id && (
                     <div className="user-profy slick-slide" key={curUser._id}>
-                        <img src={curUser.profilePictureUrl || `images/userava.jpg`} />
+                        <img src={curUser.profilePictureUrl || `../images/userava.jpg`} />
                         <h3>{curUser.lastName}</h3>
                         <span>Graphic Designer</span>
                         <ul>

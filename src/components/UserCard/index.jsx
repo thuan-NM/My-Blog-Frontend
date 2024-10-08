@@ -28,7 +28,7 @@ const UserCard = ({ user }) => {
                 <div className="user-profile">
                     <div className="username-dt">
                         <div className="usr-pic">
-                            <img src={user.profilePictureUrl || `images/userava.jpg`} />
+                            <img src={user.profilePictureUrl || `../images/userava.jpg`} />
                         </div>
                     </div>
                     <div className="user-specs">
