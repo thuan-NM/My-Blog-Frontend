@@ -39,7 +39,7 @@ function Users() {
     </div>
   }
 
-  if (user == null || user.friendRequests == null) {
+  if (user == null) {
     return <p>No results found1.</p>;
   }
   const searchTermInfo = searchTerm;

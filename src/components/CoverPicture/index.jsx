@@ -33,7 +33,10 @@ const CoverPicture = ({ user, isAuthor }) => {
             }
             updateUser();
             setSelectedCoverImage(null);
-            message.success("Change cover picture success!");
+            message.success({
+                content: "Cập nhật ảnh bìa thành công",
+                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+              });
         } catch (error) {
             if (error.response && error.response.status === 500) {
                 console.error('Internal Server Error:', error.response.data);

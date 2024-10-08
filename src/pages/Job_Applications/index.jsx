@@ -46,7 +46,10 @@ const JobApplication = () => {
             });
 
             if (response.isSuccess) {
-                message.success("Nộp thông tin ứng tuyển thành công");
+                message.success({
+                    content: "Nộp thông tin ứng tuyển thành công",
+                    style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+                  });
                 setIsFormDirty(false); // Reset the form dirty status after submit
                 navigate(`/jobdetail/${job._id}`); // Redirect after successful submission
             } else {

@@ -30,7 +30,10 @@ const EducationEdit = ({ user, isEduEditOpen, setIsEduEditOpen, selectedEducatio
                 user: user,
             };
             const res = await educationServices.updateEducationWithId(newEdu, selectedEducation._id)
-            message.success(res.message);
+            message.success({
+                content: res.message,
+                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+              });
             if (res.status === 401) {
                 navigate('/auth');
             }

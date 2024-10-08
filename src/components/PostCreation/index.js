@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
@@ -9,95 +9,89 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");
-  const [description, setDescription] = useState("");
-  const [typeOfJob, setTypeOfJob] = useState("Full Time");
-  const [experience, setExperience] = useState("Fresher Developer");
+  // const [description, setDescription] = useState("");
+  // const [typeOfJob, setTypeOfJob] = useState("Full Time");
+  // const [experience, setExperience] = useState("Fresher Developer");
   const [price, setPrice] = useState(0);
-  const [workType, setWorkType] = useState("Onsite");
+  const [workType, setWorkType] = useState("At office");
   const [location, setLocation] = useState("");
   const [createdAt, setCreatedAt] = useState(Date.now);
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalFileOpen, setIsModalFileOpen] = useState(false);
   const { user } = useAuth();
 
-  const handleCreatePost = async (e) => {
-    e.preventDefault();
-    const newPost = {
-      title: title,
-      skills: skills.split(","), // "vietnam,giaoduc,sachgiaokhoa"
-      description: description,
-      price: price,
-      typeOfJob: typeOfJob,
-      experience: experience,
-      workType: workType,
-      // lay user -> author
-      user: user,
-    };
-    try {
-      const response = await postServices.postJob(newPost);
+  // const handleCreatePost = async (e) => {
+  //   e.preventDefault();
+  //   const newPost = {
+  //     title: title,
+  //     skills: skills.split(","), // "vietnam,giaoduc,sachgiaokhoa"
+  //     location: location,
+  //     description: description,
+  //     price: price,
+  //     // typeOfJob: typeOfJob,
+  //     // experience: experience,
+  //     workType: workType,
+  //     // lay user -> author
+  //     author: {
+  //       id: user._id,
+  //       userdata: user,
+  //     },
+  //   };
+  //   try {
+  //     const response = await postServices.postJob(newPost);
 
-      if (response.isSuccess) {
-          message.success("Create a new post successful");
-          if (response.status === 401) {
-              // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-              navigate("/auth");
-          }
-          setDescription("");
-          setTitle("");
-          setSkills("");
-      } else {
-          throw new Error(response.message);
-      }
-  } catch (error) {
-      console.error('Failed to submit application:', error);
-      if (error.response && error.response.status === 401) {
-          // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-          navigate("/auth");
-      }
-      message.error('Nộp thông tin ứng tuyển không thành công');
-  }
-    if (isJobModalOpen == true) handleShowJobModal(e);
-    else handleShowProjectModal(e)
+  //     if (response.isSuccess) {
+  //         message.success("Create a new post successful");
+  //         if (response.status === 401) {
+  //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+  //             navigate("/auth");
+  //         }
+  //         setSelectedFile(null);
+  //         setTitle("");
+  //         setPrice(0);
+  //         setWorkType("At office");
+  //         setSkills("");
+  //         setLocation("");
+  //         setDescription("");
+  //     } else {
+  //         throw new Error(response.message);
+  //     }
+  // } catch (error) {
+  //     console.error('Failed to submit application:', error);
+  //     if (error.response && error.response.status === 401) {
+  //         // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
+  //         navigate("/auth");
+  //     }
+  //     message.error('Nộp thông tin ứng tuyển không thành công');
+  // }
+  //   if (isJobModalOpen == true) handleShowJobModal(e);
+  //   else handleShowProjectModal(e)
+  // };
+
+  const newPostData = {
+    title,
+    skills: skills.split(","),  // Convert skills to array
+    location,
+    price,
+    workType,
+    user: user,
+    createdAt: createdAt,
   };
-  const handleFile = (info) => {
-    if (info.file.status === 'done') {
-      setSelectedFile(info.file.originFileObj);
-    }
-  };
+
+  // const handleFile = (info) => {
+  //   if (info.file.status === 'done') {
+  //     setSelectedFile(info.file.originFileObj);
+  //   }
+  // };
 
   return (
     <div className={`post-popup job_post ${isJobModalOpen ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster zoomOut"}`}>
       <div className="post-project">
         <h3>Đăng công việc</h3>
         <div className="post-project-fields">
-          <form>
             <div className="row">
               <div className="col-lg-12">
                 <input type="text" id="title" placeholder="Tên công việc" value={title} onChange={(e) => setTitle(e.target.value)} />
-              </div>
-              <div className="col-lg-6">
-                <div className="inp-field">
-                  <select onChange={(e) => setExperience(e.target.value)} value={experience}>
-                    <option>Fresher Developer</option>
-                    <option>Junior Developer</option>
-                    <option>Middle Developer</option>
-                    <option>Senior Developer</option>
-                    <option>Team Leader</option>
-                    <option>Tester</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="inp-field">
-                  <select onChange={(e) => setWorkType(e.target.value)} value={workType}>
-                    <option>Onsite</option>
-                    <option>Remote</option>
-                    <option>Hybrid</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-lg-12">
-                <input type="text" id="skills" placeholder="Kỹ năng" value={skills} onChange={(e) => setSkills(e.target.value)} />
               </div>
               <div className="col-lg-6">
                 <div className="price-br">
@@ -107,17 +101,23 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
               </div>
               <div className="col-lg-6">
                 <div className="inp-field">
-                  <select onChange={(e) => setTypeOfJob(e.target.value)} value={typeOfJob}>
-                    <option>Full Time</option>
-                    <option>Part Time</option>
-                    <option>Hourly</option>
-                  </select>
+                  <select onChange={(e) => setWorkType(e.target.value)} value={workType}>
+                    <option>At office</option>
+                    <option>Remote</option>
+                    <option>Hybrid</option>
+                  </select> 
                 </div>
               </div>
               <div className="col-lg-12">
-                <textarea id="description" placeholder="Mô tả công việc" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                <input type="text" id="skills" placeholder="Kỹ năng" value={skills} onChange={(e) => setSkills(e.target.value)} />
               </div>
-              <div className="col-lg-12 attach-file">
+              <div className="col-lg-12">
+                <input type="text" id="location" placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
+              </div>
+              {/* <div className="col-lg-12">
+                <textarea id="description" placeholder="Mô tả công việc" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+              </div> */}
+              {/* <div className="col-lg-12 attach-file">
                 <Upload
                   action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
                   onChange={handleFile}
@@ -127,15 +127,25 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
                 >
                   {<UploadOutlined />}
                 </Upload>
-              </div>
+              </div> */}
               <div className="col-lg-12">
                 <ul>
-                  <li><button className="active" onClick={handleCreatePost}>Đăng tải</button></li>
-                  <li><button onClick={handleShowJobModal}>Hủy bỏ</button></li>
+                  <li>
+                    <NavLink
+                      to={{
+                        pathname: "/jobcreation",
+                      }}
+                      state={{ newPostData }} // Truyền dữ liệu qua state của NavLink
+                    >
+                      <button className="active">Tiếp tục</button>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button onClick={handleShowJobModal}>Hủy bỏ</button>
+                  </li>
                 </ul>
               </div>
             </div>
-          </form>
         </div>
         <button onClick={handleShowJobModal}><i className="la la-times-circle-o"></i></button>
       </div>

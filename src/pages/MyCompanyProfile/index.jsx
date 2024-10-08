@@ -212,7 +212,7 @@ function MyCompanyProfile() {
                               <span>Đánh giá</span>
                             </Link>
                           </li>
-                          <li
+                          {/* <li
                             data-tab="payment-dd"
                             className={`${
                               activeButton == "payment"
@@ -224,7 +224,7 @@ function MyCompanyProfile() {
                               <img src="images/ic6.png" alt="" />
                               <span>Thu nhập</span>
                             </Link>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </div>
@@ -602,7 +602,7 @@ function MyCompanyProfile() {
                         </div>
                       </div>
                     </div>
-                    <div className={`product-feed-tab ${ activeButton == "payment"
+                    {/* <div className={`product-feed-tab ${ activeButton == "payment"
                           ? "current animate__animated animate__faster fadeIn"
                           : "animate__animated animate__faster fadeOut"
                       }`}
@@ -635,7 +635,7 @@ function MyCompanyProfile() {
                           </a>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="col-lg-3">
