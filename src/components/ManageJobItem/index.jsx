@@ -68,14 +68,6 @@ const ManageJobItem = () => {
                                     <Link to={`/viewcandidate/${item._id}`} type="button" className="btn btn-primary !bg-[#e44d3a] outline-none border-none" >
                                         <span className="badge badge-light">{item.jobStatusCount}</span>Ứng viên
                                     </Link>
-                                    {/* <Modal title="Các ứng viên đã ứng tuyển" open={openModalId === item._id} onOk={handleOk} onCancel={handleCancel} width={800}
-                                        footer={
-                                            <Button key="submit" onClick={handleOk}>
-                                                Đóng
-                                            </Button>}
-                                    >
-                                        <CandidateManageModal candidates={item} />
-                                    </Modal> */}
                                     <a className="clrbtn" onClick={() => handleDelete(item._id)}>
                                         <i className="far fa-trash-alt"></i>
                                     </a>

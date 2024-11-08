@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { message } from "antd";
 import CompanyAuthServices from "../../services/companyAuth.services";
+import { Link } from "react-router-dom"
 
 const SignUpCompany = () => {
   const [step, setStep] = useState(1); // Quản lý bước hiện tại
@@ -134,7 +135,10 @@ const SignUpCompany = () => {
               </div>
             </div>
             <div className="col-lg-12 no-pdd">
-              <button onClick={handleNextStep}>Next</button>
+              <button className="px-2" onClick={handleNextStep}>Tiếp tục</button>
+              <Link to={"/auth"}>
+                <button className="px-2 ml-5">Về trang đăng nhập</button>
+              </Link>
             </div>
           </form>
         </div>
@@ -188,8 +192,8 @@ const SignUpCompany = () => {
               </div>
             </div>
             <div className="col-lg-12 no-pdd">
-              <button onClick={handlePrevStep}>Back</button>
-              <button className="mx-4" onClick={handleNextStep}>Next</button>
+              <button className="px-2" onClick={handlePrevStep}>Trở về</button>
+              <button className="px-2 mx-4" onClick={handleNextStep}>Tiếp tục</button>
             </div>
           </form>
         </div>
@@ -243,8 +247,8 @@ const SignUpCompany = () => {
               </div>
             </div>
             <div className="col-lg-12 no-pdd">
-              <button onClick={handlePrevStep}>Back</button>
-              <button className="mx-4" onClick={handleSubmit}>Submit</button>
+              <button className="px-2"onClick={handlePrevStep}>Trở về</button>
+              <button className="px-2 mx-4" onClick={handleSubmit}>Đăng ký</button>
             </div>
           </form>
         </div>

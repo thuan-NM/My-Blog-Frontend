@@ -26,7 +26,7 @@ function Register() {
               </div>
               <div className="col-lg-6">
                 <div className="login-sec">
-                  <ul className="sign-control">
+                  <ul className="sign-control mb-4">
                     <li
                       data-tab="tab-1"
                       className={`animated fadeIn ${currentTab === "tab-1" ? "current" : ""}`}

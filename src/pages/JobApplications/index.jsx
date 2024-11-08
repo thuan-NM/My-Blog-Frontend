@@ -46,9 +46,10 @@ const JobApplication = () => {
             formData.append('cv', fileList[0].originFileObj);  // Gửi file CV
             formData.append('postid', postId);
             formData.append('userid', user._id);
+            formData.append('companyid', job.author.id);
             formData.append('status', 'Applied');
             formData.append('coverLetter', values.coverLetter);  // Only send cover letter
-
+            console.log(formData)
             const response = await jobstatusServices.postJobstatus(formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -57,7 +58,11 @@ const JobApplication = () => {
             });
 
             if (response.isSuccess) {
-                message.success("Đã ứng tuyển thành công! Vui lòng đợi xét duyệt.");
+                message.success({
+                    content: response.message,
+                    style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                    duration: 2,
+                });
                 setIsFormDirty(false);
                 navigate(`/jobdetail/${job._id}`);
             } else {
@@ -167,7 +172,7 @@ const JobApplication = () => {
                                 >
                                     <div>
                                         <Upload {...uploadProps} className="file-upload-button"
-                                            action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
+                                            action="none"
                                             data={{
                                                 upload_preset: "sudykqqg",
                                             }}>
