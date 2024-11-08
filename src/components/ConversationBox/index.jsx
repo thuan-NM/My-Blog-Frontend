@@ -53,7 +53,7 @@ const ConversationBox = ({ datauser, isChatting, setIsChatting }) => {
         socketRef.current.disconnect();
       }
     };
-  }, [datauser._id, user._id]);
+  }, [datauser._id]);
 
   const sendMessage = (e) => {
     e.preventDefault();

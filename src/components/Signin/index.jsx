@@ -8,25 +8,29 @@ import GoogleLoginComponent from "../GoogleLogin";
 
 const SignIn = () => {
 	const navigate = useNavigate();
-	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [email, setEmail] = useState("");
-	const [companyPassword, setCompanyPassword] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
-	const [currentTabSignUp, setCurrentTabSignUp] = useState("tab-3");
+	const [currentTabSignIn, setcurrentTabSignIn] = useState("user");
 	const { login } = useAuth();
 
-	const handleLoginWithUser = async (e) => {
+	const handleLogin = async (e) => {
 		e.preventDefault();
 		const user = {
-			username: username,
+			email: email,
 			password: password,
 		};
 		try {
-			const res = await AuthServices.signIn(user)
+			const res =  currentTabSignIn=="user"?await AuthServices.signIn(user): await CompanyAuthServices.signIn(user)
 			setPassword("")
-			if (res.isSuccess === 1) {
+			if (res.isSuccess === 1 && currentTabSignIn=="user") {
 				const { user, token } = res;
+				login(user, token);
+				message.success(res.message)
+				navigate("/")
+			}
+			else if (res.isSuccess === 1 && currentTabSignIn=="company") {
+				const { company , token } = res;
 				login(user, token);
 				message.success(res.message)
 				navigate("/")
@@ -37,50 +41,32 @@ const SignIn = () => {
 			message.error(error.response.data.message)
 		}
 	};
-	const handleLoginWithCompany = async (e) => {
-		e.preventDefault();
-		const company = {
-			email: email,
-			password: companyPassword,
-		};
-		try {
-			const res = await CompanyAuthServices.signIn(company)
-			setCompanyPassword("")
-			if (res.isSuccess === 1) {
-				const { company, token } = res;
-				login(company, token);
-				message.success(res.message)
-				navigate("/")
-			}
-		}
-		catch (error) {
-			console.log(error)
-			message.error(error.response.data.message)
-		}
-	};
 	const handleTabClick = (tab) => {
-		setCurrentTabSignUp(tab);
+		setcurrentTabSignIn(tab);
 	};
 	return (
-		<div className={`sign_in_sec animated fadeIn`} id="tab-1">
-			<div className="signin-tab">
-				<h3>Đăng nhập {currentTabSignUp == "tab-3" ? "bằng người dùng" : "bằng công ty"}</h3>
+		<div className="sign_in_sec animated fadeIn">
+			<div className="signin-tab flex !items-center mb-4">
+				<div className="flex items-center">
+					<h3 className="m-0">Tài khoản {currentTabSignIn == "user" ? "" : "công ty"}</h3>
+
+				</div>
 				<ul>
 					<li data-tab="tab-3"
-						className={`animated fadeIn ${currentTabSignUp == "tab-3" ? "current" : ""}`}>
-						<button onClick={() => handleTabClick("tab-3")}>User</button></li>
+						className={`animated fadeIn ${currentTabSignIn == "user" ? "current" : ""}`}>
+						<button onClick={() => handleTabClick("user")}>User</button></li>
 					<li data-tab="tab-4"
-						className={`animated fadeIn ${currentTabSignUp == "tab-4" ? "current" : ""}`}>
-						<button onClick={() => handleTabClick("tab-4")}>Company</button></li>
+						className={`animated fadeIn ${currentTabSignIn == "company" ? "current" : ""}`}>
+						<button onClick={() => handleTabClick("company")}>Company</button></li>
 				</ul>
 			</div>
-			{currentTabSignUp == "tab-3" && <form>
+			<form>
 				<div className="row">
 					<div className="col-lg-12 no-pdd">
 						<div className="sn-field">
-							<input type="text" value={username}
-								onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-							<i className="la la-user"></i>
+							<input type="text" value={email}
+								onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+							<i className="fa fa-envelope"></i>
 						</div>
 					</div>
 					<div className="col-lg-12 no-pdd">
@@ -103,51 +89,15 @@ const SignIn = () => {
 						</div>
 					</div>
 					<div className="col-lg-12 no-pdd">
-						<button onClick={handleLoginWithUser} disabled={isLoading}>
+						<button onClick={handleLogin} disabled={isLoading}>
 							{isLoading ? "Wait htmlFor a moment..." : "Đăng nhập"}
 						</button>
 					</div>
 				</div>
-			</form>}
-			{currentTabSignUp == "tab-4" && <form>
-				<div className="row">
-					<div className="col-lg-12 no-pdd">
-						<div className="sn-field">
-							<input type="text" value={email}
-								onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-							<i className="fa fa-envelope"></i>
-						</div>
-					</div>
-					<div className="col-lg-12 no-pdd">
-						<div className="sn-field">
-							<input type="password" value={companyPassword}
-								onChange={(e) => setCompanyPassword(e.target.value)} placeholder="Password" />
-							<i className="la la-lock"></i>
-						</div>
-					</div>
-					<div className="col-lg-12 no-pdd">
-						<div className="checky-sec">
-							<div className="fgt-sec">
-								<input type="checkbox" name="cc" id="c1" />
-								<label htmlFor="c1">
-									<span></span>
-								</label>
-								<small>Ghi nhớ tài khoản</small>
-							</div>
-							<a href="#" title="">Quên mật khẩu?</a>
-						</div>
-					</div>
-					<div className="col-lg-12 no-pdd">
-						<button onClick={handleLoginWithCompany} disabled={isLoading}>
-							{isLoading ? "Wait htmlFor a moment..." : "Đăng nhập"}
-						</button>
-					</div>
-				</div>
-			</form>}
-			<div className="login-resources">
-				<h4>Đăng nhập bằng tài khoản khác</h4>
+			</form>
+			<div className="login-resources flex justify-center flex-col">
+				<h4 className="mb-2">Đăng nhập bằng tài khoản khác</h4>
 				<ul>
-					<li><a href="#" title="" className="fb"><i className="fa fa-facebook"></i>Đăng nhập bằng Facebook</a></li>
 					<li><GoogleLoginComponent /></li>
 				</ul>
 			</div>

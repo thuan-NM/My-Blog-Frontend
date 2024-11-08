@@ -13,12 +13,6 @@ const CandidateList = () => {
     const [candidates, setCandidates] = useState([]);
     const [job, setJob] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [open, setOpen] = useState(false);
-    const [selectedCvUrl, setSelectedCvUrl] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
-    const [interviewDate, setInterviewDate] = useState(null); // State for interview date
-    const [selectedCandidate, setSelectedCandidate] = useState(null); // To store candidate's ID
-
     useEffect(() => {
         const fetchCandidate = async () => {
             try {
@@ -33,7 +27,7 @@ const CandidateList = () => {
             }
         };
         fetchCandidate();
-    }, [postId]);
+    }, [postId,job]);
 
     if (isLoading) {
         return (
@@ -47,33 +41,18 @@ const CandidateList = () => {
         );
     }
 
-    const scheduleInterview = (candidateId) => {
-        setSelectedCandidate(candidateId); // Store the candidate ID
-        setIsModalOpen(true); // Open the modal
-    };
-
-    const handleOk = async () => {
-        if (!interviewDate) {
-            message.error("Please select an interview date");
-            return;
-        }
-
+    const scheduleInterview = async (candidateId) => {
         try {
-            const res = await jobstatusServices.scheduleInterview({
+            const res = await jobstatusServices.requestConfirmation({
                 postId,
-                candidateId: selectedCandidate,
-                interviewDate: interviewDate.toISOString(),
+                candidateId,
             });
             message.success(res.message);
-            setIsModalOpen(false);
         } catch (error) {
-            message.error("Failed to schedule interview");
+            message.error("Failed to send interview confirmation request");
         }
     };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+    
 
     return (
         <div className="main-section mt-[20px]">
@@ -87,9 +66,9 @@ const CandidateList = () => {
                                         label: (
                                             <button
                                                 className="!p-1 !px-6 text-md font-medium w-full"
-                                                onClick={() => scheduleInterview(candidate.user._id)} // Open modal to set interview
+                                                onClick={() => scheduleInterview(candidate.user._id)} // Send interview confirmation request
                                             >
-                                                Đặt lịch phỏng vấn
+                                                Gửi yêu cầu xác nhận
                                             </button>
                                         ),
                                         key: '0',
@@ -106,7 +85,6 @@ const CandidateList = () => {
                                         key: '1',
                                     }
                                 ];
-
                                 return (
                                     <div className="bg-white p-4 mb-3" key={candidate.user._id}>
                                         <div className="flex justify-between mb-8">
@@ -163,21 +141,6 @@ const CandidateList = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Modal for scheduling interview */}
-            <Modal
-                title="Đặt lịch phỏng vấn"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-            >
-                <DatePicker
-                    showTime
-                    format="YYYY-MM-DD HH:mm:ss"
-                    onChange={(value) => setInterviewDate(value)} // Set selected date
-                    placeholder="Chọn thời gian phỏng vấn"
-                />
-            </Modal>
         </div>
     );
 };
