@@ -5,6 +5,12 @@ import jobstatusServices from "../../services/jobstatus.services";
 import { useAuth } from "../../contexts/AuthContext";
 import PostItem from "../../components/PostItem";
 import CompanyIntroduce from "../../components/CompanyIntroduce";
+import DOMPurify from 'dompurify';
+
+function isHtml(input) {
+    const htmlRegex = /<\/?[a-z][\s\S]*>/i;
+    return htmlRegex.test(input);
+}
 
 function JobDetail() {
     const { role, user } = useAuth(); // Get user info from context
@@ -105,14 +111,36 @@ function JobDetail() {
                                 {/* Job description */}
                                 <div className="detail_sec mt-4">
                                     <div className="detail_sec_title">Mô tả công việc</div>
-                                    <div className="detail_job_description">
+                                    {/* <div className="detail_job_description">
                                         <ul>
                                             {paragraphs.map((p, index) => (
                                                 <li key={index}>{p}</li>
                                             ))}
                                         </ul>
+                                    </div> */}
+                                    <div className="text-gray-500 leading-5 text-left overflow-hidden text-ellipsis break-words whitespace-pre-wrap ml-1 flex flex-col">
+                                        {isHtml(job.description) ? (
+                                            // Nếu mô tả là HTML, hiển thị trực tiếp
+                                            <div
+                                                className="prose prose-lg max-w-none"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: DOMPurify.sanitize(job.description),
+                                                }}
+                                            />
+                                        ) : (
+                                            // Nếu mô tả là văn bản thuần, thêm dấu chấm đầu dòng
+                                            <div className="prose prose-lg max-w-none">
+                                                <ul className="list-disc list-inside p-0">
+                                                    {job.description.split('\n').map((line, index) => (
+                                                        line.trim() !== '' && <li key={index}>{line}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
+
+
 
                                 {/* Similar jobs section */}
                                 <div className="my-4">
@@ -134,13 +162,15 @@ function JobDetail() {
                                 {/* Related job posts */}
                                 <div className="posts-section">
                                     {relatedJobs.map((post) => (
-                                        <PostItem key={post._id} post={post} />
+                                        <div key={post._id}>
+                                            <PostItem post={post} />
+                                        </div>
                                     ))}
                                 </div>
                             </div>
 
                             {/* Company sidebar */}
-                            <CompanyIntroduce job={job} />
+                            <CompanyIntroduce job={job.author.userdata} />
                         </div>
                     </div>
                 </div>

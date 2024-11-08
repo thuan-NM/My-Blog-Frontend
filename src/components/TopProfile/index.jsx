@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 import userServices from "../../services/user.services";
+import UserItem from "../UserItem";
 
 const TopProfile = () => {
     const settings = {
@@ -14,7 +15,11 @@ const TopProfile = () => {
         autoplay: true,
         speed: 1000,
         autoplaySpeed: 800,
-        cssEase: "linear"
+        cssEase: "linear",
+        dots: false,
+        swipeToSlide: false,
+        nextArrow: false,
+        prevArrow: false,
     };
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
@@ -47,13 +52,14 @@ const TopProfile = () => {
         return <p>No results found1.</p>;
     }
     return (
-        <div>
+        <div className="slider-container">
             <Slider {...settings}>
                 {data.map((curUser) =>
                 // Check if the user is logged in before displaying the information
                 (user && user._id && user._id != curUser._id && (
-                    <div className="user-profy slick-slide" key={curUser._id}>
-                        <img src={curUser.profilePictureUrl || `../images/userava.jpg`} />
+                    <div className="!h-full scale-[0.95]" key={curUser._id}>
+                        <UserItem userdata={curUser} />
+                        {/* <img src={curUser.profilePictureUrl || `../images/userava.jpg`} />
                         <h3>{curUser.lastName}</h3>
                         <span>Graphic Designer</span>
                         <ul>
@@ -61,12 +67,13 @@ const TopProfile = () => {
                             <li><a href="#" title="" className="message-us"><i className="fa fa-envelope"></i></a></li>
                             <li><a href="#" title="" className="hire-us">Tuyển</a></li>
                         </ul>
-                        <Link to={`/userprofile/${curUser._id}`}>Xem trang cá nhân</Link>
+                        <Link to={`/userprofile/${curUser._id}`}>Xem trang cá nhân</Link> */}
                     </div>
                 ))
                 )}
             </Slider >
-        </div >
+        </div>
+
     );
 }
 

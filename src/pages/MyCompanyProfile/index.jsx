@@ -94,6 +94,7 @@ function MyCompanyProfile() {
                       updateUser={updateUser}
                       isModalPicOpen={isModalPicOpen}
                       setIsModalPicOpen={setIsModalPicOpen}
+                      role={role}
                     />
                     <Suggestions />
                   </div>

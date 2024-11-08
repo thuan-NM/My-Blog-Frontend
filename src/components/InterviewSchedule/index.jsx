@@ -118,7 +118,7 @@ const InterviewSchedule = () => {
             ) : (
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
                     {candidates.map((candidate, index) => (
-                        <div key={index} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-105 relative">
+                        <div key={index} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-[1.005] relative">
                             <div
                                 className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full ${candidate.status != "Interview" ? "bg-[#E44D3A]" : "bg-green-500"
                                     }`}

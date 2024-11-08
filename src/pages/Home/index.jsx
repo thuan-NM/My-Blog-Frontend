@@ -90,11 +90,10 @@ function Home() {
                   {role === "company" ?
                     (<div className="post-topbar">
                       <div className="user-picy">
-                        <img src={user.profilePictureUrl || `images/userava.jpg`} />
+                      <img className="!w-14 !h-14 rounded-full" src={user.profilePictureUrl || `../images/userava.jpg`} />
                       </div>
                       <div className="post-st">
                         <ul>
-                          <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
                           <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
                         </ul>
                       </div>
@@ -106,11 +105,10 @@ function Home() {
                       <React.Fragment key={post._id}>
                         {index === 2 && (
                           <div className="top-profiles">
-                            <div className="pf-hd">
-                              <h3>Người dùng hàng đầu</h3>
-                              <i className="la la-ellipsis-v"></i>
+                            <div className="relative w-full border-b-1 border-[#d2d2d2] p-[20px]">
+                              <h3 className="text-black text-[20px] font-[600]">Người dùng hàng đầu</h3>
                             </div>
-                            <div className="profiles-slider slick-initialized slick-slider">
+                            <div className="w-full slick-initialized slick-slider">
                               <TopProfile />
                             </div>
                           </div>)}

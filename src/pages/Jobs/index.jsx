@@ -49,7 +49,7 @@ function Jobs() {
         setFilter(defaultFilter);
         setIsPostsLoading(true); // Đánh dấu rằng bộ lọc đã được reset
     };
-    
+
 
     const token = localStorage.getItem("token");
 
@@ -59,12 +59,12 @@ function Jobs() {
                 const postResponse = await postServices.getFilterPost(filter, {
                     Authorization: `Bearer ${token}`,
                 });
-    
+
                 if (postResponse.isSuccess) {
                     setPosts(postResponse.data);
                     setTotalPages(Math.ceil(postResponse.totalCount / 20)); // Giả sử mỗi trang có 20 bài viết
                     setIsLoading(false);
-    
+
                     if (isPostsLoading) {
                         message.success({
                             content: "Lọc thành công",
@@ -101,8 +101,8 @@ function Jobs() {
         };
         fetchPost();
     }, [filter, isPostsLoading, token]);
-    
-    
+
+
 
     if (isLoading) {
         return (
@@ -170,18 +170,18 @@ function Jobs() {
                                                     </select>
                                                 </form>
                                             </div>
-                                           <div className="filter-dd">
+                                            <div className="filter-dd">
                                                 <div className="filter-ttl">
                                                     <h3>Tên công ty</h3>
                                                     <button onClick={() => setCompanyName("")}>Xóa</button>
                                                 </div>
                                                 <form onSubmit={(e) => e.preventDefault()}> {/* Prevent default form submission */}
-                                                    <input 
-                                                        type="text" 
-                                                        name="companyName" 
-                                                        placeholder="Tên công ty" 
-                                                        value={companyName} 
-                                                        onChange={(e) => setCompanyName(e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        name="companyName"
+                                                        placeholder="Tên công ty"
+                                                        value={companyName}
+                                                        onChange={(e) => setCompanyName(e.target.value)}
                                                         onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()} // Prevent Enter key refresh
                                                     />
                                                 </form>
@@ -238,11 +238,11 @@ function Jobs() {
                                                     <button onClick={() => setLocation("")}>Xóa</button>
                                                 </div>
                                                 <form onSubmit={(e) => e.preventDefault()}> {/* Prevent default form submission */}
-                                                    <input 
-                                                        type="text" 
-                                                        placeholder="Nhập tên khu vực" 
-                                                        value={location} 
-                                                        onChange={(e) => setLocation(e.target.value)} 
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Nhập tên khu vực"
+                                                        value={location}
+                                                        onChange={(e) => setLocation(e.target.value)}
                                                         onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()} // Prevent Enter key refresh
                                                     />
                                                 </form>
@@ -253,20 +253,19 @@ function Jobs() {
                                 </div>
                                 <div className="col-lg-6 col-md-8 no-pd">
                                     <div className="main-ws-sec">
-                                    {role === "company" ?
-                                        (<div className="post-topbar">
-                                        <div className="user-picy">
-                                            <img src={user.profilePictureUrl || `images/userava.jpg`} />
-                                        </div>
-                                        <div className="post-st">
-                                            <ul>
-                                            <li><button className="post_project" href="#" title="">Đăng một dự án</button></li>
-                                            <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
-                                            </ul>
-                                        </div>
-                                        </div>) : (<div className="post-topbar"><div className="user-picy">
-                                        <img src="../images/myfavicon.png" alt="" />
-                                        </div></div>)}
+                                        {role === "company" ?
+                                            (<div className="post-topbar">
+                                                <div className="user-picy">
+                                                    <img className="!w-14 !h-14 rounded-full" src={user.profilePictureUrl || `../images/userava.jpg`} />
+                                                </div>
+                                                <div className="post-st">
+                                                    <ul>
+                                                        <li><button className="post-jb" onClick={handleShowJobModal}>Đăng một công việc</button></li>
+                                                    </ul>
+                                                </div>
+                                            </div>) : (<div className="post-topbar"><div className="user-picy">
+                                                <img src="../images/myfavicon.png" alt="" />
+                                            </div></div>)}
                                         <div className="posts-section">
                                             {posts.map((post) => (
                                                 <PostItem post={post} key={post._id} />
@@ -281,8 +280,8 @@ function Jobs() {
                                             <h3>Theo Dõi Ngay Meow IT</h3>
                                             <span>Lương chỉ được trả theo số giờ làm</span>
                                             <div className="sign_link">
-                                            <h3><Link to={"/auth"} title="">Đăng Ký Ngay</Link></h3>
-                                            <Link to={"/about"} title="">Xem thêm</Link>
+                                                <h3><Link to={"/auth"} title="">Đăng Ký Ngay</Link></h3>
+                                                <Link to={"/about"} title="">Xem thêm</Link>
                                             </div>
                                         </div>
                                         <TopJob />

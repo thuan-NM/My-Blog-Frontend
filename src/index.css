@@ -906,20 +906,6 @@
         font-size: 14px;
     }
     
-    .user-info img {
-        width: 34px;
-        height: 34px;
-        background-color: white;
-        object-fit: scale-down;
-        margin-left: 10px;
-        margin-right: 10px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-        -ms-border-radius: 100px;
-        -o-border-radius: 100px;
-        border-radius: 100px;
-    }
-    
     .user-info a {
         color: #fff;
         font-size: 14px;
@@ -993,20 +979,6 @@
         height: 110px;
         margin: 0 auto;
         margin-bottom: -48px;
-    }
-    
-    .usr-pic>img {
-        background-color: white;
-        float: none;
-        object-fit: contain;
-        border: 5px solid #fff;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-        -ms-border-radius: 100px;
-        -o-border-radius: 100px;
-        border-radius: 100px;
-        height: 100%;
-        width: 100%;
     }
     
     .user-profile {
@@ -1276,22 +1248,6 @@
         margin-bottom: 20px;
     }
     
-    .user-picy {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        float: left;
-        width: 50px;
-        height: 50px;
-    }
-    
-    .user-picy img {
-        height: 100%;
-        width: 100%;
-        object-fit: scale-down;
-        border-radius: 50% !important;
-    }
-    
     .post-st {
         float: right;
         margin-top: 5px;
@@ -1422,20 +1378,6 @@
         gap: 12px;
         justify-content: space-between !important;
         padding-bottom: 10px;
-    }
-    
-    .usy-dt img {
-        width: 55px;
-        height: 55px;
-        -webkit-border-radius: 100px;
-        -moz-border-radius: 100px;
-        -ms-border-radius: 100px;
-        -o-border-radius: 100px;
-        border-radius: 100%;
-        background-color: transparent;
-        padding: 6px !important;
-        object-fit: scale-down;
-        border: 2px solid #bdbdbd;
     }
     
     .ed-opts {
@@ -1873,59 +1815,14 @@
     .top-profiles {
         float: left;
         width: 100%;
-        border: 1px solid #e5e5e5;
         margin-bottom: 20px;
         border-radius: 4px;
-    }
-    
-    .pf-hd {
-        float: left;
-        width: 100%;
-        border-bottom: 1px solid #e5e5e5;
-        padding: 20px 20px;
-        position: relative;
-    }
-    
-    .pf-hd h3 {
-        color: #000000;
-        font-size: 20px;
-        font-weight: 600;
-        text-transform: capitalize;
-        float: left;
-    }
-    
-    .pf-hd i {
-        position: absolute;
-        top: 50%;
-        -webkit-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
-        transform: translateY(-50%);
-        right: 7px;
-        color: #b2b2b2;
-        font-size: 24px;
     }
     /* ============== profiles-slider ============== */
     
     .profiles-slider {
         float: left;
         width: 100%;
-        padding: 20px;
-    }
-    
-    .slick-slider button::before {
-        color: #b2b2b2 !important;
-    }
-    
-    .slick-slider .slick-prev {
-        left: -30px !important;
-        color: #000 !important;
-    }
-    
-    .slick-slider .slick-next {
-        right: -30px !important;
-        color: #000 !important;
     }
     
     .user-profy {
@@ -3822,7 +3719,7 @@
         padding: 14px;
         font-weight: 500;
     }
-
+    
     .message-btn button {
         display: inline-block;
         color: #ffffff;
@@ -4940,7 +4837,7 @@
         position: relative;
     }
     
-    .filter-dd .search-btn {    
+    .filter-dd .search-btn {
         font-size: 17px;
         font-weight: 600;
         border: none;
@@ -5165,7 +5062,6 @@
     }
     
     .con-title h3 {
-
         float: left;
         color: #ffffff;
         font-size: 18px;
@@ -9490,4 +9386,17 @@
     .preview-overview {
         width: 100%;
         background-color: #fff;
+    }
+    /* Tùy chỉnh React Quill với Tailwind CSS */
+    
+    .ql-toolbar {
+        @apply bg-gray-100 border border-gray-300 rounded-t;
+    }
+    
+    .ql-container {
+        @apply border border-gray-300 rounded-b;
+    }
+    
+    .ql-editor {
+        @apply min-h-[200px] max-h-[400px] overflow-y-auto text-base;
     }
