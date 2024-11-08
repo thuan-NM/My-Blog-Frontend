@@ -33,7 +33,11 @@ const HiredJob = () => {
         try { 
             const res = await jobstatusServices.deleteJobstatusWithID(postId) 
             console.log(res)
-            message.success(res.data.message)
+            message.success({
+                content: res.data.message,
+                style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                duration: 2,
+              });
             fetchPosts();
         } catch (error) {
             console.error('Error deleting job status:', error);

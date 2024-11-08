@@ -57,7 +57,11 @@ const JobApplication = () => {
             });
 
             if (response.isSuccess) {
-                message.success("Đã ứng tuyển thành công! Vui lòng đợi xét duyệt.");
+                message.success({
+                    content: "Đã ứng tuyển thành công! Vui lòng đợi xét duyệt.",
+                    style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                    duration: 2,
+                  });
                 setIsFormDirty(false);
                 navigate(`/jobdetail/${job._id}`);
             } else {

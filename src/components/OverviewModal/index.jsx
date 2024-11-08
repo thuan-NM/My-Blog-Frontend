@@ -37,7 +37,11 @@ const OverviewModal = ({
         res = await overviewServices.postUserOverview(newOverview);
       }
 
-      message.success(res.message);
+      message.success({
+        content: res.message,
+        style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+        duration: 2,
+      });
       if (res.status === 401) {
         navigate("/auth");
       }
@@ -65,7 +69,7 @@ const OverviewModal = ({
         <form>
           <textarea onChange={(e) => setOverviewdata(e.target.value)} defaultValue={overview.data || ""}>
           </textarea>
-          <button className="" onClick={handleEdit}>
+          <button className="save" onClick={handleEdit}>
             Lưu
           </button>
           <button className="cancel" onClick={handleModal}>

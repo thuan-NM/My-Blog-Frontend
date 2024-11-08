@@ -70,7 +70,7 @@ const ChatBox = () => {
             : "animate__animated animate__faster zoomOut"
         }`}
       >
-        <div className="con-title mg-3">
+        <div className="con-title">
           <div className="conversations-title">
             <h3>Chat with others</h3>
           </div>

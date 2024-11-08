@@ -11,8 +11,8 @@ class CompanyAuthServices {
         console.log(data)
         return (await this.api.post("/register", data)).data;
     }
-    async changePassword(data) {
-        return (await this.api.put("/changepassword/:id", data)).data;
+    async changePassword(id, data) {
+        return (await this.api.put(`/changepassword/${id}`, data)).data;
     }
 }
 export default new CompanyAuthServices();

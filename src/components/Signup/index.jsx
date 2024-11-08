@@ -41,7 +41,11 @@ const SignUp = ({ setCurrentTab }) => {
 				setPassword("");
 				console.log(res);
 				if (res.isSuccess === 1) {
-					message.success(res.message)
+					message.success({
+						content: res.message,
+						style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+						duration: 2,
+					  });
 					setCurrentTab("tab-1")
 				}
 			}
@@ -70,7 +74,11 @@ const SignUp = ({ setCurrentTab }) => {
 				const res = await CompanyAuthServices.signUp(company)
 				setCompanyPassword("")
 				if (res.isSuccess === 1 ) {
-					message.success(res.message)
+					message.success({
+						content: res.message,
+						style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+						duration: 2,
+					  });
 					setCurrentTab("tab-1")
 				}
 			}

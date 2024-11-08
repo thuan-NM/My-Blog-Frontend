@@ -35,7 +35,8 @@ const AppliedJob = () => {
             console.log(res)
             message.success({
                 content: res.data.message,
-                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+                style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                duration: 2,
               });
             fetchPosts(); // Refetch the posts after a post is deleted
         } catch (error) {
