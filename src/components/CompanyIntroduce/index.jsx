@@ -1,44 +1,51 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+// src/components/CompanyIntroduce.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { TeamOutlined, GlobalOutlined, HomeOutlined } from '@ant-design/icons';
+import { Tag } from 'antd';
 
-const CompanyIntroduce = ({job}) => {
+const CompanyIntroduce = ({ job }) => {
+    if (!job || !job.author || !job.author.userdata) {
+        return <div>Thông tin công ty không có sẵn.</div>;
+    }
+
+    const company = job.author.userdata;
+
     return (
-        <div className="col-lg-4 pd-right-none no-pd">
-            <div className="right-sidebar">
-                <div className="company_intro">
-                    <div className="company_intro_title">
-                        <img src={job.author?.userdata.profilePictureUrl} alt="" />
-                        <div className="company_intro_info">
-                            <p>{job.author?.userdata.companyname}</p>
-                            <Link to={`/companyprofile/${job.author?.userdata._id}`} className='!underline !text-neutral-400 hover:!text-[#e44d3a]'>Xem thông tin công ty</Link>
-                        </div>
-                    </div>
-                    <div className="d-flex flex-column">
-                        <div className="d-flex justify-content-between intro_item">
-                            <div className="intro_item_name">Company type:</div>
-                            <div>{job.author?.userdata.field}</div>
-                        </div>
-                        <div className="d-flex justify-content-between intro_item">
-                            <div className="intro_item_name">Company size:</div>
-                            <div>{job.author?.userdata.numberOfEmployees}</div>
-                        </div>
-                        <div className="d-flex justify-content-between intro_item">
-                            <div className="intro_item_name">Country:</div>
-                            <div>{job.author?.userdata.location.country}</div>
-                        </div>
-                        <div className="d-flex justify-content-between intro_item">
-                            <div className="intro_item_name">Address:</div>
-                            <ul>
-                                {job.author?.userdata.location.address.map((item) => (
-                                    <li className="intro_item_content" key={item}><i className="bi bi-dot"></i>{item}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
+        <div className="bg-white shadow-md rounded p-6">
+            <div className="flex items-center mb-4">
+                <img
+                    src={company.profilePictureUrl || "/default-company.png"}
+                    alt={company.companyname}
+                    className="w-16 h-16 rounded-full mr-4"
+                />
+                <div>
+                    <Link to={`/company/${company._id}`} className="text-xl font-bold">
+                        {company.companyname}
+                    </Link>
+                    <p className="text-gray-600">{company.field}</p>
                 </div>
             </div>
+            <div className="mb-4">
+                <p><TeamOutlined /> {company.numberOfEmployees}</p>
+                <p><GlobalOutlined /> {company.location?.country || "N/A"}</p>
+                <p><HomeOutlined /> {company.location?.address.join(', ') || "N/A"}</p>
+            </div>
+            <div className="flex flex-wrap">
+                {company.socialMediaLinks.websiteUrl && (
+                    <Tag color="blue">
+                        <a href={company.socialMediaLinks.websiteUrl} target="_blank" rel="noopener noreferrer">Website</a>
+                    </Tag>
+                )}
+                {company.socialMediaLinks.facebook && (
+                    <Tag color="blue">
+                        <a href={company.socialMediaLinks.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>
+                    </Tag>
+                )}
+                {/* Thêm các liên kết mạng xã hội khác nếu có */}
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default CompanyIntroduce
+export default CompanyIntroduce;

@@ -42,7 +42,7 @@ function JobDetail() {
         };
 
         fetchPostAndStatus();
-    }, [postId, role, user,hasApplied]);
+    }, [postId, role, user]); // Removed hasApplied from dependencies
 
     if (isLoading || !role) {
         return (
@@ -85,9 +85,12 @@ function JobDetail() {
                                             )}
                                         </div>
                                         <div className="d-flex flex-column justify-content-center">
-                                            <div className="detail_companyname"><i className="bi bi-geo-alt"></i>{job.location}</div>
+                                            <div className="detail_companyname">
+                                                <i className="bi bi-geo-alt"></i>
+                                                {job.location?.address || "Location not available"}
+                                            </div>
                                             <div className="detail_companyname"><i className="bi bi-person-workspace"></i>{job.workType}</div>
-                                            <div className="detail_companyname"><i className="bi bi-clock"></i>{job.createdAt}</div>
+                                            <div className="detail_companyname"><i className="bi bi-clock"></i>{new Date(job.createdAt).toLocaleDateString()}</div>
                                         </div>
                                     </div>
                                     <div className="d-flex align-items-center">
@@ -95,7 +98,7 @@ function JobDetail() {
                                         <ul className="job_skills">
                                             {job.skills && job.skills.map((item) => (
                                                 <li key={item}>
-                                                    <a>{item}</a>
+                                                    <a href="#">{item}</a>
                                                 </li>
                                             ))}
                                         </ul>
@@ -134,13 +137,13 @@ function JobDetail() {
                                 {/* Related job posts */}
                                 <div className="posts-section">
                                     {relatedJobs.map((post) => (
-                                        <PostItem key={post._id} post={post}></PostItem>
+                                        <PostItem key={post._id} post={post} />
                                     ))}
                                 </div>
                             </div>
 
                             {/* Company sidebar */}
-                            <CompanyIntroduce job={job}/>
+                            <CompanyIntroduce job={job} />
                         </div>
                     </div>
                 </div>
