@@ -108,8 +108,8 @@ const PostItem = ({ post, handleHashtags }) => {
           </ul>
         </div>
         <div className="job_description">
-          {paragraphs.map((p) => (
-            <p key={p}>- {p}</p>
+          {paragraphs.map((p, index) => (
+            <li key={index}>{p}</li>
           ))}
         </div>
         <hr className="border-2 border-dark-subtle" />

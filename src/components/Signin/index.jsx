@@ -28,7 +28,11 @@ const SignIn = () => {
 			if (res.isSuccess === 1) {
 				const { user, token } = res;
 				login(user, token);
-				message.success(res.message)
+				message.success({
+					content: res.message,
+					style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+					duration: 2,
+				  });
 				navigate("/")
 			}
 		}
@@ -49,7 +53,11 @@ const SignIn = () => {
 			if (res.isSuccess === 1) {
 				const { company, token } = res;
 				login(company, token);
-				message.success(res.message)
+				message.success({
+					content: res.message,
+					style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+					duration: 2,
+				  });
 				navigate("/")
 			}
 		}

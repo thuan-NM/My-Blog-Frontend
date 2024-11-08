@@ -72,7 +72,8 @@ const JobCreation = () => {
       if (response.isSuccess) {
         message.success({
           content: "Đăng tải công việc thành công",
-          style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+          style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+          duration: 2,
         });
           navigate("/");
           if (response.status === 401) {
@@ -114,7 +115,7 @@ const JobCreation = () => {
                         <h2>{jobTitle}</h2>
                         <button
                           className="edit-info"
-                          onClick={() => {
+                          onClick={(event) => {
                             event.preventDefault();
                             openJobModal();
                           }}

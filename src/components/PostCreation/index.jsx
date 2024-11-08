@@ -20,54 +20,6 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
   const [isModalFileOpen, setIsModalFileOpen] = useState(false);
   const { user } = useAuth();
 
-  // const handleCreatePost = async (e) => {
-  //   e.preventDefault();
-  //   const newPost = {
-  //     title: title,
-  //     skills: skills.split(","), // "vietnam,giaoduc,sachgiaokhoa"
-  //     location: location,
-  //     description: description,
-  //     price: price,
-  //     // typeOfJob: typeOfJob,
-  //     // experience: experience,
-  //     workType: workType,
-  //     // lay user -> author
-  //     author: {
-  //       id: user._id,
-  //       userdata: user,
-  //     },
-  //   };
-  //   try {
-  //     const response = await postServices.postJob(newPost);
-
-  //     if (response.isSuccess) {
-  //         message.success("Create a new post successful");
-  //         if (response.status === 401) {
-  //             // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-  //             navigate("/auth");
-  //         }
-  //         setSelectedFile(null);
-  //         setTitle("");
-  //         setPrice(0);
-  //         setWorkType("At office");
-  //         setSkills("");
-  //         setLocation("");
-  //         setDescription("");
-  //     } else {
-  //         throw new Error(response.message);
-  //     }
-  // } catch (error) {
-  //     console.error('Failed to submit application:', error);
-  //     if (error.response && error.response.status === 401) {
-  //         // Người dùng chưa đăng nhập, chuyển hướng đến trang đăng nhập
-  //         navigate("/auth");
-  //     }
-  //     message.error('Nộp thông tin ứng tuyển không thành công');
-  // }
-  //   if (isJobModalOpen == true) handleShowJobModal(e);
-  //   else handleShowProjectModal(e)
-  // };
-
   const newPostData = {
     title,
     skills: skills.split(","),  // Convert skills to array
@@ -114,20 +66,6 @@ const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, 
               <div className="col-lg-12">
                 <input type="text" id="location" placeholder="Địa chỉ" value={location} onChange={(e) => setLocation(e.target.value)} />
               </div>
-              {/* <div className="col-lg-12">
-                <textarea id="description" placeholder="Mô tả công việc" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-              </div> */}
-              {/* <div className="col-lg-12 attach-file">
-                <Upload
-                  action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
-                  onChange={handleFile}
-                  data={{
-                    upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
-                  }}
-                >
-                  {<UploadOutlined />}
-                </Upload>
-              </div> */}
               <div className="col-lg-12">
                 <ul>
                   <li>

@@ -61,7 +61,11 @@ const KeySkillModal = ({
 
       const res = await keyskillServices.postCompanyKeySkills(newKeySkill);
 
-      message.success(res.message);
+      message.success({
+        content: res.message,
+        style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+        duration: 2,
+      });
       if (res.status === 401) {
         navigate("/auth");
       }

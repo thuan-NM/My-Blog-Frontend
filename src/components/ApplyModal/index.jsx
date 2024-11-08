@@ -45,7 +45,8 @@ const ApplyModal = ({ postId, onOk }) => {
             if (response.isSuccess) {
                 message.success({
                     content: "Nộp thông tin ứng tuyển thành công",
-                    style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+                    style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                    duration: 2,
                   });
                 onOk();
             } else {

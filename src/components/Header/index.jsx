@@ -4,11 +4,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
 import SearchBar from "../SearchBar";
 import { jwtDecode } from "jwt-decode";
+import UserSettings from "../../components/UserSettings";
 
 const Header = () => {
 	const [isOpened, setIsOpened] = useState(false);
 	const [isNotiOpened, setIsNotiOpened] = useState(false);
 	const [isRpsActive, setIsRpsActive] = useState(false);
+	const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 	const { user, logout } = useAuth();
 	const storedToken = localStorage.getItem('token');
 	let decodedToken = null;
@@ -160,7 +162,9 @@ const Header = () => {
 								</ul>
 								<h3>Cài đặt</h3>
 								<ul className="us-links">
-									<li><a href="profile-account-setting.html" title="">Cài đặt tài khoản</a></li>
+									<li>
+										<Link onClick={() => setIsSettingsModalOpen(!isSettingsModalOpen)}>Cài đặt tài khoản</Link>
+									</li>
 									<li><a href="#" title="">Quyền riêng tư</a></li>
 									<li><a href="#" title="">Câu hỏi thường gặp</a></li>
 									<li><a href="#" title="">Điều khoản sử dụng</a></li>
@@ -173,6 +177,7 @@ const Header = () => {
 						</div>)}
 				</div>
 			</div>
+			<UserSettings isSettingsModalOpen={isSettingsModalOpen} setIsSettingsModalOpen={setIsSettingsModalOpen}/>
 		</header>
 	)
 }

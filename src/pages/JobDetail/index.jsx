@@ -85,9 +85,9 @@ function JobDetail() {
                                             )}
                                         </div>
                                         <div className="d-flex flex-column justify-content-center">
-                                            <div className="detail_companyname"><i className="bi bi-geo-alt"></i>{job.location}</div>
+                                            <div className="detail_companyname"><i className="bi bi-geo-alt"></i>{job.location.address}</div>
                                             <div className="detail_companyname"><i className="bi bi-person-workspace"></i>{job.workType}</div>
-                                            <div className="detail_companyname"><i className="bi bi-clock"></i>{job.createdAt}</div>
+                                            <div className="detail_companyname"><i className="bi bi-clock"></i>{new Date(job.createdAt).toLocaleDateString()}</div>
                                         </div>
                                     </div>
                                     <div className="d-flex align-items-center">
