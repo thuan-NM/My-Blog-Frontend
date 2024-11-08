@@ -133,7 +133,7 @@ const Header = () => {
 					</div>) :
 						(<div className="user-account">
 							<div className="user-info" onClick={handleOpenMenu}>
-								<img src={!user.profilePictureUrl ? "images/userava.jpg" : user.profilePictureUrl} />
+								<img className="!w-10 !h-10 !rounded-full !ml-4 mr-0" src={!user.profilePictureUrl ? "images/userava.jpg" : user.profilePictureUrl} />
 								<i className="la la-sort-down"></i>
 							</div>
 							<div className={`user-account-settingss ${isOpened ? "active animate__animated animate__faster slideInDown" : "animate__animated animate__faster slideOutUp"}`}>

@@ -5,19 +5,18 @@ import { TeamOutlined, GlobalOutlined, HomeOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 
 const CompanyIntroduce = ({ job }) => {
-    if (!job || !job.author || !job.author.userdata) {
+    if (!job) {
         return <div>Thông tin công ty không có sẵn.</div>;
     }
 
-    const company = job.author.userdata;
-
+    const company = job;
+    console.log(company)
     return (
-        <div className="bg-white shadow-md rounded p-6">
+        <div className="bg-white shadow-md rounded-[4px] p-6 col-4 h-fit">
             <div className="flex items-center mb-4">
                 <img
-                    src={company.profilePictureUrl || "/default-company.png"}
-                    alt={company.companyname}
-                    className="w-16 h-16 rounded-full mr-4"
+                    src={company.profilePictureUrl}
+                    className="w-20 h-20 p-1 border border-gray-600 rounded-full mr-4 object-contain"
                 />
                 <div>
                     <Link to={`/company/${company._id}`} className="text-xl font-bold">
@@ -27,9 +26,10 @@ const CompanyIntroduce = ({ job }) => {
                 </div>
             </div>
             <div className="mb-4">
-                <p><TeamOutlined /> {company.numberOfEmployees}</p>
+                <p ><TeamOutlined /> {company.numberOfEmployees}</p>
                 <p><GlobalOutlined /> {company.location?.country || "N/A"}</p>
-                <p><HomeOutlined /> {company.location?.address.join(', ') || "N/A"}</p>
+                {company.location?.address.map((address,index) => (<p key={index}><HomeOutlined /> {address || "N/A"}</p>))}
+
             </div>
             <div className="flex flex-wrap">
                 {company.socialMediaLinks.websiteUrl && (

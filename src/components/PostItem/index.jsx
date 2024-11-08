@@ -5,10 +5,9 @@ import { useAuth } from '../../contexts/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import { Card } from 'antd';
 import reactionServices from '../../services/reaction.services';
-import commentServices from '../../services/comment.services';
+import DOMPurify from 'dompurify';
 
 const PostItem = ({ post, handleHashtags }) => {
-  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [reactionStats, setReactionStats] = useState({
     totalReactions: 0,
@@ -34,8 +33,6 @@ const PostItem = ({ post, handleHashtags }) => {
     const fetchReactionStats = async () => {
       try {
         const reactionStatsResponse = await reactionServices.getReactionsWithPostId(post._id);
-        const commentsResponse = await commentServices.getCommentsWithPostId(post._id);
-        setComments(commentsResponse.data);
         setReactionStats(reactionStatsResponse.data);
         setIsLoading(false);
       } catch (error) {
@@ -44,7 +41,7 @@ const PostItem = ({ post, handleHashtags }) => {
     };
 
     fetchReactionStats();
-  }, [comments, reactionStats]);
+  }, [reactionStats]);
 
   // Cuộn lên đầu khi component được render
   useEffect(() => {
@@ -64,7 +61,19 @@ const PostItem = ({ post, handleHashtags }) => {
   }
 
   const paragraphs = post.description.split('\n');
+  function stripHtml(html) {
+    const tmp = document.createElement('DIV');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+  }
 
+  // Lấy văn bản thuần từ mô tả
+  const plainDescription = stripHtml(post.description);
+
+  // Cắt ngắn mô tả nếu cần (ví dụ: 200 ký tự)
+  const shortDescription = plainDescription.length > 200
+    ? plainDescription.substring(0, 200) + '...'
+    : plainDescription;
   return (
     <Card bordered={false} className="post-bar">
       <div className="d-flex flex-column">
@@ -72,10 +81,9 @@ const PostItem = ({ post, handleHashtags }) => {
           <div>
             <Link to={`/jobdetail/${post._id}`} className="usy-dt" onClick={() => window.scrollTo(0, 0)}>
               <img
+                className="!w-14 !h-14 rounded-full object-scale-down	border border-gray-600 p-1"
                 src={post.author.userdata.profilePictureUrl || 'images/userava.jpg'}
                 alt=""
-                width="40"
-                height="40"
               />
               <div className="usy-name">
                 <h3>{post.title}</h3>
@@ -83,22 +91,23 @@ const PostItem = ({ post, handleHashtags }) => {
               </div>
             </Link>
           </div>
-          <div className="like-com">
+          <div className="like-com flex flex-col justify-start items-center">
             <button
-              className={`${
-                reactionStats.reactions.some((reaction) => reaction.userId === user._id) ? 'active' : ''
-              }`}
+              className={`${reactionStats.reactions.some((reaction) => reaction.userId === user._id) ? 'active' : ''
+                }`}
               onClick={handleReaction}
             >
               <i className="fas fa-heart"></i>
             </button>
+            <p>{reactionStats.totalReactions}</p>
+
           </div>
         </div>
         <hr className="border-2 border-dark-subtle" />
         <div>
           <ul className="skill-tags">
             {post.skills.map((item) => (
-              <li onClick={() => handleHashtags(item)} key={item}>
+              <li key={item}>
                 <a>{item}</a>
               </li>
             ))}
@@ -107,10 +116,10 @@ const PostItem = ({ post, handleHashtags }) => {
             </li>
           </ul>
         </div>
-        <div className="job_description">
-          {paragraphs.map((p, index) => (
-            <li key={index}>{p}</li>
-          ))}
+        <div className="job_description mt-2">
+          <p className="text-gray-700">
+            {shortDescription}
+          </p>
         </div>
         <hr className="border-2 border-dark-subtle" />
         <div className="d-flex justify-content-between mx-2">

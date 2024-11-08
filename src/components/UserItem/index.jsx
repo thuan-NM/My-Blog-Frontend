@@ -3,7 +3,7 @@ import followServices from "../../services/follow.services";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-const UserItem = ({ userdata, onAddFriend, onRemoveFriend, isFriend, viewed, isActive }) => {
+const UserItem = ({ userdata }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const { user } = useAuth();
 
@@ -37,7 +37,6 @@ const UserItem = ({ userdata, onAddFriend, onRemoveFriend, isFriend, viewed, isA
   };
 
   return (
-    <div className="col-lg-3 col-md-4 col-sm-6 col-12">
       <div className="company_profile_info">
         <div className="company-up-info !w-full">
           <img src={userdata.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
@@ -51,7 +50,6 @@ const UserItem = ({ userdata, onAddFriend, onRemoveFriend, isFriend, viewed, isA
         </div>
         <Link to={`/userprofile/${userdata._id}`}>Xem trang cá nhân</Link>
       </div>
-    </div>
   );
 };
 

@@ -55,13 +55,11 @@ function Users() {
             {data.map((curUser) =>
             // Check if the user is logged in before displaying the information
             (user && user._id && user._id != curUser._id && (
-              <UserItem
-                key={curUser._id}
-                userdata={curUser}
-                onAddFriend={() => { handleSendFriendRequest(curUser) }}
-                onRemoveFriend={() => { handleRemoveFriend(curUser._id) }}
-                isFriend={user.friend && user.friend.some((friend) => friend._id === curUser._id)}
-              />
+              <div className="col-lg-3 col-md-4 col-sm-6 col-12" key={curUser._id}>
+                <UserItem
+                  userdata={curUser}
+                />
+              </div>
             ))
             )}
           </div>

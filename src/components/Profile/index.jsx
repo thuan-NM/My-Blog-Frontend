@@ -9,7 +9,7 @@ import followServices from '../../services/follow.services';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
-const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor }) => {
+const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor,role }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [followers, setFollowers] = useState({})
   const [following, setFollowing] = useState({})
