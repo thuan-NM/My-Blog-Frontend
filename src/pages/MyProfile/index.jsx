@@ -27,12 +27,13 @@ import postServices from "../../services/post.services";
 import overviewServices from "../../services/overview.services";
 import experienceServices from "../../services/experience.services";
 import educationServices from "../../services/education.services";
+import UserSettings from "../../components/UserSettings";
 
 function MyProfile() {
-	const { user, updateUser } = useAuth();
+	const { user, updateUser, role } = useAuth();
 	const storedToken = localStorage.getItem('token');
 	const decodedToken = jwtDecode(storedToken);
-	const [activeButton, setActiveButton] = useState("feed");
+	const [activeButton, setActiveButton] = useState("info");
 	const [posts, setPosts] = useState([]);
 	const [overview, setOverview] = useState([]);
 	const [experiences, setExperiences] = useState([])
@@ -46,11 +47,13 @@ function MyProfile() {
 	const [selectedEducation, setSelectEducation] = useState();
 	const [isEduModalOpen, setIsEduModalOpen] = useState(false);
 	const [isEduEditOpen, setIsEduEditOpen] = useState(false);
+	const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 	const isAuthor = true;
 
 	const handleButtonClick = (buttonName) => {
 		setActiveButton(buttonName);
 	};
+
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
@@ -59,7 +62,7 @@ function MyProfile() {
 				const experiencesResponse = await experienceServices.getExperiencesWithUserId(decodedToken.userId)
 				const educationResponse = await educationServices.getEducationsWithUserId(decodedToken.userId)
 				setEducations(educationResponse.data)
-				setExperiences(experiencesResponse.data)
+				setExperiences(experiencesResponse.data)	
 				setOverview(overviewResponse.data)
 				setPosts(postResponse.data);
 				setIsLoading(false);
@@ -84,7 +87,7 @@ function MyProfile() {
 		return <p>No results found1.</p>;
 	}
 	return (
-		<div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen) ? "overlay animate__animated fadeIn" : ""}`}>
+		<div className={`${(isOverviewModalOpen || isModalPicOpen || isExpModalOpen || isExpEditOpen || isEduModalOpen || isEduEditOpen || isSettingsModalOpen) ? "overlay animate__animated fadeIn" : ""}`}>
 			<CoverPicture user={user} isAuthor={isAuthor}/>
 			<main>
 				<div className="main-section">
@@ -108,12 +111,6 @@ function MyProfile() {
 											</div>
 											<div className="tab-feed st2 settingjb">
 												<ul>
-													<li data-tab="feed-dd" className={`${activeButton == "feed" ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster slideIn"}`}>
-														<Link onClick={() => setActiveButton("feed")}>
-															<img src="images/ic1.png" alt="" />
-															<span>Bảng tin</span>
-														</Link>
-													</li>
 													<li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("info")}>
 															<img src="images/ic2.png" alt="" />
@@ -144,12 +141,12 @@ function MyProfile() {
 															<span>Đánh giá</span>
 														</Link>
 													</li>
-													<li data-tab="payment-dd" className={`${activeButton == "payment" ? "active animate__animated animate__faster zoomIn" : ""}`}>
+													{/* <li data-tab="payment-dd" className={`${activeButton == "payment" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("payment")}>
 															<img src="images/ic6.png" alt="" />
 															<span>Thu nhập</span>
 														</Link>
-													</li>
+													</li> */}
 												</ul>
 											</div>
 										</div>
@@ -179,21 +176,6 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton == "feed" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="feed-dd">
-											<div className="posts-section">
-												{posts.map((post) => (
-													(post.author._id == decodedToken.userId) &&
-													<PostItem key={post._id} post={post} />
-												))}
-												<div className="process-comm">
-													<div className="spinner">
-														<div className="bounce1"></div>
-														<div className="bounce2"></div>
-														<div className="bounce3"></div>
-													</div>
-												</div>
-											</div>
-										</div>
 										<div className={`product-feed-tab ${activeButton == "my-bids" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="my-bids">
 											<ul className="nav nav-tabs bid-tab" id="myTab" role="tablist">
 												<li className="nav-item">
@@ -218,14 +200,14 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
-											{/* <Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} isAuthor={isAuthor} />
-											<OverviewModal user={user} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} setOverview={setOverview}/>
+											<Overview overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} isAuthor={isAuthor} />
+											<OverviewModal user={user} role={role} overview={overview} isOverviewModalOpen={isOverviewModalOpen} setIsOverviewModalOpen={setIsOverviewModalOpen} setOverview={setOverview}/>
 											<Experience selectedExperience={selectedExperience} setSelectExperience={setSelectExperience} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} experiences={experiences} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} isAuthor={isAuthor} />
 											<ExperienceModal user={user} setIsExpModalOpen={setIsExpModalOpen} isExpModalOpen={isExpModalOpen} />
 											<ExperienceEdit user={user} isExpEditOpen={isExpEditOpen} setIsExpEditOpen={setIsExpEditOpen} Exp={selectedExperience} />
 											<Education isLoading={isLoading} setSelectEducation={setSelectEducation} selectedEducation={selectedEducation} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} educations={educations} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} isAuthor={isAuthor} />
 											<EducationModal setIsLoading={setIsLoading} user={user} setIsEduModalOpen={setIsEduModalOpen} isEduModalOpen={isEduModalOpen} />
-											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} /> */}
+											<EducationEdit user={user} isEduEditOpen={isEduEditOpen} setIsEduEditOpen={setIsEduEditOpen} selectedEducation={selectedEducation} />
 										</div>
 										<div className={`product-feed-tab ${activeButton == "rewivewdata" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="rewivewdata">
 											<div className="posts-section">
@@ -305,34 +287,15 @@ function MyProfile() {
 												</div>
 											</div>
 										</div>
-										<div className={`product-feed-tab ${activeButton == "payment" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="payment-dd">
-											<div className="billing-method">
-												<ul>
-													<li>
-														<h3>Phương thức thanh toán</h3>
-														<a href="#" title=""><i className="fa fa-plus-circle"></i></a>
-													</li>
-													<li>
-														<h3>Xem hoạt động</h3>
-														<a href="#" title="">Xem tất cả</a>
-													</li>
-													<li>
-														<h3>Tổng tiền</h3>
-														<span>$0.00</span>
-													</li>
-												</ul>
-												<div className="lt-sec">
-													<h4>Các sao kê của bạn</h4>
-													<a title=""><EuroCircleOutlined className="p-0 m-0 me-2" />Bấm vào </a>
-												</div>
-											</div>
-										</div>
 									</div>
 								</div>
 								<div className="col-lg-3">
 									<div className="right-sidebar">
 										<div className="message-btn">
-											<a href="profile-account-setting.html" title=""><i className="fas fa-cog"></i>Cài đặt</a>
+											{/* <Link to={"/user-account-settings"}><i className="fas fa-cog"></i>Cài đặt</Link> */}
+											<button onClick={() => setIsSettingsModalOpen(!isSettingsModalOpen)}>
+												<i className="fas fa-cog"></i>Cài đặt
+											</button>
 										</div>
 										<div className="widget widget-portfolio">
 											<div className="wd-heady">
@@ -347,6 +310,7 @@ function MyProfile() {
 						</div>
 					</div>
 				</div>
+				<UserSettings isSettingsModalOpen={isSettingsModalOpen} setIsSettingsModalOpen={setIsSettingsModalOpen}/>
 			</main>
 		</div>
 	)

@@ -35,7 +35,8 @@ const CoverPicture = ({ user, isAuthor }) => {
             setSelectedCoverImage(null);
             message.success({
                 content: "Cập nhật ảnh bìa thành công",
-                style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
+                style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                duration: 2,
               });
         } catch (error) {
             if (error.response && error.response.status === 500) {

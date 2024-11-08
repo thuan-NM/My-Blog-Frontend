@@ -10,6 +10,7 @@ function VerifyEmail() {
     const [message, setMessage] = useState('');
     const query = new URLSearchParams(useLocation().search);
     const token = query.get('token');
+    console.log(token);
 
     useEffect(() => {
         const verifyEmail = async () => {

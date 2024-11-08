@@ -45,7 +45,11 @@ const ManageJobItem = () => {
     const handleDelete = async (postId) => {
         try {
             const res = await postServices.deletePostWithID(postId)
-            message.success(res.message)
+            message.success({
+                content: res.message,
+                style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                duration: 2,
+              });
         } catch (error) {
             message.error(error.response.data.message)
             console('Error deleting job status:', error);

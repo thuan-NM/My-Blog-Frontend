@@ -19,7 +19,7 @@ const TopJob = () => {
             }
         };
         fetchUsers();
-    }, [data]);
+    }, []);
 
     if (isLoading) {
         return (

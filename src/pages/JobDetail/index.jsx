@@ -85,10 +85,7 @@ function JobDetail() {
                                             )}
                                         </div>
                                         <div className="d-flex flex-column justify-content-center">
-                                            <div className="detail_companyname">
-                                                <i className="bi bi-geo-alt"></i>
-                                                {job.location?.address || "Location not available"}
-                                            </div>
+                                            <div className="detail_companyname"><i className="bi bi-geo-alt"></i>{job.location.address}</div>
                                             <div className="detail_companyname"><i className="bi bi-person-workspace"></i>{job.workType}</div>
                                             <div className="detail_companyname"><i className="bi bi-clock"></i>{new Date(job.createdAt).toLocaleDateString()}</div>
                                         </div>

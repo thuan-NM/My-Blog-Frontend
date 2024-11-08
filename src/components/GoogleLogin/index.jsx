@@ -1,68 +1,55 @@
 import React from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode'; // Corrected import
+import { jwtDecode } from 'jwt-decode';
 import authServices from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { useAuth } from "../../contexts/AuthContext";
 
-const clientId = '216765626838-4hlcbvu5uqmnvar12i82v5oueltfb0f1.apps.googleusercontent.com'; // Replace with your Google Client ID
+const clientId = '216765626838-4hlcbvu5uqmnvar12i82v5oueltfb0f1.apps.googleusercontent.com'; // Thay thế bằng Google Client ID của bạn
 
 const GoogleLoginButton = () => {
     const navigate = useNavigate();
-    const { login } = useAuth();
+	const { login } = useAuth();
 
     const handleLoginSuccess = async (credentialResponse) => {
+        const decodedToken = jwtDecode(credentialResponse.credential);
+        console.log('Login Success:', credentialResponse.credential);
+        // Bạn có thể sử dụng thông tin người dùng từ decodedToken
         try {
-            // Ensure the credential exists
-            if (!credentialResponse.credential) {
-                throw new Error('No credential returned from Google login');
-            }
-
-            // Decode the token to get user details if needed
-            const decodedToken = jwtDecode(credentialResponse.credential);
-            console.log('Login Success:', decodedToken);
-
-            // Send the credential to your backend for further verification
-            const res = await authServices.signInWithGoogle(credentialResponse.credential);
+            const res = await authServices.signInWithGoogle(credentialResponse.credential)
             if (res.isSuccess === 1) {
                 const { user, token } = res;
                 login(user, token);
-                message.success(res.message);
-                navigate("/");
-            } else {
-                message.error(res.message || 'Đăng nhập thất bại');
+                message.success({
+                    content: res.message,
+                    style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                    duration: 2,
+                  });
+                navigate("/")
             }
-        } catch (error) {
-            console.error('Error during login process:', error);
-            message.error(error.response?.data?.message || 'Đăng nhập thất bại');
+        }
+        catch (error) {
+            console.log(error)
+            message.error(error.response.data.message)
         }
     };
 
     const handleLoginError = () => {
         console.error('Login Error');
-        message.error('Đăng nhập bằng Google gặp sự cố.');
     };
 
     return (
         <GoogleOAuthProvider clientId={clientId}>
-            <div style={buttonWrapperStyle}>
+            <div>
                 <GoogleLogin
                     onSuccess={handleLoginSuccess}
                     onError={handleLoginError}
-                    prompt="select_account" // Always show account selection prompt
+                    prompt="select_account" // Luôn hiển thị tùy chọn đăng nhập
                 />
             </div>
         </GoogleOAuthProvider>
     );
-};
-
-// Optional: Custom styles for button wrapper (if you need additional styling)
-const buttonWrapperStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '20px 0',
 };
 
 export default GoogleLoginButton;
