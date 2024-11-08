@@ -100,3 +100,4 @@ const HiredJob = () => {
 }
 
 export default HiredJob;
+

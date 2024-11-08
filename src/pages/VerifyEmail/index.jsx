@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Footer from "../../components/Footer";
+import verifyServices from '../../services/verify.services';
 
 function VerifyEmail() {
     const imagePath = process.env.PUBLIC_URL + '/images';
-
+    const {type}=useParams()
+    console.log(type);
     const [message, setMessage] = useState('');
     const query = new URLSearchParams(useLocation().search);
     const token = query.get('token');
@@ -14,9 +15,9 @@ function VerifyEmail() {
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/auth/verify-email?token=${token}`);
-                // const res = await axios.get(`http://localhost:3001/companyauth/verify-email?token=${token}`);
-                setMessage(res.data.message);
+                const route= type == "user"?"auth":"companyauth"
+                const response = await verifyServices.verifyEmail(route,token)
+                setMessage(response.message);
             } catch (error) {
                 setMessage('Failed to verify email. Invalid or expired token.');
             }
