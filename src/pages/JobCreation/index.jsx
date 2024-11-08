@@ -144,10 +144,9 @@ const JobCreation = () => {
 
       if (response.isSuccess) {
         message.success({
-          content: isEditMode
-            ? "Chỉnh sửa công việc thành công!"
-            : "Đăng tải công việc thành công!",
-          style: { marginTop: "20vh" },
+          content: "Đăng tải công việc thành công",
+          style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+          duration: 2,
         });
         navigate("/");
       } else {
@@ -190,28 +189,17 @@ const JobCreation = () => {
             <div className="row">
               {/* Form Chính */}
               <div className="col-lg-8 col-md-4 pd-left-none no-pd">
-                {isLoading ? (
-                  <div className="flex justify-center items-center h-full">
-                    <Spin size="large" />
-                  </div>
-                ) : (
-                  <Form
-                    form={form}
-                    layout="vertical"
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                  >
-                    <div className="detail_sec bg-white p-6 rounded shadow-md mb-6">
-                      <div className="flex justify-between items-center mb-4">
-                        <Form.Item
-                          label="Tiêu đề công việc"
-                          name="title"
-                          rules={[
-                            {
-                              required: true,
-                              message: "Vui lòng nhập tiêu đề công việc!",
-                            },
-                          ]}
+                <form>
+                  <div className="detail_sec">
+                    <div>
+                      <div className="flex flex-row justify-between">
+                        <h2>{jobTitle}</h2>
+                        <button
+                          className="edit-info"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            openJobModal();
+                          }}
                         >
                           <Input
                             placeholder="Nhập tiêu đề công việc"

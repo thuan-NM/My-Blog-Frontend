@@ -9,7 +9,7 @@ import followServices from '../../services/follow.services';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
-const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
+const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [followers, setFollowers] = useState({})
   const [following, setFollowing] = useState({})
@@ -55,7 +55,11 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
       updateUser();
       // Reset the selected image
       setSelectedImage(null);
-      message.success("Change picture success!");
+      message.success({
+        content: "Đổi ảnh đại diện thành công",
+        style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+        duration: 2,
+      });
       // If the server successfully updates the profile picture, you can handle any necessary logic here
       console.log('Profile picture updated successfully.');
     } catch (error) {
@@ -88,7 +92,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen }) => {
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `../images/userava.jpg`} />
-        {(user._id === user.userId || user._id === user.companyId) && (
+        {(isAuthor = true) && (
           <div className="add-dp" id="OpenImgUpload">
             <label>
               <i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i>

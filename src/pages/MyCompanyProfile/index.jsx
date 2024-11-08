@@ -17,6 +17,7 @@ import KeySkillServices from "../../services/keyskill.services";
 import ManageJobItem from "../../components/ManageJobItem";
 import InterviewSchedule from "../../components/InterviewSchedule";
 import ManageJob from "../../components/ManageJob";
+import CompanySettings from "../../components/CompanySettings";
 
 function MyCompanyProfile() {
   const { user, updateUser, role } = useAuth();
@@ -36,6 +37,7 @@ function MyCompanyProfile() {
   const [isExpEditOpen, setIsExpEditOpen] = useState(false);
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEduEditOpen, setIsEduEditOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const isAuthor = true;
 
   useEffect(() => {
@@ -73,7 +75,8 @@ function MyCompanyProfile() {
           isExpModalOpen ||
           isExpEditOpen ||
           isEduModalOpen ||
-          isEduEditOpen
+          isEduEditOpen ||
+        isSettingsModalOpen
           ? "overlay animate__animated fadeIn"
           : ""
         }`}
@@ -249,7 +252,7 @@ function MyCompanyProfile() {
                             aria-controls="contact"
                             aria-selected="false"
                           >
-                            Applied cadidates
+                            Applied candidates
                           </a>
                         </li>
                       </ul>
@@ -507,9 +510,9 @@ function MyCompanyProfile() {
                 <div className="col-lg-3">
                   <div className="right-sidebar">
                     <div className="message-btn">
-                      <a href="profile-account-setting.html" title="">
-                        <i className="fas fa-cog"></i>Cài đặt
-                      </a>
+                      <button onClick={() => setIsSettingsModalOpen(!isSettingsModalOpen)}>
+												<i className="fas fa-cog"></i>Cài đặt
+											</button>
                     </div>
                     <div className="widget widget-portfolio">
                       <div className="wd-heady">
@@ -523,6 +526,7 @@ function MyCompanyProfile() {
             </div>
           </div>
         </div>
+        <CompanySettings isSettingsModalOpen={isSettingsModalOpen} setIsSettingsModalOpen={setIsSettingsModalOpen}/>
       </main>
     </div>
   );

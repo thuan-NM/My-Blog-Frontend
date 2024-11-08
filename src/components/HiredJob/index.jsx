@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import jobstatusServices from "../../services/jobstatus.services";
-import { message } from "antd";
 import {ExclamationCircleOutlined } from "@ant-design/icons"
 
-const DeniedJob = () => {
+const HiredJob = () => {
     const [posts, setPosts] = useState([]);
     const storedToken = localStorage.getItem('token');
     const decodedToken = jwtDecode(storedToken);
@@ -13,7 +12,7 @@ const DeniedJob = () => {
 
     const data = {
         userId: decodedToken.userId,
-        statusdata: "Denied"
+        statusdata: "Hired"
     }
 
     useEffect(() => {
@@ -31,7 +30,7 @@ const DeniedJob = () => {
     };
 
     const handleDelete = async (postId) => {
-        try {
+        try { 
             const res = await jobstatusServices.deleteJobstatusWithID(postId) 
             console.log(res)
             message.success({
@@ -41,7 +40,6 @@ const DeniedJob = () => {
               });
             fetchPosts();
         } catch (error) {
-            message.error(error.response.data.message)
             console.error('Error deleting job status:', error);
         }
     };
@@ -89,7 +87,7 @@ const DeniedJob = () => {
                             <p>{post.price}$/giờ</p>
                         </li>
                         <div className="devepbtn saved-btn ">
-                            <button className="clrbtn" disabled>Đã bị từ chối</button>
+                            <button className="clrbtn" disabled>Đã được tuyển</button>
                             <button className="clrbtn" onClick={() => handleDelete(post.status._id)}>
                                 <i className="far fa-trash-alt"></i>
                             </button>
@@ -101,4 +99,5 @@ const DeniedJob = () => {
     )
 }
 
-export default DeniedJob;
+export default HiredJob;
+
