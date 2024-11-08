@@ -10,7 +10,7 @@ const ConfirmInterview = () => {
     useEffect(() => {
         const confirmInterview = async () => {
             try {
-                const res = await jobstatusServices.confirmInterview(token); // Call your backend to confirm interview
+                const res = await jobstatusServices.confirmRequest(token); // Call your backend to confirm interview
                 message.success(res.message);
                 navigate('/confirmation-success'); // Redirect to a success page or home
             } catch (error) {

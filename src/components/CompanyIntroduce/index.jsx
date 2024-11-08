@@ -10,7 +10,7 @@ const CompanyIntroduce = ({job}) => {
                         <img src={job.author?.userdata.profilePictureUrl} alt="" />
                         <div className="company_intro_info">
                             <p>{job.author?.userdata.companyname}</p>
-                            <Link className='!underline !text-neutral-400 hover:!text-[#e44d3a]'>Xem thông tin công ty</Link>
+                            <Link to={`/companyprofile/${job.author?.userdata._id}`} className='!underline !text-neutral-400 hover:!text-[#e44d3a]'>Xem thông tin công ty</Link>
                         </div>
                     </div>
                     <div className="d-flex flex-column">

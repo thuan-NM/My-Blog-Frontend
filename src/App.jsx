@@ -34,13 +34,15 @@ import ConfirmInterview from "./pages/ConfirmInterview";
 import ConfirmationSuccess from "./components/ConfirmationSuccess";
 
 import JobCreation from "./pages/JobCreation";
+import InterviewSchedule from "./components/InterviewSchedule";
+import InterviewActionPage from "./pages/InterviewActionPage";
 const queryClient = new QueryClient()
 
 function App() {
   const location = useLocation();
 
   // Kiểm tra xem đang ở trang đăng nhập hoặc đăng ký
-  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth") ||location.pathname.includes("/jobapplication");
+  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth") || location.pathname.includes("/jobapplication");
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
@@ -58,14 +60,16 @@ function App() {
           <Route path="/userprofile/:id" element={<UserProfile />} />
           <Route path="/companyprofile/:id" element={<CompanyProfile />} />
           <Route path="/mycompanyprofile" element={<MyCompanyProfile />} />
-          <Route path="/auth/verifyemail" element={<VerifyEmail />} />
+          <Route path="/auth/verifyemail/:type" element={<VerifyEmail />} />
           <Route path="/companyauth" element={<CompanyAuth />} />
           <Route path="/jobdetail/:postId" element={<JobDetail />} />
           <Route path="/jobapplication/:postId" element={<JobApplication />} />
           <Route path="/viewcandidate/:postId" element={<CandidateList />} />
-          <Route path="/interview/confirm/:token" element={<ConfirmInterview />} /> {/* Confirmation route */}
+          <Route path="/sendrequest/confirm/:token" element={<ConfirmInterview />} /> {/* Confirmation route */}
           <Route path="/confirmation-success" element={<ConfirmationSuccess />} />
           <Route path="/jobcreation" element={<JobCreation />} />
+          <Route path="/schedule" element={<InterviewSchedule />} />
+          <Route path="/interview/:action/:jobStatusId" element={<InterviewActionPage />} />
         </Routes>
         {/* {!isAuthPage} */}
         {!isAuthPage && <ChatBox />}

@@ -55,17 +55,47 @@ class JobstatusServices {
     }
 
     // New method for scheduling an interview
-    async scheduleInterview(data) {
+    async requestConfirmation(data) {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
-        return (await this.api.post(`/scheduleInterview`, data, { headers })).data;
+        return (await this.api.post(`/sendrequest`, data, { headers })).data;
     }
 
     // New method for confirming an interview
-    async confirmInterview(token) {
+    async confirmRequest(token) {
         return (await this.api.get(`/confirmInterview/${token}`)).data;
     }
+    async getInterviewCandidates(companyId) {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.get(`/interviewcandidates/${companyId}`)).data;
+    }
+    async scheduleInterview(data) {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.post(`/schedule`, data, { headers })).data;
+    }
+
+    async acceptInterview(jobStatusId) {
+        return (await this.api.get(`/interview/accept/${jobStatusId}`)).data;
+    }
+
+    async rescheduleInterview(jobStatusId, data) {
+        const headers = {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        };
+        return (await this.api.post(`/interview/reschedule/${jobStatusId}`, data, { headers })).data;
+    }
+    async getJobstatusDetails(jobStatusId) {
+        return (await this.api.get(`/details/${jobStatusId}`)).data;
+    }
+    async getInterviewConfirmedCandidates(companyId) {
+        return (await this.api.get(`/interview-confirmed/${companyId}`));
+    };
+
 }
 
 export default new JobstatusServices();

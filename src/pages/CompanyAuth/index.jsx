@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SignUp from "../../components/Signup";
-import SignIn from "../../components/Signin";
 import Footer from "../../components/Footer";
 import SignUpCompany from "../../components/SignUpCompany";
 

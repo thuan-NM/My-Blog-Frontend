@@ -58,9 +58,9 @@ const Suggestions = () => {
         );
     }
 
-    if (data.length === 0) {
-        return <p>No suggestions found.</p>;
-    }
+    // if (data.length === 0) {
+    //     return <p>No suggestions found.</p>;
+    // }
 
     return (
         <div className="widget suggestions full-width">
