@@ -21,7 +21,7 @@ const MostInterest = () => {
         fetchUsers();
     }, [data]);
     if (isLoading) {
-        return <p>Loading...</p>;
+        return <p></p>;
     }
 
     if (user == null) {

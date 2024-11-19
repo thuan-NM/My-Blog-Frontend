@@ -4,8 +4,8 @@ class PostServices {
     constructor(baseURL = process.env.REACT_APP_API_URL + `/posts`) {
         this.api = createApiClient(baseURL);
     }
-    async getJobsList() {
-        return (await this.api.get("/")).data;
+    async getJobsList(page = 1, pageSize = 20) {
+        return (await this.api.get(`/?page=${page}&pageSize=${pageSize}`)).data;
     }
     async getJobsWithSearch() {
         return (await this.api.get("/search")).data;

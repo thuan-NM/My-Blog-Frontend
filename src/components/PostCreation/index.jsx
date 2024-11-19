@@ -5,7 +5,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import postServices from "../../services/post.services";
 
-const PostCreation = ({ isJobModalOpen, handleShowJobModal, isProjectModalOpen, handleShowProjectModal }) => {
+const PostCreation = ({ isJobModalOpen, handleShowJobModal }) => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [skills, setSkills] = useState("");

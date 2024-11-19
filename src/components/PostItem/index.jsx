@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import { message } from 'antd';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
@@ -140,4 +140,4 @@ const PostItem = ({ post, handleHashtags }) => {
   );
 };
 
-export default PostItem;
+export default memo(PostItem);
