@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { message } from "antd";
 import CompanyAuthServices from "../../services/companyAuth.services";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const SignUpCompany = () => {
   const [step, setStep] = useState(1); // Quản lý bước hiện tại
@@ -21,7 +21,7 @@ const SignUpCompany = () => {
       websiteUrl: "",
     },
   });
-
+  const navigate = useNavigate()
   const handleNextStep = () => setStep(step + 1);
   const handlePrevStep = () => setStep(step - 1);
 
@@ -58,6 +58,7 @@ const SignUpCompany = () => {
       const res = await CompanyAuthServices.signUp(formData);
       if (res.isSuccess === 1) {
         message.success(res.message);
+        navigate("/auth")
       }
     } catch (error) {
       console.log(error);

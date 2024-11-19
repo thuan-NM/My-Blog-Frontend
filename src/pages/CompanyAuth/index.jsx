@@ -3,10 +3,7 @@ import Footer from "../../components/Footer";
 import SignUpCompany from "../../components/SignUpCompany";
 
 function CompanyAuth() {
-  const [currentTab, setCurrentTab] = useState("tab-1");
-  const handleTabClick = (tab) => {
-    setCurrentTab(tab);
-  };
+
   const imagePath = process.env.PUBLIC_URL + '/images';
 
   return (

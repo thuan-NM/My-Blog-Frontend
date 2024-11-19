@@ -21,8 +21,8 @@ class JobstatusServices {
         return (await this.api.get(`/${id}`)).data;
     }
 
-    async postJobstatus(data, header) {
-        return (await this.api.post(`/`, data, header)).data;
+    async postJobstatus(formData, config) {
+        return (await this.api.post(`/`, formData, config)).data;
     }
 
     async getCandidateOfJob(id) {
@@ -51,7 +51,7 @@ class JobstatusServices {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         }
-        return (await this.api.delete(`/${id}`, { headers }));
+        return (await this.api.delete(`/${id}`, { headers })).data;
     }
 
     // New method for scheduling an interview
@@ -79,8 +79,8 @@ class JobstatusServices {
         return (await this.api.post(`/schedule`, data, { headers })).data;
     }
 
-    async acceptInterview(jobStatusId) {
-        return (await this.api.get(`/interview/accept/${jobStatusId}`)).data;
+    async acceptInterview(jobStatusId,data) {
+        return (await this.api.post(`/interview/accept/${jobStatusId}`,{data})).data;
     }
 
     async rescheduleInterview(jobStatusId, data) {
@@ -94,6 +94,9 @@ class JobstatusServices {
     }
     async getInterviewConfirmedCandidates(companyId) {
         return (await this.api.get(`/interview-confirmed/${companyId}`));
+    };
+    async getCandidatesWithStatus(companyId,data) {
+        return (await this.api.get(`/status/${companyId}/${data}`)).data;
     };
 
 }

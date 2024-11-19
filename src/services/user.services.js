@@ -7,14 +7,14 @@ class UserServices {
     async getUsersList() {
         return (await this.api.get("/")).data;
     }
-    async getUsersWithSearch() {
-        return (await this.api.get("/search")).data;
+    async getUsersWithSearch(searchTerm) {
+        return (await this.api.get(`/search`, { params: { searchTerm } })).data;
     }
     async getUsersWithId(id) {
         const headers = {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
         };
-        return (await this.api.get(`/${id}`,{headers})).data;
+        return (await this.api.get(`/${id}`, { headers })).data;
     }
     async updateUserWithId(data, id) {
         return (await this.api.put(`/${id}`, data)).data;
@@ -24,7 +24,7 @@ class UserServices {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'multipart/form-data',
         };
-        return (await this.api.post(`/update-picture/${id}`, data,{headers})).data;
+        return (await this.api.post(`/update-picture/${id}`, data, { headers })).data;
     }
     async updateCoverPictureWithId(data, id) {
         const headers = {

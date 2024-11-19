@@ -92,7 +92,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor
     <div className="user_profile">
       <div className="user-pro-img">
         <img src={user.profilePictureUrl || `../images/userava.jpg`} />
-        {(isAuthor = true) && (
+        {(isAuthor == true) && (
           <div className="add-dp" id="OpenImgUpload">
             <label>
               <i className="fas fa-camera" onClick={() => setIsModalPicOpen(!isModalPicOpen)}></i>

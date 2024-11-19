@@ -90,7 +90,7 @@ function Home() {
                   {role === "company" ?
                     (<div className="post-topbar">
                       <div className="user-picy">
-                      <img className="!w-14 !h-14 rounded-full" src={user.profilePictureUrl || `../images/userava.jpg`} />
+                      <img className="!w-14 !h-14 rounded-full bg-neutral-100 object-contain" src={user.profilePictureUrl || `../images/userava.jpg`} />
                       </div>
                       <div className="post-st">
                         <ul>

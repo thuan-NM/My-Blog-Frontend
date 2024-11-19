@@ -1,16 +1,18 @@
+// App.jsx
+import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css"
+import "bootstrap-icons/font/bootstrap-icons.css";
 import "font-awesome/css/font-awesome.min.css";
-import "line-awesome/dist/font-awesome-line-awesome/css/all.css"
-import "line-awesome/dist/line-awesome/css/line-awesome.css"
+import "line-awesome/dist/font-awesome-line-awesome/css/all.css";
+import "line-awesome/dist/line-awesome/css/line-awesome.css";
 import "slick-carousel/slick/slick.min.js";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "animate.css/animate.css";
 import "animate.css/source/animate.css";
 import "./index.css";
-import "./responsive.css"
+import "./responsive.css";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
@@ -20,10 +22,10 @@ import MyProfile from "./pages/MyProfile";
 import UserProfile from "./pages/UserProfile";
 import CompanyProfile from "./pages/CompanyProfile";
 import Jobs from "./pages/Jobs";
-import Companies from "./pages/Companies"
-import { QueryClient, QueryClientProvider } from 'react-query'
+import Companies from "./pages/Companies";
+import { QueryClient, QueryClientProvider } from "react-query";
 import ChatBox from "./components/ChatBox";
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import MyCompanyProfile from "./pages/MyCompanyProfile";
 import VerifyEmail from "./pages/VerifyEmail";
 import CompanyAuth from "./pages/CompanyAuth";
@@ -32,17 +34,21 @@ import JobApplication from "./pages/JobApplications";
 import CandidateList from "./pages/CandidatesList";
 import ConfirmInterview from "./pages/ConfirmInterview";
 import ConfirmationSuccess from "./components/ConfirmationSuccess";
-
 import JobCreation from "./pages/JobCreation";
 import InterviewSchedule from "./components/InterviewSchedule";
 import InterviewActionPage from "./pages/InterviewActionPage";
-const queryClient = new QueryClient()
+
+const queryClient = new QueryClient();
 
 function App() {
   const location = useLocation();
 
   // Kiểm tra xem đang ở trang đăng nhập hoặc đăng ký
-  const isAuthPage = location.pathname.includes("/auth") || location.pathname.includes("/companyauth") || location.pathname.includes("/jobapplication");
+  const isAuthPage =
+    location.pathname.includes("/auth") ||
+    location.pathname.includes("/companyauth") ||
+    location.pathname.includes("/jobapplication");
+
   return (
     <div className="wrapper">
       <QueryClientProvider client={queryClient}>
@@ -71,7 +77,6 @@ function App() {
           <Route path="/schedule" element={<InterviewSchedule />} />
           <Route path="/interview/:action/:jobStatusId" element={<InterviewActionPage />} />
         </Routes>
-        {/* {!isAuthPage} */}
         {!isAuthPage && <ChatBox />}
       </QueryClientProvider>
     </div>

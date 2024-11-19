@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { message, Modal, DatePicker, Button, Spin } from 'antd';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode'; // Đảm bảo đúng import
 import { FaCalendarAlt, FaUserTie, FaBriefcase } from 'react-icons/fa';
 import moment from 'moment';
 import jobstatusServices from '../../services/jobstatus.services';
+
+const { confirm } = Modal;
 
 const InterviewSchedule = () => {
     const storedToken = localStorage.getItem("token");
@@ -96,7 +98,7 @@ const InterviewSchedule = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen bg-gray-100">
-                <Spin tip="Đang tải dữ liệu..." size="large" />
+                <Spin />
             </div>
         );
     }
@@ -117,13 +119,13 @@ const InterviewSchedule = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
-                    {candidates.map((candidate, index) => (
-                        <div key={index} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-[1.005] relative">
+                    {candidates.map((candidate) => (
+                        <div key={candidate.id} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-[1.005] relative">
                             <div
-                                className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full ${candidate.status != "Interview" ? "bg-[#E44D3A]" : "bg-green-500"
+                                className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full ${candidate.status !== "Interview" ? "bg-[#E44D3A]" : "bg-green-500"
                                     }`}
                             >
-                                {candidate.status != "Interview" ? 'Yêu cầu dời lịch' : 'Chưa xếp lịch'}
+                                {candidate.status !== "Interview" ? 'Yêu cầu dời lịch' : 'Chưa xếp lịch'}
                             </div>
 
                             <div className="flex items-center mb-4">
@@ -139,7 +141,7 @@ const InterviewSchedule = () => {
                             </div>
                             <div className="flex items-center mt-2">
                                 <FaCalendarAlt className="text-gray-600 mr-2" />
-                                {candidate.status == "Reschedule Requested" ? (
+                                {candidate.status === "Reschedule Requested" ? (
                                     <p className="text-[#E44D3A]">
                                         Lịch phỏng vấn: {moment.utc(candidate.interviewDate).format('DD/MM/YYYY HH:mm')}
                                     </p>
@@ -165,7 +167,6 @@ const InterviewSchedule = () => {
                 okButtonProps={{ loading: isScheduling }}
                 centered
                 className="rounded-lg"
-                h
             >
                 <DatePicker
                     showTime={{ format: 'HH:mm' }}
