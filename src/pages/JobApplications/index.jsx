@@ -172,7 +172,7 @@ const JobApplication = () => {
                                 >
                                     <div>
                                         <Upload {...uploadProps} className="file-upload-button"
-                                            action="none"
+                                            action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
                                             data={{
                                                 upload_preset: "sudykqqg",
                                             }}>

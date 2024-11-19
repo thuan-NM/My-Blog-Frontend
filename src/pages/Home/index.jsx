@@ -172,7 +172,7 @@ function Home() {
                       <div className="post-topbar">
                         <div className="user-picy">
                           <img
-                            className="!w-14 !h-14 rounded-full"
+                            className="!w-14 !h-14 rounded-full bg-neutral-100 object-contain"
                             src={
                               user.profilePictureUrl || `../images/userava.jpg`
                             }

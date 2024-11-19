@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useAuth } from "../../contexts/AuthContext";
-import { useQuery } from "react-query";
 import PostItem from "../../components/PostItem";
-import UserItem from "../../components/UserItem";
-import ChangePassword from "../../components/ChangePassword";
-import MyInfo from "../../components/MyInfo";
 import Profile from "../../components/Profile";
-import OverviewModal from "../../components/OverviewModal";
 import Experience from "../../components/Experience";
-import { useHashtags } from "../../contexts/HashtagContext";
-import { useFriend } from "../../contexts/FriendContext";
 import { jwtDecode } from "jwt-decode";
 import Suggestions from "../../components/Suggestion";
 import { Link } from "react-router-dom";
@@ -32,12 +23,10 @@ function UserProfile() {
   const { id } = useParams();
   const storedToken = localStorage.getItem('token');
   const decodedToken = jwtDecode(storedToken);
-  const [posts, setPosts] = useState([]);
   const [overview, setOverview] = useState("");
   const [experiences, setExperiences] = useState([])
   const [activeButton, setActiveButton] = useState("feed");
   const [educations, setEducations] = useState([])
-  const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
   const [isModalPicOpen, setIsModalPicOpen] = useState(false);
@@ -58,7 +47,6 @@ function UserProfile() {
     const fetchPost = async () => {
       try {
         const userres = await userServices.getUsersWithId(id)
-        const postResponse = await postServices.getJobsWithUser(id)
         const overviewResponse = await overviewServices.getOverviewWithUserID(id)
         const experiencesResponse = await experienceServices.getExperiencesWithUserId(id)
         const educationResponse = await educationServices.getEducationsWithUserId(id)
@@ -72,7 +60,7 @@ function UserProfile() {
       }
     };
     fetchPost();
-  }, [posts, user, overview, experiences, educations]);
+  }, [user, overview, experiences, educations]);
 
   if (isLoading) {
     return (
@@ -97,7 +85,7 @@ function UserProfile() {
               <div className="row">
                 <div className="col-lg-3">
                   <div className="main-left-sidebar">
-                    <Profile user={user} isModalPicOpen={isModalPicOpen} setIsModalPicOpen={setIsModalPicOpen} />
+                    <Profile user={user} isModalPicOpen={isModalPicOpen} setIsModalPicOpen={setIsModalPicOpen} isAuthor={isAuthor}/>
                     <Suggestions />
                   </div>
                 </div>
@@ -112,12 +100,6 @@ function UserProfile() {
                       </div>
                       <div className="tab-feed st2 settingjb">
                         <ul>
-                          <li data-tab="feed-dd" className={`${activeButton == "feed" ? "active animate__animated animate__faster zoomIn" : "animate__animated animate__faster slideIn"}`}>
-                            <Link onClick={() => setActiveButton("feed")}>
-                              <img src="../images/ic1.png" alt="" />
-                              <span>Bảng tin</span>
-                            </Link>
-                          </li>
                           <li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
                             <Link onClick={() => setActiveButton("info")}>
                               <img src="../images/ic2.png" alt="" />
@@ -168,21 +150,6 @@ function UserProfile() {
                         <div className="tab-pane fade" id="applied" role="tabpanel" aria-labelledby="applied-tab">
                         </div>
                         <div className="tab-pane fade" id="cadidates" role="tabpanel" aria-labelledby="cadidates-tab">
-                        </div>
-                      </div>
-                    </div>
-                    <div className={`product-feed-tab ${activeButton == "feed" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="feed-dd">
-                      <div className="posts-section">
-                        {posts.map((post) => (
-                          (post.author._id == id) &&
-                          <PostItem key={post._id} post={post} />
-                        ))}
-                        <div className="process-comm">
-                          <div className="spinner">
-                            <div className="bounce1"></div>
-                            <div className="bounce2"></div>
-                            <div className="bounce3"></div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -298,9 +265,6 @@ function UserProfile() {
                 </div>
                 <div className="col-lg-3">
                   <div className="right-sidebar">
-                    <div className="message-btn">
-                      <a href="profile-account-setting.html" title=""><i className="fas fa-cog"></i>Cài đặt</a>
-                    </div>
                     <div className="widget widget-portfolio">
                       <div className="wd-heady">
                         <h3>Portfolio</h3>

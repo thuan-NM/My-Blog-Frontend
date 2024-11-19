@@ -18,6 +18,7 @@ import ManageJobItem from "../../components/ManageJobItem";
 import InterviewSchedule from "../../components/InterviewSchedule";
 import ManageJob from "../../components/ManageJob";
 import CompanySettings from "../../components/CompanySettings";
+import ManageInterview from "../../components/ManageInterview";
 
 function MyCompanyProfile() {
   const { user, updateUser, role } = useAuth();
@@ -95,6 +96,7 @@ function MyCompanyProfile() {
                       isModalPicOpen={isModalPicOpen}
                       setIsModalPicOpen={setIsModalPicOpen}
                       role={role}
+                      isAuthor={isAuthor}
                     />
                     <Suggestions />
                   </div>
@@ -305,7 +307,7 @@ function MyCompanyProfile() {
                       }`}
                       id="my-bids"
                     >
-                      <InterviewSchedule companyId={decodedToken.companyId}/>
+                      <ManageInterview/>
                     </div>
                     <div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`} >
                       <Overview
@@ -336,50 +338,6 @@ function MyCompanyProfile() {
                         setIsKeySkillModalOpen={setIsKeySkillModalOpen}
                         setKeySkill={setKeySkill}
                       />
-                      {/* <Experience
-                        selectedExperience={selectedExperience}
-                        setSelectExperience={setSelectExperience}
-                        isExpEditOpen={isExpEditOpen}
-                        setIsExpEditOpen={setIsExpEditOpen}
-                        experiences={experiences}
-                        setIsExpModalOpen={setIsExpModalOpen}
-                        isExpModalOpen={isExpModalOpen}
-                        isAuthor={isAuthor}
-                      /> */}
-                      {/* <ExperienceModal
-                        user={user}
-                        setIsExpModalOpen={setIsExpModalOpen}
-                        isExpModalOpen={isExpModalOpen}
-                      />
-                      <ExperienceEdit
-                        user={user}
-                        isExpEditOpen={isExpEditOpen}
-                        setIsExpEditOpen={setIsExpEditOpen}
-                        Exp={selectedExperience}
-                      />
-                      <Education
-                        isLoading={isLoading}
-                        setSelectEducation={setSelectEducation}
-                        selectedEducation={selectedEducation}
-                        setIsEduModalOpen={setIsEduModalOpen}
-                        isEduModalOpen={isEduModalOpen}
-                        educations={educations}
-                        isEduEditOpen={isEduEditOpen}
-                        setIsEduEditOpen={setIsEduEditOpen}
-                        isAuthor={isAuthor}
-                      />
-                      <EducationModal
-                        setIsLoading={setIsLoading}
-                        user={user}
-                        setIsEduModalOpen={setIsEduModalOpen}
-                        isEduModalOpen={isEduModalOpen}
-                      />
-                      <EducationEdit
-                        user={user}
-                        isEduEditOpen={isEduEditOpen}
-                        setIsEduEditOpen={setIsEduEditOpen}
-                        selectedEducation={selectedEducation}
-                      /> */}
                     </div>
                     <div className={`product-feed-tab ${activeButton == "rewivewdata"
                       ? "current animate__animated animate__faster fadeIn"

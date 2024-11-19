@@ -12,14 +12,14 @@ const CompanyIntroduce = ({ job }) => {
     const company = job;
     console.log(company)
     return (
-        <div className="bg-white shadow-md rounded-[4px] p-6 col-4 h-fit">
+        <div className="bg-white shadow-md rounded-[4px] p-6 col-4 h-fit w-full">
             <div className="flex items-center mb-4">
                 <img
                     src={company.profilePictureUrl}
                     className="w-20 h-20 p-1 border border-gray-600 rounded-full mr-4 object-contain"
                 />
                 <div>
-                    <Link to={`/company/${company._id}`} className="text-xl font-bold">
+                    <Link to={`/companyprofile/${company._id}`} className="text-xl font-bold">
                         {company.companyname}
                     </Link>
                     <p className="text-gray-600">{company.field}</p>

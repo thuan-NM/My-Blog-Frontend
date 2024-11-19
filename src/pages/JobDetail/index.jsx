@@ -170,7 +170,9 @@ function JobDetail() {
                             </div>
 
                             {/* Company sidebar */}
-                            <CompanyIntroduce job={job.author.userdata} />
+                            <div className="col-lg-4 pd-right-none no-pd">
+                                <CompanyIntroduce job={job.author.userdata} />
+                            </div>
                         </div>
                     </div>
                 </div>

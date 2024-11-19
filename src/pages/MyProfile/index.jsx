@@ -96,7 +96,7 @@ function MyProfile() {
 							<div className="row">
 								<div className="col-lg-3">
 									<div className="main-left-sidebar">
-										<Profile user={user} updateUser={updateUser} isModalPicOpen={isModalPicOpen} setIsModalPicOpen={setIsModalPicOpen} />
+										<Profile user={user} updateUser={updateUser} isModalPicOpen={isModalPicOpen} setIsModalPicOpen={setIsModalPicOpen} isAuthor={isAuthor}/>
 										<Suggestions />
 									</div>
 								</div>

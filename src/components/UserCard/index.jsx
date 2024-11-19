@@ -27,8 +27,8 @@ const UserCard = ({ user }) => {
             {user && (<div className="user-data full-width">
                 <div className="user-profile">
                     <div className="username-dt">
-                        <div className="flex justify-center items-center mb-[-48px]">
-                            <img className="!w-32 !h-32 rounded-full" src={user.profilePictureUrl || `../images/userava.jpg`} />
+                        <div className="flex justify-center items-center mb-[-48px] ">
+                            <img className="!w-32 !h-32 rounded-full bg-neutral-100 object-contain" src={user.profilePictureUrl || `../images/userava.jpg`} />
                         </div>
                     </div>
                     <div className="user-specs">

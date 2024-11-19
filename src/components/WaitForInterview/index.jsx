@@ -1,10 +1,11 @@
 // components/WaitForInterview.js
 import React, { useState, useEffect } from 'react';
 import { message, Button, Spin, Modal } from 'antd';
-import { FaCalendarAlt, FaUserTie, FaBriefcase } from 'react-icons/fa';
-import moment from 'moment';
+import {jwtDecode} from 'jwt-decode'; // Sửa lại import
+import { FaBriefcase } from 'react-icons/fa';
 import jobstatusServices from '../../services/jobstatus.services';
-import { jwtDecode } from 'jwt-decode'; // Sửa lại import
+
+const { confirm } = Modal;
 
 const WaitForInterview = () => {
     const storedToken = localStorage.getItem("token");
@@ -46,10 +47,11 @@ const WaitForInterview = () => {
         setIsLoading(true);
         try {
             const response = await jobstatusServices.getInterviewConfirmedCandidates(decodedToken.companyId);
-            if (response.data.isSuccess) {
-                setInterviewConfirmedCandidates(response.data.data);
+            console.log("Fetch response:", response); // Kiểm tra cấu trúc phản hồi
+            if (response.isSuccess) { // Hoặc response.data.isSuccess tùy vào cấu trúc
+                setInterviewConfirmedCandidates(response.data); // Hoặc response.data.data
             } else {
-                message.error(response.data.message || 'Không thể lấy danh sách ứng viên chờ phỏng vấn.');
+                message.error(response.message || 'Không thể lấy danh sách ứng viên chờ phỏng vấn.');
             }
         } catch (error) {
             console.error('Lỗi khi lấy danh sách ứng viên chờ phỏng vấn:', error);
@@ -74,7 +76,7 @@ const WaitForInterview = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center h-screen bg-gray-100">
-                <Spin tip="Đang tải dữ liệu..." size="large" />
+                <Spin />
             </div>
         );
     }
@@ -95,8 +97,8 @@ const WaitForInterview = () => {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
-                    {interviewConfirmedCandidates.map((candidate, index) => (
-                        <div key={index} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:!scale-[1.005] relative">
+                    {interviewConfirmedCandidates.map((candidate) => (
+                        <div key={candidate.id} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-[1.005] relative">
                             <div
                                 className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full bg-green-500`}
                             >
@@ -104,7 +106,9 @@ const WaitForInterview = () => {
                             </div>
 
                             <div className="flex items-center mb-4">
-                                <FaUserTie className="text-blue-500 text-3xl mr-4" />
+                                <img
+                                    className="w-14 h-14 rounded-full object-cover border border-gray-600 p-1 mr-3"
+                                    src={candidate.user.profilePictureUrl || '/default-avatar.png'} alt={`${candidate.user.firstName} ${candidate.user.lastName}`} />
                                 <div>
                                     <p className="text-xl font-bold text-gray-800">{candidate.user.firstName} {candidate.user.lastName}</p>
                                     <p className="text-sm text-gray-500">{candidate.user.email}</p>
@@ -117,14 +121,14 @@ const WaitForInterview = () => {
                             {candidate.companyKey && (
                                 <div className="mt-2">
                                     <p className="text-gray-700 flex items-center">
-                                        <strong>Khoá truy cập:</strong>
-                                        <p className='ml-2 bg-gray-300 p-1 font-semibold text-lg italic text-black'>
+                                        <strong>Khóa truy cập:</strong>
+                                        <span className='ml-2 bg-gray-300 p-1 font-semibold text-lg italic text-black'>
                                             {candidate.companyKey}
-                                        </p>
+                                        </span>
                                     </p>
                                 </div>
                             )}
-                            <Button className="bg-green-400 mt-6 w-fit text-white text-lg h-auto" onClick={() => showJoinModal(candidate)}>
+                            <Button type="primary" className="bg-green-400 mt-6 w-fit text-white text-lg h-auto" onClick={() => showJoinModal(candidate)}>
                                 Tham gia phòng họp
                             </Button>
                         </div>
@@ -134,12 +138,11 @@ const WaitForInterview = () => {
 
             <Modal
                 title="Tham gia phỏng vấn"
-                open={isModalVisible}
+                visible={isModalVisible}
                 onOk={handleJoin}
                 onCancel={() => setIsModalVisible(false)}
-                okText="Join"
+                okText="Tham gia"
                 cancelText="Hủy bỏ"
-                okButtonProps={{ loading: false }} // Không cần trạng thái loading cho Join
                 centered
                 className="rounded-lg"
             >

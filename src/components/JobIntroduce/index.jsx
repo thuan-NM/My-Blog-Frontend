@@ -39,7 +39,7 @@ const JobIntroduce = ({ job }) => {
                         </div>
                         <div className="d-flex justify-content-between intro_item">
                             <div className="intro_item_name">Address:</div>
-                            <p className="!text-sm !w-2/3 text-black">{job.location}</p>
+                            <p className="!text-sm !w-2/3 text-black">{job.location.address}</p>
                         </div>
 
                     </div>
