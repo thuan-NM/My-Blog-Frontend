@@ -47,9 +47,9 @@ const WaitForInterview = () => {
         setIsLoading(true);
         try {
             const response = await jobstatusServices.getInterviewConfirmedCandidates(decodedToken.companyId);
-            console.log("Fetch response:", response); // Kiểm tra cấu trúc phản hồi
-            if (response.isSuccess) { // Hoặc response.data.isSuccess tùy vào cấu trúc
-                setInterviewConfirmedCandidates(response.data); // Hoặc response.data.data
+            console.log("Fetch response:", response.data); // Kiểm tra cấu trúc phản hồi
+            if (response.data.isSuccess) { // Hoặc response.data.isSuccess tùy vào cấu trúc
+                setInterviewConfirmedCandidates(response.data.data); // Hoặc response.data.data
             } else {
                 message.error(response.message || 'Không thể lấy danh sách ứng viên chờ phỏng vấn.');
             }
@@ -96,7 +96,7 @@ const WaitForInterview = () => {
                     <p className="text-gray-600">Không có ứng viên nào đã xác nhận phỏng vấn.</p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-1">
                     {interviewConfirmedCandidates.map((candidate) => (
                         <div key={candidate.id} className="bg-white rounded-[4px] shadow-lg p-6 hover:shadow-2xl transform transition duration-300 ease-in-out hover:scale-[1.005] relative">
                             <div
@@ -138,7 +138,7 @@ const WaitForInterview = () => {
 
             <Modal
                 title="Tham gia phỏng vấn"
-                visible={isModalVisible}
+                open={isModalVisible}
                 onOk={handleJoin}
                 onCancel={() => setIsModalVisible(false)}
                 okText="Tham gia"

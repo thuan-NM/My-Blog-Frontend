@@ -8,19 +8,19 @@ import companyServices from '../../services/company.services';
 
 const CoverPicture = ({ user, isAuthor }) => {
     const [selectedCoverImage, setSelectedCoverImage] = useState(null);
+    const [fileList, setFileList] = useState([]);
     const [isModalCoverPicOpen, setIsModalCoverPicOpen] = useState(false);
     const { updateUser, role } = useAuth();
 
     const handleCoverImageChange = (info) => {
-        if (info.file.status === 'done') {
-            setSelectedCoverImage(info.file.originFileObj);
-        }
+        setFileList([...info.fileList]);
+        setSelectedCoverImage(info.fileList.length > 0 ? info.fileList[0].originFileObj : null);
     };
 
     const onSubmitCoverImage = async () => {
         try {
             if (!selectedCoverImage) {
-                console.error('Please choose an image');
+                message.error('Please choose an image');
                 return;
             }
             const formData = new FormData();
@@ -33,32 +33,43 @@ const CoverPicture = ({ user, isAuthor }) => {
             }
             updateUser();
             setSelectedCoverImage(null);
+            setFileList([]);
             message.success({
                 content: "Cập nhật ảnh bìa thành công",
-                style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
+                style: { marginTop: '8vh' },
                 duration: 2,
-              });
+            });
         } catch (error) {
             if (error.response && error.response.status === 500) {
                 console.error('Internal Server Error:', error.response.data);
             } else {
-                message.error("Change cover picture fail!", error);
+                message.error("Change cover picture failed!");
                 console.error('Error updating cover picture:', error);
             }
         }
         setIsModalCoverPicOpen(!isModalCoverPicOpen);
     };
 
+    const uploadProps = {
+        multiple: false,
+        beforeUpload: () => false,
+        onChange: handleCoverImageChange,
+        fileList: fileList,
+        accept: 'image/*',
+        listType: 'picture-card',
+        showUploadList: true,
+    };
+
     return (
         <>
             <section className="cover-sec">
-                <img src={user.coverPictureUrl || `../images/cover-img.jpg`} alt="" />
+                <img src={user.coverPictureUrl || `../images/cover-img.jpg`} alt="Cover" />
                 {isAuthor && (
                     <div className="add-pic-box">
                         <div className="container">
                             <div className="row no-gutters">
                                 <div className="col-lg-12 col-sm-12">
-                                    <input type="file" />
+                                    <input type="file" style={{ display: 'none' }} />
                                     <label htmlFor="file" onClick={() => setIsModalCoverPicOpen(!isModalCoverPicOpen)}>Change Image</label>
                                 </div>
                             </div>
@@ -73,15 +84,8 @@ const CoverPicture = ({ user, isAuthor }) => {
                         <div className="post-project">
                             <h3>Update Cover Picture</h3>
                             <div className="post-project-fields">
-                                <Upload
-                                    action="https://api.cloudinary.com/v1_1/dca8kjdlq/upload"
-                                    listType="picture-card"
-                                    onChange={handleCoverImageChange}
-                                    data={{
-                                        upload_preset: "sudykqqg", // Thay đổi thành upload preset của bạn
-                                    }}
-                                >
-                                    {<UploadOutlined />}
+                                <Upload {...uploadProps}>
+                                    {fileList.length >= 1 ? null : <UploadOutlined />}
                                 </Upload>
                                 <button className="submit-but" onClick={onSubmitCoverImage}>Submit<i className="ms-2 bi bi-check-circle-fill"></i></button>
                             </div>

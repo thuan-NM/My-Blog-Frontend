@@ -266,7 +266,6 @@ function Home() {
                       </div>
                     </div>
                     <TopJob />
-                    <MostInterest />
                   </div>
                 </div>
               </div>

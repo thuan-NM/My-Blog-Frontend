@@ -424,7 +424,6 @@ function Jobs() {
                                             </div>
                                         </div>
                                         <TopJob />
-                                        <MostInterest />
                                     </div>
                                 </div>
                             </div>

@@ -86,7 +86,7 @@ const ScheduledCandidate = () => {
                             <div
                                 className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full bg-green-500`}
                             >
-                                {moment.utc(candidate.interviewDate).format('DD/MM/YYYY HH:mm')}
+                                {moment(candidate.interviewDate).format('DD/MM/YYYY HH:mm')}
                             </div>
 
                             <div className="flex items-center mb-4">

@@ -1,24 +1,18 @@
 import React, { useEffect, useState, memo } from 'react';
 import { message } from 'antd';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { jwtDecode } from 'jwt-decode';
 import { Card } from 'antd';
 import reactionServices from '../../services/reaction.services';
-import DOMPurify from 'dompurify';
 
-const PostItem = ({ post, handleHashtags }) => {
+const PostItem = ({ post }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [reactionStats, setReactionStats] = useState({
     totalReactions: 0,
-    reactions: {},
+    reactions: [],
   });
   const { user } = useAuth();
-  const storedToken = localStorage.getItem('token');
-  let decodedToken;
-  if (storedToken) {
-    decodedToken = jwtDecode(storedToken);
-  }
+  const navigate = useNavigate();
 
   const handleReaction = async () => {
     try {
@@ -41,9 +35,8 @@ const PostItem = ({ post, handleHashtags }) => {
     };
 
     fetchReactionStats();
-  }, [reactionStats]);
+  }, [post._id]);
 
-  // Cuộn lên đầu khi component được render
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -60,17 +53,24 @@ const PostItem = ({ post, handleHashtags }) => {
     );
   }
 
-  const paragraphs = post.description.split('\n');
-  function stripHtml(html) {
+  const handleNavigation = () => {
+    window.scrollTo(0, 0);
+    if (user._id === post.author.id || user._id === post.author._id) {
+      // Navigate to job creation/editing page with postId
+      navigate(`/jobedit/${post._id}`);
+    } else {
+      // Navigate to job detail page
+      navigate(`/jobdetail/${post._id}`);
+    }
+  };
+
+  const stripHtml = (html) => {
     const tmp = document.createElement('DIV');
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || '';
-  }
+  };
 
-  // Lấy văn bản thuần từ mô tả
   const plainDescription = stripHtml(post.description);
-
-  // Cắt ngắn mô tả nếu cần (ví dụ: 200 ký tự)
   const shortDescription = plainDescription.length > 200
     ? plainDescription.substring(0, 200) + '...'
     : plainDescription;
@@ -79,7 +79,7 @@ const PostItem = ({ post, handleHashtags }) => {
       <div className="d-flex flex-column">
         <div className="d-flex justify-content-between align-items-center">
           <div>
-            <Link to={`/jobdetail/${post._id}`} className="usy-dt" onClick={() => window.scrollTo(0, 0)}>
+            <div onClick={handleNavigation} className="usy-dt cursor-pointer" >
               <img
                 className="!w-14 !h-14 rounded-full object-scale-down	border border-gray-600 p-1"
                 src={post.author.userdata.profilePictureUrl || 'images/userava.jpg'}
@@ -89,7 +89,7 @@ const PostItem = ({ post, handleHashtags }) => {
                 <h3>{post.title}</h3>
                 <span>{post.author.userdata.companyname}</span>
               </div>
-            </Link>
+            </div>
           </div>
           <div className="like-com flex flex-col justify-start items-center">
             <button

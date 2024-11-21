@@ -9,7 +9,7 @@ const ManageInterview = () => {
     const renderTabContent = () => {
         switch (activeTab) {
             case "schedule":
-                return <ScheduledCandidate />;
+                return <InterviewSchedule />;
             case "action":
                 return <ScheduledCandidate />;
             case "waiting":

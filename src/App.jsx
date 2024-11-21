@@ -37,6 +37,7 @@ import ConfirmationSuccess from "./components/ConfirmationSuccess";
 import JobCreation from "./pages/JobCreation";
 import InterviewSchedule from "./components/InterviewSchedule";
 import InterviewActionPage from "./pages/InterviewActionPage";
+import JobEditing from "./pages/JobEditing";
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ function App() {
           <Route path="/sendrequest/confirm/:token" element={<ConfirmInterview />} /> {/* Confirmation route */}
           <Route path="/confirmation-success" element={<ConfirmationSuccess />} />
           <Route path="/jobcreation" element={<JobCreation />} />
+          <Route path="/jobedit/:postId?" element={<JobEditing />} />
           <Route path="/schedule" element={<InterviewSchedule />} />
           <Route path="/interview/:action/:jobStatusId" element={<InterviewActionPage />} />
         </Routes>
