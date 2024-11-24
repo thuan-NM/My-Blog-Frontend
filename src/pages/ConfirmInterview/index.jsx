@@ -11,7 +11,6 @@ const ConfirmInterview = () => {
         const confirmInterview = async () => {
             try {
                 const res = await jobstatusServices.confirmRequest(token); // Call your backend to confirm interview
-                message.success(res.message);
                 navigate('/confirmation-success'); // Redirect to a success page or home
             } catch (error) {
                 message.error('Failed to confirm interview.');
@@ -23,8 +22,12 @@ const ConfirmInterview = () => {
     }, [token, navigate]);
 
     return (
-        <div>
-            <h1>Confirming interview...</h1>
+        <div className="process-comm">
+            <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+            </div>
         </div>
     );
 };

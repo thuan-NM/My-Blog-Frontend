@@ -8,7 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import PostItem from "../../components/PostItem";
 import CompanyIntroduce from "../../components/CompanyIntroduce";
 import DOMPurify from 'dompurify';
-import JobForm from "../JobForm"; // Import the shared JobForm component
+import JobForm from "../../components/JobForm"; // Import the shared JobForm component
 
 function isHtml(input) {
     const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -24,7 +24,9 @@ const JobDetailEditing = () => {
     const [editableJob, setEditableJob] = useState({
         title: '',
         price: '',
-        location: { address: '' },
+        location: {
+            address: ''
+        },
         workType: '',
         description: '',
         skills: [],
@@ -112,14 +114,14 @@ const JobDetailEditing = () => {
             const updatedJob = {
                 title: editableJob.title,
                 price: editableJob.price,
-                location: editableJob.location,
+                "location.address": editableJob.location,
                 workType: editableJob.workType,
                 description: editableJob.description,
                 skills: editableJob.skills,
             };
             console.log(updatedJob);
             // Call the update service
-            await postServices.updatePostWithId(updatedJob,postId);
+            await postServices.updatePostWithId(updatedJob, postId);
 
             // Refetch the job details to ensure data consistency
             const postResponse = await postServices.getJobsWithId(postId);
@@ -195,7 +197,17 @@ const JobDetailEditing = () => {
                                         <>
                                             {/* Job Details View */}
                                             <div>
-                                                <h2>{job.title}</h2>
+                                                {role === "company" && user._id === job.author.userdata._id && (
+                                                    <div className="flex flex-row justify-between">
+                                                        <h2>{job.title}</h2>
+                                                        <button
+                                                            className="edit-info"
+                                                            onClick={() => setIsEditing(true)}
+                                                        >
+                                                            <i className="bi bi-pencil-fill w-auto h-auto"></i>
+                                                        </button>
+                                                    </div>
+                                                )}
                                                 <div className="detail_companyname">{job.author?.userdata.companyname}</div>
                                                 <div className="detail_price"><i className="bi bi-coin mr-4"></i>{job.price}$/giờ</div>
                                             </div>
@@ -212,14 +224,6 @@ const JobDetailEditing = () => {
                                                         </Link>
                                                     )}
                                                     {/* Show Edit button if the user is the author and in "company" role */}
-                                                    {role === "company" && user._id === job.author.userdata._id && (
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            onClick={() => setIsEditing(true)}
-                                                        >
-                                                            Edit Job
-                                                        </button>
-                                                    )}
                                                 </div>
                                                 <div className="d-flex flex-column justify-content-center">
                                                     <div className="detail_companyname"><i className="bi bi-geo-alt"></i>{job.location.address}</div>

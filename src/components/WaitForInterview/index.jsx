@@ -4,6 +4,7 @@ import { message, Button, Spin, Modal } from 'antd';
 import {jwtDecode} from 'jwt-decode'; // Sửa lại import
 import { FaBriefcase } from 'react-icons/fa';
 import jobstatusServices from '../../services/jobstatus.services';
+import moment from 'moment';
 
 const { confirm } = Modal;
 
@@ -102,7 +103,7 @@ const WaitForInterview = () => {
                             <div
                                 className={`absolute top-4 right-4 text-white text-xs font-semibold px-2 py-1 rounded-full bg-green-500`}
                             >
-                                Chờ phỏng vấn
+                                {moment(candidate.interviewDate).format('DD/MM/YYYY HH:mm')}
                             </div>
 
                             <div className="flex items-center mb-4">

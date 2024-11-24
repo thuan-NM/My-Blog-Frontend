@@ -1,6 +1,4 @@
-// src/pages/Jobs/Jobs.js
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import PostCreation from "../../components/PostCreation";
 import PostItem from "../../components/PostItem";
@@ -13,18 +11,16 @@ import TopJob from "../../components/TopJob";
 import MostInterest from "../../components/MostInterest";
 import postServices from "../../services/post.services";
 import { useInfiniteQuery } from "react-query";
+import LocationAutocomplete from "../../components/LocationAutocomplete";
+
 
 function Jobs() {
     const { user, role } = useAuth();
     const [isJobModalOpen, setIsJobModalOpen] = useState(false);
-    const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-    const [scrollPosition, setScrollPosition] = useState(0);
     const [pageLoading, setPageLoading] = useState(true);
-
-    const handleScroll = () => {
-        setScrollPosition(window.scrollY); // Lưu vị trí cuộn của body
-      };
-
+    const scrollPositionRef = useRef(0);
+    const hasAppliedFilter = useRef(false);
+    
     // Các state cho bộ lọc (input values)
     const [minInputValue, setMinInputValue] = useState(0);
     const [maxInputValue, setMaxInputValue] = useState(500000);
@@ -49,10 +45,6 @@ function Jobs() {
     const handleShowJobModal = (e) => {
         e.preventDefault();
         setIsJobModalOpen(!isJobModalOpen);
-    };
-    const handleShowProjectModal = (e) => {
-        e.preventDefault();
-        setIsProjectModalOpen(!isProjectModalOpen);
     };
 
     // Hàm xử lý reset bộ lọc
@@ -92,6 +84,7 @@ function Jobs() {
             companyName,
             sortBy,
         });
+        hasAppliedFilter.current = true; // Đánh dấu bộ lọc đã được áp dụng
         message.loading({ content: "Đang lọc...", key: "filter", style: { marginTop: '8vh' }, duration: 2 });
     };
 
@@ -132,14 +125,15 @@ function Jobs() {
     const allPosts = data?.pages.flatMap((page) => page.data) || [];
 
     useEffect(() => {
-        // Chỉ hiển thị message khi `data` thay đổi và không đang ở trạng thái tải
-        if (!isLoading && data?.pages?.length > 0) {
+        // Chỉ hiển thị message khi `data` thay đổi và bộ lọc thực sự đã được áp dụng
+        if (!isLoading && hasAppliedFilter.current && data?.pages?.length > 0) {
             message.success({
                 content: "Lọc thành công",
                 key: "filter-success",
                 style: { marginTop: "8vh" },
                 duration: 2, // Thời gian hiển thị thông báo
             });
+            hasAppliedFilter.current = false; // Reset lại trạng thái
         }
     }, [data, isLoading]);
 
@@ -159,17 +153,35 @@ function Jobs() {
     }, []);
 
     useEffect(() => {
-        // Lắng nghe sự kiện cuộn
-        window.addEventListener("scroll", handleScroll);
+        const handleResize = () => {
+            window.scrollTo(0, scrollPositionRef.current);
+        };
     
-        // Khi rời trang Home, khôi phục trạng thái cuộn ban đầu
+        window.addEventListener("resize", handleResize);
+    
         return () => {
-          window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
+
+    useEffect(() => {
+        const handleScroll = () => {
+            scrollPositionRef.current = window.scrollY;
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
         };
     }, []);
 
+    // Khôi phục vị trí cuộn sau khi tải dữ liệu
     useEffect(() => {
-        window.scrollTo(0, scrollPosition); // Cuộn về vị trí đã lưu
+        if (scrollPositionRef.current > 0) {
+            setTimeout(() => {
+                window.scrollTo(0, scrollPositionRef.current);
+            }, 0);
+        }
     }, [allPosts]);
 
     if (pageLoading) {
@@ -195,7 +207,7 @@ function Jobs() {
     return (
         <div>
             <main>
-                <div className={`main-section ${isJobModalOpen || isProjectModalOpen ? "overlay" : ""}`}>
+                <div className={`main-section ${isJobModalOpen ? "overlay" : ""}`}>
                     <div className="container">
                         <div className="main-section-data">
                             <div className="row">
@@ -304,12 +316,10 @@ function Jobs() {
                                                         <button onClick={() => setLocation("")}>Xóa</button>
                                                     </div>
                                                     <form onSubmit={(e) => e.preventDefault()}>
-                                                        <input
-                                                            type="text"
-                                                            placeholder="Nhập tên khu vực"
-                                                            value={location}
-                                                            onChange={(e) => setLocation(e.target.value)}
-                                                        />
+                                                    <LocationAutocomplete
+                                                        value={location}
+                                                        onChange={(value) => setLocation(value)}
+                                                    />
                                                     </form>
                                                 </div>
                                                 <button
@@ -352,11 +362,11 @@ function Jobs() {
                                             </div>
                                         ) : (
                                             <div className="post-topbar">
-                                                <div className="user-picy">
-                                                    <img
-                                                        src="../images/myfavicon.png"
-                                                        alt="User Avatar"
-                                                    />
+                                                <div className="h-[50px]">
+                                                <img className="h-full w-full object-scale-down"
+                                                    src="../images/myfavicon.png"
+                                                    alt="User Avatar"
+                                                />
                                                 </div>
                                             </div>
                                         )}
@@ -390,10 +400,10 @@ function Jobs() {
                                             >
                                                 <div className="overflow-y-hidden overflow-x-hidden">
                                                 {allPosts.map((post, index) => (
-                                                    <div key={post._id}>
+                                                    <div key={`${post._id}-${index}`}>
                                                         <PostItem post={post} />
                                                     </div>
-                                                ))}
+                                                ))} 
                                                 </div>
                                             </InfiniteScroll>
                                         )}
@@ -405,11 +415,11 @@ function Jobs() {
                                 <div className="col-lg-3 pd-right-none no-pd">
                                     <div className="right-sidebar">
                                         <div className="widget widget-about">
-                                            <img
-                                                className="!mx-auto"
-                                                src="images/myfavicon.png"
-                                                alt="Company Logo"
-                                            />
+                                        <img
+                                            className="!mx-auto !w-full !object-scale-down !h-[70px]"
+                                            src="images/myfavicon.png"
+                                            alt="Company Logo"
+                                        />
                                             <h3>Theo Dõi Ngay Meow IT</h3>
                                             <span>Lương chỉ được trả theo số giờ làm</span>
                                             <div className="sign_link">
@@ -434,8 +444,6 @@ function Jobs() {
                 <PostCreation
                     isJobModalOpen={isJobModalOpen}
                     handleShowJobModal={handleShowJobModal}
-                    isProjectModalOpen={isProjectModalOpen}
-                    handleShowProjectModal={handleShowProjectModal}
                 />
             </main>
         </div>

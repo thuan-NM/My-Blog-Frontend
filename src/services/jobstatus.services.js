@@ -21,6 +21,10 @@ class JobstatusServices {
         return (await this.api.get(`/${id}`)).data;
     }
 
+    async getJobstatusByApplier(id) {
+        return (await this.api.get(`/applier/${id}`)).data;
+    }
+
     async postJobstatus(formData, config) {
         return (await this.api.post(`/`, formData, config)).data;
     }

@@ -15,7 +15,7 @@ function Footer() {
 						<li><a href="#" title="">Ngôn ngữ</a></li>
 						<li><a href="#" title="">Chính sách bản quyền</a></li>
 					</ul>
-					<p><img alt=""/>Bản quyền 2019</p>
+					<p><img alt=""/>Bản quyền 2024</p>
 				</div>
 			</div>
   );

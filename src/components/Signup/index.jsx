@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { message } from "antd"
 import AuthServices from "../../services/auth.services";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const SignUp = ({ setCurrentTab }) => {
 	const [username, setUsername] = useState("");
@@ -9,7 +9,6 @@ const SignUp = ({ setCurrentTab }) => {
 	const [email, setEmail] = useState("");
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [country, setCountry] = useState("");
 	const [confirmpassword, setConfirmpassword] = useState("");
 	const [companyName, setCompanyName] = useState("")
 	const [companyemail, setCompanyEmail] = useState("");
@@ -19,7 +18,17 @@ const SignUp = ({ setCurrentTab }) => {
 	const [currentTabSignUp, setCurrentTabSignUp] = useState("tab-3");
 	const [isUserChecked, setIsUserChecked] = useState(false);
 	const [isCompanyChecked, setCompanyIsChecked] = useState(false);
+	const [country, setCountry] = useState("");
+	const [countryOptions, setCountryOptions] = useState([]);
 
+	useEffect(() => {
+		fetch('https://restcountries.com/v3.1/all')
+			.then(response => response.json())
+			.then(data => {
+				const countries = data.map((item) => ({ value: item.cca2, label: item.name.common }));
+				setCountryOptions(countries);
+			});
+	}, []);
 	const handleSignUpUser = async (e) => {
 		if (!isUserChecked) {
 			message.info("Bạn phải đồng ý với điều khoản sử dụng");
@@ -45,7 +54,7 @@ const SignUp = ({ setCurrentTab }) => {
 						content: res.message,
 						style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
 						duration: 2,
-					  });
+					});
 					setCurrentTab("tab-1")
 				}
 			}
@@ -66,7 +75,7 @@ const SignUp = ({ setCurrentTab }) => {
 								<input type="text" id="username"
 									value={username}
 									onChange={(e) => setUsername(e.target.value)}
-									placeholder="User Name" />
+									placeholder="Username" />
 								<i className="la la-user"></i>
 							</div>
 						</div>
@@ -75,7 +84,7 @@ const SignUp = ({ setCurrentTab }) => {
 								<input type="text" id="firstName"
 									value={firstName}
 									onChange={(e) => setFirstName(e.target.value)}
-									placeholder="FirstName" />
+									placeholder="Họ" />
 								<i className="bi bi-journal-text"></i>
 							</div>
 						</div>
@@ -84,16 +93,23 @@ const SignUp = ({ setCurrentTab }) => {
 								<input type="text" id="lastName"
 									value={lastName}
 									onChange={(e) => setLastName(e.target.value)}
-									placeholder="LastName" />
+									placeholder="Tên" />
 								<i className="bi bi-journal-text"></i>
 							</div>
 						</div>
-						<div className="col-lg-12 no-pdd">
-							<div className="sn-field">
-								<input type="text" id="country"
+						<div className='col-lg-12 no-pdd'>
+							<div className='sn-field'>
+								<select id="country"
 									value={country}
 									onChange={(e) => setCountry(e.target.value)}
-									placeholder="Country" />
+								>
+									<option value="" disabled>Chọn quốc gia</option>
+									{countryOptions.map(option => (
+										<option key={option.value} value={option.label}>
+											{option.label}
+										</option>
+									))}
+								</select>
 								<i className="la la-globe"></i>
 							</div>
 						</div>

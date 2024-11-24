@@ -68,16 +68,16 @@ const SignUpCompany = () => {
 
   return (
     <div className="sign_in_sec animated fadeIn mt-5">
-      <div className="company_signup_tab">
-        <ul>
-          <li className={step === 1 ? "current" : ""}>
-            <button onClick={() => setStep(1)}>Step 1</button>
+      <div className="w-full mb-4">
+        <ul className="flex flex-row !mx-auto !justify-center cur">
+          <li onClick={() => setStep(1)} className={step === 1 ? "p-3 bg-custom-red text-white cursor-pointer" : "p-3 cursor-pointer bg-neutral-100"}>
+            <div>Bước 1</div>
           </li>
-          <li className={step === 2 ? "current" : ""}>
-            <button onClick={() => setStep(2)}>Step 2</button>
+          <li onClick={() => setStep(2)} className={step === 2 ? "p-3 bg-custom-red text-white cursor-pointer" : "p-3 cursor-pointer bg-neutral-100"}>
+            <div>Bước 2</div>
           </li>
-          <li className={step === 3 ? "current" : ""}>
-            <button onClick={() => setStep(3)}>Step 3</button>
+          <li onClick={() => setStep(3)} className={step === 3 ? "p-3 bg-custom-red text-white cursor-pointer" : "p-3 cursor-pointer bg-neutral-100"}>
+            <div>Bước 3</div>
           </li>
         </ul>
       </div>
@@ -85,7 +85,7 @@ const SignUpCompany = () => {
       {/* Step 1: Basic Information */}
       {step === 1 && (
         <div className="dff-tab current">
-          <h3>Step 1: Basic Information</h3>
+          <h3>Bước 1: Thông tin cơ bản</h3>
           <form className="row">
             <div className="col-lg-12 no-pdd">
               <div className="sn-field">
@@ -148,7 +148,7 @@ const SignUpCompany = () => {
       {/* Step 2: Contact Information */}
       {step === 2 && (
         <div className="dff-tab current">
-          <h3>Step 2: Company Details</h3>
+          <h3>Bước 2: Thông tin chi tiết công ty</h3>
           <form className="row">
             <div className="col-lg-12 no-pdd">
               <div className="sn-field">
@@ -203,7 +203,7 @@ const SignUpCompany = () => {
       {/* Step 3: Media and Social Links */}
       {step === 3 && (
         <div className="dff-tab current">
-          <h3>Step 3: Media and Social Links</h3>
+          <h3>Bước 3: Liên kết website và ứng dụng</h3>
           <form className="row">
             <div className="col-lg-12 no-pdd">
               <div className="sn-field">
@@ -248,7 +248,7 @@ const SignUpCompany = () => {
               </div>
             </div>
             <div className="col-lg-12 no-pdd">
-              <button className="px-2"onClick={handlePrevStep}>Trở về</button>
+              <button className="px-2" onClick={handlePrevStep}>Trở về</button>
               <button className="px-2 mx-4" onClick={handleSubmit}>Đăng ký</button>
             </div>
           </form>

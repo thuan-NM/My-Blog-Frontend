@@ -162,9 +162,6 @@ const Header = () => {
 								</ul>
 								<h3>Cài đặt</h3>
 								<ul className="us-links">
-									<li>
-										<Link onClick={() => setIsSettingsModalOpen(!isSettingsModalOpen)}>Cài đặt tài khoản</Link>
-									</li>
 									<li><a href="#" title="">Quyền riêng tư</a></li>
 									<li><a href="#" title="">Câu hỏi thường gặp</a></li>
 									<li><a href="#" title="">Điều khoản sử dụng</a></li>

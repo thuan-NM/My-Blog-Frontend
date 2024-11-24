@@ -17,12 +17,9 @@ import { useInfiniteQuery } from "react-query";
 function Home() {
   const { user, role } = useAuth();
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollPositionRef = useRef(0);
 
-  const handleScroll = () => {
-    setScrollPosition(window.scrollY); // Lưu vị trí cuộn của body
-  };
+  
 
   // Sử dụng useInfiniteQuery để quản lý fetching dữ liệu
   const { data, fetchNextPage, hasNextPage, isLoading, isError, error } =
@@ -46,27 +43,42 @@ function Home() {
   const allPosts = data?.pages.flatMap((page) => page.data) || [];
 
   useEffect(() => {
-    // Lắng nghe sự kiện cuộn
-    window.addEventListener("scroll", handleScroll);
-
-    // Khi rời trang Home, khôi phục trạng thái cuộn ban đầu
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
+    const handleResize = () => {
+        window.scrollTo(0, scrollPositionRef.current);
     };
-  }, []);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+        window.removeEventListener("resize", handleResize);
+    };
+}, []);
 
   useEffect(() => {
-    window.scrollTo(0, scrollPosition); // Cuộn về vị trí đã lưu
-  }, [allPosts]);
+    const handleScroll = () => {
+        scrollPositionRef.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+        window.removeEventListener("scroll", handleScroll);
+    };
+}, []);
+
+useEffect(() => {
+  if (scrollPositionRef.current > 0) {
+      // Sử dụng setTimeout để đảm bảo DOM đã render xong
+      setTimeout(() => {
+          window.scrollTo(0, scrollPositionRef.current);
+      }, 0);
+  }
+}, [allPosts]);
 
   // Hàm xử lý mở/đóng modal
   const handleShowJobModal = (e) => {
     e.preventDefault();
     setIsJobModalOpen(!isJobModalOpen);
-  };
-  const handleShowProjectModal = (e) => {
-    e.preventDefault();
-    setIsProjectModalOpen(!isProjectModalOpen);
   };
 
   if (isLoading) {
@@ -93,7 +105,7 @@ function Home() {
     <div>
       <main>
         <div className={`main-section ${
-            isJobModalOpen || isProjectModalOpen ? "overlay" : ""
+            isJobModalOpen ? "overlay" : ""
           }`}
         >
           <div className="container">
@@ -153,8 +165,8 @@ function Home() {
                         </li>
                       </ul>
                       <div className="cp-sec">
-                        <img
-                          src="../images/myfavicon.png"
+                        <img className="rounded-full"
+                          src="../images/logo2.png"
                           alt=""
                           width={30}
                           height={30}
@@ -194,8 +206,8 @@ function Home() {
                       </div>
                     ) : (
                       <div className="post-topbar">
-                        <div className="user-picy">
-                          <img
+                        <div className="h-[50px]">
+                          <img className="h-full w-full object-scale-down"
                             src="../images/myfavicon.png"
                             alt="User Avatar"
                           />
@@ -248,11 +260,11 @@ function Home() {
                   <div className="right-sidebar">
                     <div className="widget widget-about">
                       <img
-                        className="!mx-auto"
+                        className="!mx-auto !w-full !object-scale-down !h-[70px]"
                         src="images/myfavicon.png"
                         alt="Company Logo"
                       />
-                      <h3>Theo Dõi Ngay Meow IT</h3>
+                      <h3>Theo Dõi Ngay Katz Dev</h3>
                       <span>Lương chỉ được trả theo số giờ làm</span>
                       <div className="sign_link">
                         <h3>
@@ -276,8 +288,6 @@ function Home() {
         <PostCreation
           isJobModalOpen={isJobModalOpen}
           handleShowJobModal={handleShowJobModal}
-          isProjectModalOpen={isProjectModalOpen}
-          handleShowProjectModal={handleShowProjectModal}
         />
       </main>
     </div>

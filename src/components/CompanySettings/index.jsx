@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { message, Input, InputNumber, Button } from "antd";
-import companyServices from "../../services/companyAuth.services";
+import companyServices from "../../services/company.services";
 import companyAuthService from "../../services/companyAuth.services";
 
 const CompanySettings = ({ isSettingsModalOpen, setIsSettingsModalOpen }) => {
@@ -165,6 +165,7 @@ const CompanySettings = ({ isSettingsModalOpen, setIsSettingsModalOpen }) => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  disabled
                 />
               </div>
               <div className="col-lg-12">

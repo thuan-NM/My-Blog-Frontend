@@ -174,33 +174,6 @@ function MyCompanyProfile() {
                               <span>Portfolio</span>
                             </Link>
                           </li>
-                          <li
-                            data-tab="rewivewdata"
-                            className={`${activeButton == "rewivewdata"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
-                              }`}
-                          >
-                            <Link
-                              onClick={() => setActiveButton("rewivewdata")}
-                            >
-                              <img src="images/review.png" alt="" />
-                              <span>Đánh giá</span>
-                            </Link>
-                          </li>
-                          {/* <li
-                            data-tab="payment-dd"
-                            className={`${
-                              activeButton == "payment"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
-                            }`}
-                          >
-                            <Link onClick={() => setActiveButton("payment")}>
-                              <img src="images/ic6.png" alt="" />
-                              <span>Thu nhập</span>
-                            </Link>
-                          </li> */}
                         </ul>
                       </div>
                     </div>
@@ -338,104 +311,6 @@ function MyCompanyProfile() {
                         setIsKeySkillModalOpen={setIsKeySkillModalOpen}
                         setKeySkill={setKeySkill}
                       />
-                    </div>
-                    <div className={`product-feed-tab ${activeButton == "rewivewdata"
-                      ? "current animate__animated animate__faster fadeIn"
-                      : "animate__animated animate__faster fadeOut"
-                      }`}
-                      id="rewivewdata"
-                    >
-                      <div className="posts-section">
-                        <div className="post-bar reviewtitle">
-                          <h2>Đánh giá</h2>
-                        </div>
-                        <div className="post-bar ">
-                          <div className="post_topbar">
-                            <div className="usy-dt">
-                              <div className="usy-name">
-                                <h3>Rock William</h3>
-                                <div className="epi-sec epi2">
-                                  <ul className="descp review-lt">
-                                    <li>
-                                      <img src="images/icon8.png" alt="" />
-                                      <span>Epic Coder</span>
-                                    </li>
-                                    <li>
-                                      <img src="images/icon9.png" alt="" />
-                                      <span>India</span>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="job_descp mngdetl">
-                            <div className="star-descp review">
-                              <ul>
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>
-                                <li>
-                                  <i className="fa fa-star"></i>
-                                </li>
-                                <li>
-                                  <i className="fa fa-star-half-o"></i>
-                                </li>
-                              </ul>
-                              <a href="#" title="">
-                                5.0 of 5 Reviews
-                              </a>
-                            </div>
-                            <div className="reviewtext">
-                              <p>Bạn là nhất, nhất bạn, bạn nhất</p>
-                              <hr />
-                            </div>
-
-                            <div className="post_topbar post-reply">
-                              <div className="usy-dt">
-                                <img
-                                  src="images/resources/bg-img4.png"
-                                  alt=""
-                                />
-                                <div className="usy-name">
-                                  <h3>John Doe</h3>
-                                  <div className="epi-sec epi2">
-                                    <p>
-                                      <i className="la la-clock-o"></i>3 phút
-                                      trước
-                                    </p>
-                                    <p className="tahnks">Củm ưn :)</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="post_topbar rep-post rep-thanks">
-                              <hr />
-                              <div className="usy-dt">
-                                <img
-                                  src="images/resources/bg-img4.png"
-                                  alt=""
-                                />
-                                <input
-                                  className="reply"
-                                  type="text"
-                                  placeholder="Trả lời"
-                                />
-                                <a className="replybtn" href="#">
-                                  Gửi
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div className={`product-feed-tab ${activeButton == "jobs"
                       ? "current animate__animated animate__faster fadeIn"

@@ -1,24 +1,59 @@
 
 import { Link } from "react-router-dom";
+import followServices from "../../services/follow.services";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
-const CompanyItem = ({ company, onAddFriend, onRemoveFriend, isFriend, viewed, isActive }) => {
+const CompanyItem = ({ company }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    // Check if the user is already followed
+    const checkFollowStatus = async () => {
+      try {
+        const data = await followServices.getFollowing(user._id);
+        if (data.isSuccess) {
+          const followingList = data.data.following || [];
+
+          setIsFollowing(followingList.some(follow => follow.followId === company._id));
+        }
+      } catch (error) {
+        console.error("Error checking follow status:", error);
+      }
+    };
+
+    checkFollowStatus();
+  }, [company._id, user._id]);
+  const handleFollowToggle = async () => {
+    try {
+      if (isFollowing) {
+        await followServices.unfollowUser({ userId: user._id, followId: company._id });
+      } else {
+        await followServices.followUser({ userId: user._id, followId: company._id });
+      }
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error("Error toggling follow status:", error);
+    }
+  };
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 col-12">
       <div className="company_profile_info">
         <div className="company-up-info">
           <div className="company-item-avt">
-          <source srcSet={company.profilePictureUrl} type="image/svg+xml" />
-          <img src={company.profilePictureUrl} alt="..."/>
+            <source srcSet={company.profilePictureUrl} type="image/svg+xml" />
+            <img src={company.profilePictureUrl} alt="..." />
           </div>
-          {/* <img src={company.profilePictureUrl} alt="" width={100} height={100} className="rounded img-fluid img-thumbnail" /> */}
           <h3>{company.companyname}</h3>
           <h4></h4>
-          <ul>
-            <li><a href="#" title="" className="follow">Follow</a></li>
-            <li><a href="#" title="" className="message-us"><i className="fa fa-envelope"></i></a></li>
+          <ul className="!w-full">
+            <li className="!w-full"><button onClick={handleFollowToggle} className={`${!isFollowing ? `follow` : `unfollow`} !w-9/12 py-1 h-auto`}>
+              {isFollowing ? 'Hủy theo dõi' : 'Theo dõi'}
+            </button></li>
           </ul>
         </div>
-        <Link to={`/companyprofile/${company._id}`}>Xem</Link>
+        <Link to={`/companyprofile/${company._id}`}>Xem trang công ty</Link>
       </div>
     </div>
   );

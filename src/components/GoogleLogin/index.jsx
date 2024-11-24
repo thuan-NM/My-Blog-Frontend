@@ -10,7 +10,7 @@ const clientId = '216765626838-4hlcbvu5uqmnvar12i82v5oueltfb0f1.apps.googleuserc
 
 const GoogleLoginButton = () => {
     const navigate = useNavigate();
-	const { login } = useAuth();
+    const { login } = useAuth();
 
     const handleLoginSuccess = async (credentialResponse) => {
         const decodedToken = jwtDecode(credentialResponse.credential);
@@ -25,7 +25,7 @@ const GoogleLoginButton = () => {
                     content: res.message,
                     style: { marginTop: '8vh' }, // Di chuyển vị trí thông báo xuống dưới
                     duration: 2,
-                  });
+                });
                 navigate("/")
             }
         }
@@ -41,11 +41,12 @@ const GoogleLoginButton = () => {
 
     return (
         <GoogleOAuthProvider clientId={clientId}>
-            <div>
+            <div className="!w-full">
                 <GoogleLogin
                     onSuccess={handleLoginSuccess}
                     onError={handleLoginError}
                     prompt="select_account" // Luôn hiển thị tùy chọn đăng nhập
+                    width={276}
                 />
             </div>
         </GoogleOAuthProvider>

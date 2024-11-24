@@ -28,12 +28,13 @@ import overviewServices from "../../services/overview.services";
 import experienceServices from "../../services/experience.services";
 import educationServices from "../../services/education.services";
 import UserSettings from "../../components/UserSettings";
+import AppliedJobs from "../../components/AppliedJobs";
 
 function MyProfile() {
 	const { user, updateUser, role } = useAuth();
 	const storedToken = localStorage.getItem('token');
 	const decodedToken = jwtDecode(storedToken);
-	const [activeButton, setActiveButton] = useState("info");
+	const [activeButton, setActiveButton] = useState("jobs");
 	const [posts, setPosts] = useState([]);
 	const [overview, setOverview] = useState([]);
 	const [experiences, setExperiences] = useState([])
@@ -83,7 +84,7 @@ function MyProfile() {
 		  </div>)
 	  }
 
-	if (user == null || user.friendRequests == null) {
+	if (user == null) {
 		return <p>No results found1.</p>;
 	}
 	return (
@@ -111,22 +112,16 @@ function MyProfile() {
 											</div>
 											<div className="tab-feed st2 settingjb">
 												<ul>
-													<li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
-														<Link onClick={() => setActiveButton("info")}>
-															<img src="images/ic2.png" alt="" />
-															<span>Thông tin</span>
-														</Link>
-													</li>
 													<li data-tab="saved-jobs" className={`${activeButton == "jobs" ? "active animate__animated animate__faster zoomIn" : ""}`}>
 														<Link onClick={() => setActiveButton("jobs")}>
 															<img src="images/ic4.png" alt="" />
 															<span>Công việc</span>
 														</Link>
 													</li>
-													<li data-tab="my-bids" className={`${activeButton == "my-bids" ? "active animate__animated animate__faster zoomIn" : ""}`}>
-														<Link onClick={() => setActiveButton("my-bids")}>
-															<img src="images/ic5.png" alt="" />
-															<span>Đấu thầu</span>
+													<li data-tab="info-dd" className={`${activeButton == "info" ? "active animate__animated animate__faster zoomIn" : ""}`}>
+														<Link onClick={() => setActiveButton("info")}>
+															<img src="images/ic2.png" alt="" />
+															<span>Thông tin</span>
 														</Link>
 													</li>
 													<li data-tab="portfolio-dd" className={`${activeButton == "portfolio" ? "active animate__animated animate__faster zoomIn" : ""}`}>
@@ -141,62 +136,7 @@ function MyProfile() {
 															<span>Đánh giá</span>
 														</Link>
 													</li>
-													{/* <li data-tab="payment-dd" className={`${activeButton == "payment" ? "active animate__animated animate__faster zoomIn" : ""}`}>
-														<Link onClick={() => setActiveButton("payment")}>
-															<img src="images/ic6.png" alt="" />
-															<span>Thu nhập</span>
-														</Link>
-													</li> */}
 												</ul>
-											</div>
-										</div>
-										<div className="product-feed-tab" id="saved-jobs">
-											<ul className="nav nav-tabs" id="myTab" role="tablist">
-												<li className="nav-item">
-													<a className="nav-link active" id="mange-tab" data-toggle="tab" href="#mange" role="tab" aria-controls="home" aria-selected="true">Manage Jobs</a>
-												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="saved-tab" data-toggle="tab" href="#saved" role="tab" aria-controls="profile" aria-selected="false">Saved Jobs</a>
-												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="contact-tab" data-toggle="tab" href="#applied" role="tab" aria-controls="applied" aria-selected="false">Applied Jobs</a>
-												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="cadidates-tab" data-toggle="tab" href="#cadidates" role="tab" aria-controls="contact" aria-selected="false">Applied cadidates</a>
-												</li>
-											</ul>
-											<div className="tab-content" id="myTabContent">
-												<div className="tab-pane fade show active" id="mange" role="tabpanel" aria-labelledby="mange-tab">
-												</div>
-												<div className="tab-pane fade" id="saved" role="tabpanel" aria-labelledby="saved-tab">
-												</div>
-												<div className="tab-pane fade" id="applied" role="tabpanel" aria-labelledby="applied-tab">
-												</div>
-												<div className="tab-pane fade" id="cadidates" role="tabpanel" aria-labelledby="cadidates-tab">
-												</div>
-											</div>
-										</div>
-										<div className={`product-feed-tab ${activeButton == "my-bids" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="my-bids">
-											<ul className="nav nav-tabs bid-tab" id="myTab" role="tablist">
-												<li className="nav-item">
-													<a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Quản lý đấu thầu</a>
-												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="bidders-tab" data-toggle="tab" href="#bidders" role="tab" aria-controls="contact" aria-selected="false">Người đấu thầu</a>
-												</li>
-												<li className="nav-item">
-													<a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Đang đấu thầu</a>
-												</li>
-											</ul>
-											<div className="tab-content" id="myTabContent">
-												<div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-												</div>
-												<div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-												</div>
-												<div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-												</div>
-												<div className="tab-pane fade" id="bidders" role="tabpanel" aria-labelledby="bidders-tab">
-												</div>
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`}>
@@ -272,7 +212,7 @@ function MyProfile() {
 											</div>
 										</div>
 										<div className={`product-feed-tab ${activeButton == "jobs" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="saved-jobs">
-											<ManageJob />
+											<AppliedJobs />
 										</div>
 										<div className={`product-feed-tab ${activeButton == "portfolio" ? "current animate__animated animate__faster fadeIn" : "animate__animated animate__faster fadeOut"}`} id="portfolio-dd">
 											<div className="portfolio-gallery-sec">

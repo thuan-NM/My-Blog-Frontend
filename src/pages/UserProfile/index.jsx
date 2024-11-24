@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PostItem from "../../components/PostItem";
 import Profile from "../../components/Profile";
 import Experience from "../../components/Experience";
 import { jwtDecode } from "jwt-decode";
@@ -13,7 +12,6 @@ import EducationModal from "../../components/EducationModal";
 import EducationEdit from "../../components/EducationEdit";
 import { EuroCircleOutlined } from "@ant-design/icons"
 import { useParams, useNavigate } from "react-router-dom";
-import postServices from "../../services/post.services";
 import overviewServices from "../../services/overview.services";
 import experienceServices from "../../services/experience.services";
 import educationServices from "../../services/education.services";
@@ -25,7 +23,7 @@ function UserProfile() {
   const decodedToken = jwtDecode(storedToken);
   const [overview, setOverview] = useState("");
   const [experiences, setExperiences] = useState([])
-  const [activeButton, setActiveButton] = useState("feed");
+  const [activeButton, setActiveButton] = useState("info");
   const [educations, setEducations] = useState([])
   const [isLoading, setIsLoading] = useState(true);
   const [isOverviewModalOpen, setIsOverviewModalOpen] = useState(false);
@@ -53,7 +51,6 @@ function UserProfile() {
         setEducations(educationResponse.data)
         setExperiences(experiencesResponse.data)
         setOverview(overviewResponse.data)
-        setPosts(postResponse.data);
         setUser(userres.data)
         setIsLoading(false);
       } catch (error) {

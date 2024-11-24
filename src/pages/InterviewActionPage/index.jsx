@@ -145,7 +145,7 @@ const InterviewActionPage = () => {
                 <Space direction="vertical" size="middle" className="w-full">
                     {action === 'accept' && roomCreated && roomData && (
                         <div>
-                            <Text>Xin chào,</Text>
+                            <Text>Xin chào, </Text>
                             <Text>Chúng tôi rất vui khi bạn đã đồng ý về việc sắp xếp lịch phỏng vấn. Thông tin chi tiết như sau:</Text>
                             {(
                                 <Text className="block mb-2">Ngày và Giờ: <span className="font-semibold">{new Date(interviewDate).toLocaleString()}</span></Text>

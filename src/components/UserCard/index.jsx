@@ -33,7 +33,6 @@ const UserCard = ({ user }) => {
                     </div>
                     <div className="user-specs">
                         <h3>{user.companyname != null ? user.companyname : user.lastName}</h3>
-                        <span>Graphic Designer at Self Employed</span>
                     </div>
                 </div>
                 <ul className="user-fw-status">

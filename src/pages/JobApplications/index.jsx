@@ -129,7 +129,7 @@ const JobApplication = () => {
 
 
     return (
-        <div className="wrapper relative z-10">
+        <div className="wrapper relative z-10 !h-full">
             <div className="appication_page relative z-20">
                 <div className="absolute top-14 right-80 text-black z-30">
                     <Link
@@ -141,8 +141,8 @@ const JobApplication = () => {
                         <p className="text-white text-lg">Back</p>
                     </Link>
                 </div>
-                <div className="appication_popup relative z-40">
-                    <div className="appication_pop">
+                <div className="appication_popup relative z-40 !h-full">
+                    <div className="appication_pop !h-full">
                         <div className="row p-5">
                             <Form
                                 name="job-application-form"

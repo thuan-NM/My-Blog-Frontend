@@ -1,35 +1,15 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useAuth } from "../../contexts/AuthContext";
-import { useQuery } from "react-query";
 import PostItem from "../../components/PostItem";
-import UserItem from "../../components/UserItem";
-import ChangePassword from "../../components/ChangePassword";
-import MyInfo from "../../components/MyInfo";
 import Profile from "../../components/Profile";
-import OverviewModal from "../../components/OverviewModal";
-import Experience from "../../components/Experience";
-import { useHashtags } from "../../contexts/HashtagContext";
-import { useFriend } from "../../contexts/FriendContext";
 import { jwtDecode } from "jwt-decode";
 import Suggestions from "../../components/Suggestion";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Overview from "../../components/Overview";
-import Education from "../../components/Education";
-import ExperienceModal from "../../components/ExperienceModal";
-import ExperienceEdit from "../../components/ExperienceEdit";
-import EducationModal from "../../components/EducationModal";
-import EducationEdit from "../../components/EducationEdit";
-import ManageJob from "../../components/ManageJob";
-import { EuroCircleOutlined } from "@ant-design/icons";
 import CoverPicture from "../../components/CoverPicture";
 import postServices from "../../services/post.services";
 import overviewServices from "../../services/overview.services";
-import experienceServices from "../../services/experience.services";
-import educationServices from "../../services/education.services";
 import companyServices from "../../services/company.services";
 import KeySkill from "../../components/KeySkill";
-import KeySkillModal from "../../components/KeySkillModal";
 import KeySkillServices from "../../services/keyskill.services";
 
 function CompanyProfile() {
@@ -48,8 +28,6 @@ function CompanyProfile() {
   const [isModalPicOpen, setIsModalPicOpen] = useState(false);
   const [isExpModalOpen, setIsExpModalOpen] = useState(false);
   const [isExpEditOpen, setIsExpEditOpen] = useState(false);
-  const [selectedExperience, setSelectExperience] = useState();
-  const [selectedEducation, setSelectEducation] = useState();
   const [isEduModalOpen, setIsEduModalOpen] = useState(false);
   const [isEduEditOpen, setIsEduEditOpen] = useState(false);
   const [company, setCompany] = useState();
@@ -69,10 +47,6 @@ function CompanyProfile() {
         const postResponse = await postServices.getJobsWithCompany(id)
         const overviewResponse = await overviewServices.getOverviewWithCompanyID(id)
         const keyskillResponse = await KeySkillServices.getKeySkillsWithCompanyID(id)
-        // const experiencesResponse = await experienceServices.getExperiencesWithUserId(decodedToken.userId)
-        // const educationResponse = await educationServices.getEducationsWithUserId(decodedToken.userId)
-        // setEducations(educationResponse.data)
-        // setExperiences(experiencesResponse.data)
         setCompany(companyResponse.data)
         setOverview(overviewResponse.data)
         setKeySkill(keyskillResponse.data)
@@ -213,28 +187,12 @@ function CompanyProfile() {
                         setIsOverviewModalOpen={setIsOverviewModalOpen}
                         isAuthor={isAuthor}
                       />
-                      {/* <OverviewModal
-                        user={user}
-                        role={role}
-                        overview={overview}
-                        isOverviewModalOpen={isOverviewModalOpen}
-                        setIsOverviewModalOpen={setIsOverviewModalOpen}
-                        setOverview={setOverview}
-                      /> */}
                       <KeySkill
                       keyskill={keyskill}
                       isKeySkillModalOpen={isKeySkillModalOpen}
                       setIsKeySkillModalOpen={setIsKeySkillModalOpen}
                       isAuthor={isAuthor}
                       />
-                      {/* <KeySkillModal
-                      user={user}
-                      role={role}
-                      keyskill={keyskill}
-                      isKeySkillModalOpen={isKeySkillModalOpen}
-                      setIsKeySkillModalOpen={setIsKeySkillModalOpen}
-                      setKeySkill={setKeySkill}
-                      /> */}
                     </div>
                     <div className={`product-feed-tab ${ activeButton == "rewivewdata"
                           ? "current animate__animated animate__faster fadeIn"
@@ -357,11 +315,6 @@ function CompanyProfile() {
                 </div>
                 <div className="col-lg-3">
                   <div className="right-sidebar">
-                    <div className="message-btn">
-                      <a href="profile-account-setting.html" title="">
-                        <i className="fas fa-cog"></i>Cài đặt
-                      </a>
-                    </div>
                     <div className="widget widget-portfolio">
                       <div className="wd-heady">
                         <h3>Portfolio</h3>

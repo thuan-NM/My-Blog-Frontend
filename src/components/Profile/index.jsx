@@ -111,7 +111,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor
             }`}
           >
             <div className="post-project">
-              <h3>Update Picture</h3>
+              <h3>Cập nhật ảnh đại diện</h3>
               <div className="post-project-fields">
                 <ImgCrop rotationSlider className="crop">
                   <Upload
@@ -125,7 +125,7 @@ const Profile = ({ user, updateUser, isModalPicOpen, setIsModalPicOpen, isAuthor
                   </Upload>
                 </ImgCrop>
                 <button className="submit-but" onClick={onSubmit}>
-                  Submit<i className="ms-2 bi bi-check-circle-fill"></i>
+                  Tải lên<i className="ms-2 bi bi-check-circle-fill"></i>
                 </button>
               </div>
               <button onClick={() => setIsModalPicOpen(!isModalPicOpen)}>

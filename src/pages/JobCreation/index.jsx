@@ -160,7 +160,7 @@ const JobCreation = () => {
                         </div>
                         <div className="detail_companyname">
                           <i className="bi bi-clock"></i>
-                          {jobCreatedAt}
+                          {new Date(jobCreatedAt).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
@@ -175,17 +175,6 @@ const JobCreation = () => {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="detail_sec mt-4">
-                    <div className="detail_sec_title">Mô tả công việc</div>
-                    <div className="preview-overview">
-                      <span className="!text-neutral-600 text-[12px] mb-[5px] float-right">5000 ký tự</span>
-                      <textarea className="!h-80 border !border-neutral-400 w-full resize-none text-[17px] p-[15px] leading-normal text-black" id="description" placeholder="Nhập mô tả công việc" value={jobDescription} onChange={(e) => setJobDescription(e.target.value)}></textarea>
-                    </div>
-                  </div>
-                  <div className="flex justify-center mt-3">
-                    <Button className="bg-white text-[#e44d3a] hover:!bg-[#e44d3a] ease-in-out duration-500 text-lg p-1 h-[40px]" onClick={handleCreatePost} type="primary" htmlType="submit" block loading={isSubmitting} > {isSubmitting ? 'Đang đăng tải...' : 'Đăng tải công việc'}
-                    </Button>
-                  </div> */}
                   <div className="preview-overview">
                     <ReactQuill
                       theme="snow"
@@ -212,8 +201,9 @@ const JobCreation = () => {
 
                 </form>
               </div>
-              <CompanyIntroduce job={jobAuthor} />
-
+              <div className="col-lg-4 pd-right-none no-pd">
+                <CompanyIntroduce job={jobAuthor} />
+              </div>
             </div>
           </div>
         </div>

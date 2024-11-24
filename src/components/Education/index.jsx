@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import educationServices from "../../services/education.services";
 
 const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, educations, setSelectEducation, selectedEducation, isEduEditOpen, setIsEduEditOpen }) => {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const handleSelect = (exp) => {
         setIsEduEditOpen(!isEduEditOpen);
@@ -18,7 +18,7 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
             message.success({
                 content: res.message,
                 style: { marginTop: '20vh' }, // Di chuyển vị trí thông báo xuống dưới
-              });
+            });
             if (res.status === 401) {
                 navigate('/auth');
             }
@@ -40,15 +40,15 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                 </div>
             </div>)
     }
-    
+
     return (
         <div className="user-profile-ov animate__animated zoomIn">
             <h3><Link className="ed-box-open">Học vấn</Link>
                 {isAuthor && (
                     <Link><button className="edit-info" onClick={() => { setIsEduModalOpen(!isEduModalOpen) }}><i className="bi bi-plus-circle-fill ms-2"></i></button></Link>)}
             </h3>
-            {educations.map((education) => (
-                <div key={education._id}>
+            {educations.length !== 0 ? (educations.map((education) => (
+                <div className="ms-2 animate__animated fadeIn"key={education._id}>
                     <h4>{education.degree} at {education.school}
                         {isAuthor && (
                             <>
@@ -57,10 +57,10 @@ const Education = ({ isAuthor, isLoading, setIsEduModalOpen, isEduModalOpen, edu
                             </>
                         )}
                     </h4>
-                    <span>{education.from.split('T')[0]} {"=>"} {education.to.split('T')[0]}</span>
+                    <span>Từ {education.from.split('T')[0]} đến {education.to.split('T')[0]}</span>
                     <p>{education.description}</p>
                 </div>
-            ))}
+            ))) : <div className="animate__animated fadeIn">Trống</div>}
         </div>
     )
 }

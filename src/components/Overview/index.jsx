@@ -8,11 +8,11 @@ const Overview = ({ overview, setIsOverviewModalOpen, isOverviewModalOpen, isAut
                 <Link className="overview-open" >Tổng quan</Link>
                 {isAuthor && <Link className="overview-open" onClick={() => setIsOverviewModalOpen(!isOverviewModalOpen)}><button className="edit-info"><i className="bi bi-pencil-fill ms-2"></i></button></Link>}
             </h3>
-            {(overview.data) && (
+            {(overview.data) ? (
                 overview.data.split('\n').map((p) => (
-                    <p key={p}>- {p}</p>
+                    <p className="ms-2" key={p}>{p}</p>
                 ))
-            )}
+            ): "Trống"}
         </div>
     )
 }

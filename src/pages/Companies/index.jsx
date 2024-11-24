@@ -42,7 +42,7 @@ function Companies() {
     <section className="companies-info">
       <div className="container">
         <div className="company-title">
-          <h3>All Companies</h3>
+          <h3>Tất cả Công ty</h3>
         </div>
         <div className="companies-list">
           <div className="row">

@@ -55,26 +55,25 @@ const ManageCandidate = () => {
 
     const handleHire = (candidate) => {
         confirm({
-            title: 'Are you sure you want to hire this candidate?',
+            title: `Bạn có muốn tuyển ${candidate.user.firstName} ${candidate.user.lastName} không?`,
             content: `${candidate.user.firstName} ${candidate.user.lastName}`,
             okText: 'Yes',
             cancelText: 'No',
             onOk: async () => {
                 const candidateId = candidate.id;
-                console.log("Hiring candidate with ID:", candidateId);
                 setActionLoading(prev => ({ ...prev, [candidateId]: true }));
                 try {
                     const postid = candidate.postId;
                     const response = await jobstatusServices.hireWithUserId({ postid }, candidate.user._id);
                     if (response.isSuccess) {
-                        message.success('Candidate hired successfully.');
+                        message.success('Tuyển thành công.');
                         fetchInterviewCandidates();
                     } else {
-                        message.error(response.message || 'Failed to hire candidate.');
+                        message.error(response.message || 'Tuyển thất bại.');
                     }
                 } catch (error) {
-                    console.error('Error hiring candidate:', error);
-                    message.error('An error occurred while hiring the candidate.');
+                    console.error('Tuyển thất bại:', error);
+                    message.error('Có lỗi xảy ra khi tuyển.');
                 } finally {
                     setActionLoading(prev => ({ ...prev, [candidateId]: false }));
                 }
@@ -84,26 +83,25 @@ const ManageCandidate = () => {
 
     const handleDeny = (candidate) => {
         confirm({
-            title: 'Are you sure you want to deny this candidate?',
+            title: `Bạn có thật sự muốn từ chối ${candidate.user.firstName} ${candidate.user.lastName} không?`,
             content: `${candidate.user.firstName} ${candidate.user.lastName}`,
             okText: 'Yes',
             cancelText: 'No',
             onOk: async () => {
                 const candidateId = candidate.id;
-                console.log("Denying candidate with ID:", candidateId);
                 setActionLoading(prev => ({ ...prev, [candidateId]: true }));
                 try {
                     const postid = candidate.postId;
                     const response = await jobstatusServices.denyWithUserId({ postid }, candidate.user._id);
                     if (response.isSuccess) {
-                        message.success('Candidate denied successfully.');
+                        message.success('Đã từ chối.');
                         fetchInterviewCandidates();
                     } else {
-                        message.error(response.message || 'Failed to deny candidate.');
+                        message.error(response.message || 'Từ chối thất bại.');
                     }
                 } catch (error) {
-                    console.error('Error denying candidate:', error);
-                    message.error('An error occurred while denying the candidate.');
+                    console.error('Từ chối thất bại:', error);
+                    message.error('Có lỗi xảy ra khi từ chối.');
                 } finally {
                     setActionLoading(prev => ({ ...prev, [candidateId]: false }));
                 }
@@ -113,28 +111,27 @@ const ManageCandidate = () => {
 
     const handleDelete = (candidate) => {
         confirm({
-            title: 'Are you sure you want to delete this denied candidate?',
+            title: 'Bạn có muốn xóa người này không?',
             content: `${candidate.user.firstName} ${candidate.user.lastName}`,
             okText: 'Yes',
             cancelText: 'No',
             onOk: async () => {
                 const candidateId = candidate.id;
-                console.log("Deleting candidate with ID:", candidateId);
                 setActionLoading(prev => ({ ...prev, [candidateId]: true }));
                 try {
                     const response = await jobstatusServices.deleteJobstatusWithID(candidateId);
                     if (response.isSuccess) {
-                        message.success('Candidate deleted successfully.');
+                        message.success('Xóa thành công.');
                         // Cập nhật danh sách ứng viên cục bộ
                         setCandidates(prevCandidates => prevCandidates.filter(c => c.id !== candidateId));
                         // Hoặc gọi lại fetchInterviewCandidates để lấy danh sách mới từ server
                         // fetchInterviewCandidates();
                     } else {
-                        message.error(response.message || 'Failed to delete candidate.');
+                        message.error(response.message || 'Lỗi khi xóa.');
                     }
                 } catch (error) {
-                    console.error('Error deleting candidate:', error);
-                    message.error('An error occurred while deleting the candidate.');
+                    console.error('Lỗi khi xóa:', error);
+                    message.error('Có lỗi xảy ra khi xóa.');
                 } finally {
                     setActionLoading(prev => ({ ...prev, [candidateId]: false }));
                 }
@@ -153,7 +150,7 @@ const ManageCandidate = () => {
     if (!decodedToken) {
         return (
             <div className="flex items-center justify-center h-screen bg-gray-100">
-                <p className="text-red-600 text-lg font-semibold">Access denied. Please log in.</p>
+                <p className="text-red-600 text-lg font-semibold">Vui lòng đăng nhập để tiếp tục.</p>
             </div>
         );
     }
@@ -162,7 +159,7 @@ const ManageCandidate = () => {
         <div className="container mx-auto p-4">
             {candidates.length === 0 ? (
                 <div className="bg-white rounded-md shadow-md p-6 text-center">
-                    <p className="text-gray-600">No candidates found with the specified statuses.</p>
+                    <p className="text-gray-600">Không có ứng cử viên nào để xét duyệt.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-1">
