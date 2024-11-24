@@ -33,7 +33,7 @@ const JobIntroduce = ({ job }) => {
                     <p className="font-semibold">Skills:</p>
                     <ul className="job_skills w-fit ">
                         {job.skills && job.skills.map((item) => (
-                            <li className="w-fit" key={item}>
+                            <li className="w-fit mt-2" key={item}>
                                 <Tag color="blue">{item}</Tag>
                             </li>
                         ))}

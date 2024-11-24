@@ -37,10 +37,11 @@ const LocationAutocomplete = ({ value, onChange }) => {
                     `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json`,
                     {
                         params: {
-                            access_token: process.env.GEOCODING_API_KEY,
+                            access_token: process.env.REACT_APP_GEOCODING_API_KEY,
                             autocomplete: true,
-                            limit: 3,
-                            language: 'vi', // Đặt ngôn ngữ trả về là tiếng Việt
+                            limit: 5,
+                            types: "place,region,country", // Lấy thành phố, tỉnh, quốc gia
+                            language: "vi", // Ngôn ngữ tiếng Việt
                         },
                     }
                 );
@@ -97,7 +98,7 @@ const LocationAutocomplete = ({ value, onChange }) => {
             )}
             {loading && (
                 <div className="absolute right-3 top-3">
-                    <span className="text-sm text-gray-500">Loading...</span>
+                    <span className="text-sm text-gray-500">Đang tải...</span>
                 </div>
             )}
             {error && (

@@ -32,9 +32,20 @@ const TopJob = () => {
             </div>)
     }
 
-    if (user == null ) {
+    if (user == null) {
         return <p>No results found1.</p>;
     }
+    const stripHtml = (html) => {
+        const tmp = document.createElement('DIV');
+        tmp.innerHTML = html;
+        const plainDescription = tmp.textContent || tmp.innerText || '';
+        const shortDescription = plainDescription.length > 200
+            ? plainDescription.substring(0, 200) + '...'
+            : plainDescription;
+        return shortDescription;
+    };
+
+
     return (
         <div className="widget widget-jobs">
             <div className="sd-title">
@@ -46,7 +57,7 @@ const TopJob = () => {
                     <div className="job-info" key={post._id}>
                         <div className="job-details">
                             <h3>{post.title}</h3>
-                            <p>{post.description}</p>
+                            <p>{stripHtml(post.description)}</p>
                         </div>
                         <div className="hr-rate">
                             <span>${post.price} / hr</span>
