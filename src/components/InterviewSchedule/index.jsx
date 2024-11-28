@@ -81,9 +81,16 @@ const InterviewSchedule = () => {
 
             if (response.isSuccess) {
                 message.success("Đã xếp lịch phỏng vấn thành công.");
-                // Gọi lại hàm fetchInterviewCandidates để làm mới danh sách ứng viên
-                fetchInterviewCandidates();
+                // Loại bỏ ứng viên đã xếp lịch khỏi danh sách candidates
+                setCandidates(prevCandidates =>
+                    prevCandidates.filter(candidate => candidate.user._id !== selectedCandidate.user._id)
+                );
                 setIsModalVisible(false); // Đóng modal sau khi cập nhật lịch
+
+                // Kiểm tra nếu không còn ứng viên nào thì hiển thị thông báo
+                if (candidates.length === 1) {
+                    message.info('Không còn ứng viên nào để xếp lịch.');
+                }
             } else {
                 message.error(response.message || "Không thể xếp lịch phỏng vấn.");
             }
@@ -94,6 +101,7 @@ const InterviewSchedule = () => {
             setIsScheduling(false);
         }
     };
+
 
     if (isLoading) {
         return (

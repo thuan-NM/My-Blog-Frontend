@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import JobstatusServices from '../../services/jobstatus.services';
 import { message, Spin, Button as AntdButton, Typography, Card, Space, Modal, Input } from 'antd';
 import axios from 'axios';
+import roomServices from '../../services/room.services';
 
 const { Title, Text } = Typography;
 
@@ -36,7 +37,7 @@ const InterviewActionPage = () => {
                 userkey: code1,
                 companykey: code2,
             };
-            const roomResponse = await axios.post("http://localhost:5000/rooms/create", roomDataPayload);
+            const roomResponse = await roomServices.createRoom(roomDataPayload)
 
             if (roomResponse.data.success) {
                 setRoomData(roomResponse.data.data);
@@ -153,10 +154,10 @@ const InterviewActionPage = () => {
                             <Text>Để tiện trao đổi chi tiết về bản thân bạn, vui lòng tham gia vào phòng phỏng vấn dưới đây vào đúng thời gian đã nêu:</Text>
 
                             <div className="text-left">
-                                <Text className="block mb-2">Mật khẩu để tham gia phòng là: <span className="font-bold text-md bg-neutral-100 p-2">{roomData.userkey}</span></Text>
+                                <Text className="block my-2">Mật khẩu để tham gia phòng là: <span className="font-bold text-md bg-neutral-100 p-2">{roomData.userkey}</span></Text>
                                 <div className='flex !justify-center'>
                                     <AntdButton type="primary" className="w-1/2 mt-4 !mx-auto">
-                                        <Link to={`${process.env.REACT_APP_API_ROOM_APP_API_URL}/call/${userId}/${companyId}`}>
+                                        <Link to={`${process.env.REACT_APP_API_ROOM_URL}/call/${userId}/${companyId}`}>
                                             Tham gia ngay
                                         </Link>
                                     </AntdButton>

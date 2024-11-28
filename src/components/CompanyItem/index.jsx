@@ -45,7 +45,7 @@ const CompanyItem = ({ company }) => {
             <source srcSet={company.profilePictureUrl} type="image/svg+xml" />
             <img src={company.profilePictureUrl} alt="..." />
           </div>
-          <h3>{company.companyname}</h3>
+          <h3 className="w-10/12 truncate ">{company.companyname}</h3>
           <h4></h4>
           <ul className="!w-full">
             <li className="!w-full"><button onClick={handleFollowToggle} className={`${!isFollowing ? `follow` : `unfollow`} !w-9/12 py-1 h-auto`}>

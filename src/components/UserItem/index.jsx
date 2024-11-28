@@ -41,7 +41,7 @@ const UserItem = ({ userdata }) => {
         <div className="company-up-info !w-full">
           <img src={userdata.profilePictureUrl || `images/userava.jpg`} alt="Profile" />
           <h3>{userdata.lastName}</h3>
-          <h4>Graphic Designer</h4>
+          <h4 className="!w-10/12 truncate ">{userdata.position[0]||"Freelancer"}</h4>
           <ul className="!w-full">
             <li className="!w-full"><button onClick={handleFollowToggle} className={`${!isFollowing?`follow`:`unfollow`} !w-9/12 py-1 h-auto`}>
               {isFollowing ? 'Hủy theo dõi' : 'Theo dõi'}

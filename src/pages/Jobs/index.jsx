@@ -20,7 +20,7 @@ function Jobs() {
     const [pageLoading, setPageLoading] = useState(true);
     const scrollPositionRef = useRef(0);
     const hasAppliedFilter = useRef(false);
-    
+
     // Các state cho bộ lọc (input values)
     const [minInputValue, setMinInputValue] = useState(0);
     const [maxInputValue, setMaxInputValue] = useState(500000);
@@ -78,13 +78,13 @@ function Jobs() {
         setAppliedFilters({
             minInputValue,
             maxInputValue,
-            skills,
+            skills: skills.split(',').map(skill => skill.trim()).filter(skill => skill.length > 0),
             workType,
             location,
             companyName,
             sortBy,
         });
-        hasAppliedFilter.current = true; // Đánh dấu bộ lọc đã được áp dụng
+        hasAppliedFilter.current = true;
         message.loading({ content: "Đang lọc...", key: "filter", style: { marginTop: '8vh' }, duration: 2 });
     };
 
@@ -148,7 +148,7 @@ function Jobs() {
                 setPageLoading(false); // Đảm bảo tắt trạng thái loading ngay cả khi có lỗi
             }
         };
-    
+
         fetchInitialData();
     }, []);
 
@@ -156,14 +156,14 @@ function Jobs() {
         const handleResize = () => {
             window.scrollTo(0, scrollPositionRef.current);
         };
-    
+
         window.addEventListener("resize", handleResize);
-    
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
-    
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -316,10 +316,10 @@ function Jobs() {
                                                         <button onClick={() => setLocation("")}>Xóa</button>
                                                     </div>
                                                     <form onSubmit={(e) => e.preventDefault()}>
-                                                    <LocationAutocomplete
-                                                        value={location}
-                                                        onChange={(value) => setLocation(value)}
-                                                    />
+                                                        <LocationAutocomplete
+                                                            value={location}
+                                                            onChange={(value) => setLocation(value)}
+                                                        />
                                                     </form>
                                                 </div>
                                                 <button
@@ -363,50 +363,50 @@ function Jobs() {
                                         ) : (
                                             <div className="post-topbar">
                                                 <div className="h-[50px]">
-                                                <img className="h-full w-full object-scale-down"
-                                                    src="../images/myfavicon.png"
-                                                    alt="User Avatar"
-                                                />
+                                                    <img className="h-full w-full object-scale-down"
+                                                        src="../images/myfavicon.png"
+                                                        alt="User Avatar"
+                                                    />
                                                 </div>
                                             </div>
                                         )}
                                         <div className="posts-section">
-                                        {isLoading ? (
-                                            <div className="spinner">
-                                                <div className="bounce1"></div>
-                                                <div className="bounce2"></div>
-                                                <div className="bounce3"></div>
-                                            </div>
-                                        ) : (
-                                            <InfiniteScroll
-                                                className="overflow-y-hidden"
-                                                dataLength={allPosts.length}
-                                                next={fetchNextPage}
-                                                hasMore={hasNextPage}
-                                                loader={
-                                                    <div className="spinner">
-                                                        <div className="bounce1"></div>
-                                                        <div className="bounce2"></div>
-                                                        <div className="bounce3"></div>
-                                                    </div>
-                                                }
-                                                endMessage={
-                                                    <p className="text-center w-full">
-                                                        <b>Đã tải hết bài viết.</b>
-                                                    </p>
-                                                }
+                                            {isLoading ? (
+                                                <div className="spinner">
+                                                    <div className="bounce1"></div>
+                                                    <div className="bounce2"></div>
+                                                    <div className="bounce3"></div>
+                                                </div>
+                                            ) : (
+                                                <InfiniteScroll
+                                                    className="overflow-y-hidden"
+                                                    dataLength={allPosts.length}
+                                                    next={fetchNextPage}
+                                                    hasMore={hasNextPage}
+                                                    loader={
+                                                        <div className="spinner">
+                                                            <div className="bounce1"></div>
+                                                            <div className="bounce2"></div>
+                                                            <div className="bounce3"></div>
+                                                        </div>
+                                                    }
+                                                    endMessage={
+                                                        <p className="text-center w-full">
+                                                            <b>Đã tải hết bài viết.</b>
+                                                        </p>
+                                                    }
                                                 // Nếu bạn muốn sử dụng một div cuộn cụ thể, hãy thêm thuộc tính scrollableTarget
                                                 // scrollableTarget="scrollableDiv"
-                                            >
-                                                <div className="overflow-y-hidden overflow-x-hidden">
-                                                {allPosts.map((post, index) => (
-                                                    <div key={`${post._id}-${index}`}>
-                                                        <PostItem post={post} />
+                                                >
+                                                    <div className="overflow-y-hidden overflow-x-hidden">
+                                                        {allPosts.map((post, index) => (
+                                                            <div key={`${post._id}-${index}`}>
+                                                                <PostItem post={post} />
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                ))} 
-                                                </div>
-                                            </InfiniteScroll>
-                                        )}
+                                                </InfiniteScroll>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -415,11 +415,11 @@ function Jobs() {
                                 <div className="col-lg-3 pd-right-none no-pd">
                                     <div className="right-sidebar">
                                         <div className="widget widget-about">
-                                        <img
-                                            className="!mx-auto !w-full !object-scale-down !h-[70px]"
-                                            src="images/myfavicon.png"
-                                            alt="Company Logo"
-                                        />
+                                            <img
+                                                className="!mx-auto !w-full !object-scale-down !h-[70px]"
+                                                src="images/myfavicon.png"
+                                                alt="Company Logo"
+                                            />
                                             <h3>Theo Dõi Ngay Meow IT</h3>
                                             <span>Lương chỉ được trả theo số giờ làm</span>
                                             <div className="sign_link">

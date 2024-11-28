@@ -186,7 +186,9 @@ const ManageCandidate = () => {
                                 </div>
 
                                 <div className="flex items-center mb-4">
-                                    <FaUserTie className="text-blue-500 text-3xl mr-4" />
+                                    <img
+                                        className="w-14 h-14 rounded-full object-cover border border-gray-600 p-1 mr-3"
+                                        src={candidate.user.profilePictureUrl || '../images/userava.jpg'} alt={`${candidate.user.firstName} ${candidate.user.lastName}`} />
                                     <div>
                                         <p className="text-xl font-bold text-gray-800">
                                             {candidate.user.firstName} {candidate.user.lastName}

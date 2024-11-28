@@ -1,13 +1,13 @@
 import createApiClient from "./api";
 
 class RoomServices {
-    constructor(baseURL = process.env.ROOM_APP_API_URL + `/rooms`) {
+    constructor(baseURL = process.env.REACT_APP_API_ROOM_APP_API_URL + `/rooms`) {
         this.api = createApiClient(baseURL);
     }
 
     async createRoom(data) {
         // Gửi request POST tới endpoint để tạo phòng
-        return (await this.api.post(`/create`, data)).data;
+        return (await this.api.post(`/create`, data));
     }
 
     async joinRoom(roomId, data) {

@@ -107,7 +107,7 @@ function MyProfile() {
 											<h3>{user.firstName} {user.lastName}</h3>
 											<hr></hr>
 											<div className="star-descp">
-												<span>Graphic Designer at Self Employed</span>
+												<span>{user.position[0]||"Freelancer"}</span>
 												<hr></hr>
 											</div>
 											<div className="tab-feed st2 settingjb">

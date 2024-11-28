@@ -52,12 +52,12 @@ function CompanyProfile() {
         setKeySkill(keyskillResponse.data)
         setPosts(postResponse.data);
         setIsLoading(false);
-      } catch (error) {}
+      } catch (error) { }
     };
     fetchPost();
   }, [posts, company, overview, experiences, educations, keyskill]);
 
-  if (!company||isLoading) {
+  if (!company || isLoading) {
     return (
       <div className="process-comm">
         <div className="spinner">
@@ -71,17 +71,16 @@ function CompanyProfile() {
 
   return (
     <div
-      className={`${
-        isOverviewModalOpen ||
-        isKeySkillModalOpen ||
-        isModalPicOpen ||
-        isExpModalOpen ||
-        isExpEditOpen ||
-        isEduModalOpen ||
-        isEduEditOpen
+      className={`${isOverviewModalOpen ||
+          isKeySkillModalOpen ||
+          isModalPicOpen ||
+          isExpModalOpen ||
+          isExpEditOpen ||
+          isEduModalOpen ||
+          isEduEditOpen
           ? "overlay animate__animated fadeIn"
           : ""
-      }`}
+        }`}
     >
       <CoverPicture user={company} isAuthor={isAuthor} />
       <main>
@@ -107,17 +106,16 @@ function CompanyProfile() {
                       </h3>
                       <hr></hr>
                       <div className="star-descp">
-                        <span>Graphic Designer at Self Employed</span>
+                        <span>{company.field}</span>
                         <hr></hr>
                       </div>
                       <div className="tab-feed st2 settingjb">
                         <ul>
                           <li data-tab="feed-dd"
-                            className={`${
-                              activeButton == "feed"
+                            className={`${activeButton == "feed"
                                 ? "active animate__animated animate__faster zoomIn"
                                 : "animate__animated animate__faster slideIn"
-                            }`}
+                              }`}
                           >
                             <Link onClick={() => setActiveButton("feed")}>
                               <img src="../images/ic1.png" alt="" />
@@ -125,11 +123,10 @@ function CompanyProfile() {
                             </Link>
                           </li>
                           <li data-tab="info-dd"
-                            className={`${
-                              activeButton == "info"
+                            className={`${activeButton == "info"
                                 ? "active animate__animated animate__faster zoomIn"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <Link onClick={() => setActiveButton("info")}>
                               <img src="../images/ic2.png" alt="" />
@@ -137,11 +134,10 @@ function CompanyProfile() {
                             </Link>
                           </li>
                           <li data-tab="portfolio-dd"
-                            className={`${
-                              activeButton == "portfolio"
+                            className={`${activeButton == "portfolio"
                                 ? "active animate__animated animate__faster zoomIn"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <Link onClick={() => setActiveButton("portfolio")}>
                               <img src="../images/ic3.png" alt="" />
@@ -149,11 +145,10 @@ function CompanyProfile() {
                             </Link>
                           </li>
                           <li data-tab="rewivewdata"
-                            className={`${
-                              activeButton == "rewivewdata"
+                            className={`${activeButton == "rewivewdata"
                                 ? "active animate__animated animate__faster zoomIn"
                                 : ""
-                            }`}
+                              }`}
                           >
                             <Link
                               onClick={() => setActiveButton("rewivewdata")}
@@ -165,22 +160,28 @@ function CompanyProfile() {
                         </ul>
                       </div>
                     </div>
-                    <div className={`product-feed-tab ${ activeButton == "feed"
-                          ? "current animate__animated animate__faster fadeIn"
-                          : "animate__animated animate__faster fadeOut"
+                    <div className={`product-feed-tab ${activeButton == "feed"
+                      ? "current animate__animated animate__faster fadeIn"
+                      : "animate__animated animate__faster fadeOut"
                       }`}
                       id="feed-dd"
                     >
                       <div className="posts-section">
-                        {posts.map(
-                          (post) =>
-                            post.author.id == id && (
-                              <PostItem key={post._id} post={post} />
-                            )
+                        {posts.length !== 0 ? (
+                          posts.map(
+                            (post) =>
+                              post.author.id == id && (
+                                <PostItem key={post._id} post={post} />
+                              )
+                          )
+                        ) : (
+                          <div className="bg-white rounded shadow-md p-6 text-center">
+                            <p>Chưa có công việc nào được đăng</p>
+                          </div>
                         )}
                       </div>
                     </div>
-                    <div className={`product-feed-tab ${ activeButton == "info" ? "current" : "" }`} >
+                    <div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`} >
                       <Overview
                         overview={overview}
                         isOverviewModalOpen={isOverviewModalOpen}
@@ -188,15 +189,15 @@ function CompanyProfile() {
                         isAuthor={isAuthor}
                       />
                       <KeySkill
-                      keyskill={keyskill}
-                      isKeySkillModalOpen={isKeySkillModalOpen}
-                      setIsKeySkillModalOpen={setIsKeySkillModalOpen}
-                      isAuthor={isAuthor}
+                        keyskill={keyskill}
+                        isKeySkillModalOpen={isKeySkillModalOpen}
+                        setIsKeySkillModalOpen={setIsKeySkillModalOpen}
+                        isAuthor={isAuthor}
                       />
                     </div>
-                    <div className={`product-feed-tab ${ activeButton == "rewivewdata"
-                          ? "current animate__animated animate__faster fadeIn"
-                          : "animate__animated animate__faster fadeOut"
+                    <div className={`product-feed-tab ${activeButton == "rewivewdata"
+                      ? "current animate__animated animate__faster fadeIn"
+                      : "animate__animated animate__faster fadeOut"
                       }`}
                       id="rewivewdata"
                     >
@@ -292,9 +293,9 @@ function CompanyProfile() {
                         </div>
                       </div>
                     </div>
-                    <div className={`product-feed-tab ${ activeButton == "portfolio"
-                          ? "current animate__animated animate__faster fadeIn"
-                          : "animate__animated animate__faster fadeOut"
+                    <div className={`product-feed-tab ${activeButton == "portfolio"
+                      ? "current animate__animated animate__faster fadeIn"
+                      : "animate__animated animate__faster fadeOut"
                       }`}
                       id="portfolio-dd"
                     >

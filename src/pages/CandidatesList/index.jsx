@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import jobstatusServices from "../../services/jobstatus.services";
-import { message, Drawer, Modal, DatePicker } from "antd"; // Import Modal and DatePicker
+import { Button, message, Modal,  } from "antd"; // Import Modal and DatePicker
 import { Link, useParams } from "react-router-dom";
 import postServices from "../../services/post.services";
 import JobIntroduce from "../../components/JobIntroduce";
 import { Dropdown, Space } from "antd";
 import { BarsOutlined } from "@ant-design/icons";
-import moment from "moment";
+const { confirm } = Modal;
 
 const CandidateList = () => {
   const { postId } = useParams();
   const [candidates, setCandidates] = useState([]);
   const [job, setJob] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [actionLoading, setActionLoading] = useState({}); // Sử dụng đối tượng để quản lý loading
+
   useEffect(() => {
     const fetchCandidate = async () => {
       try {
@@ -55,6 +57,33 @@ const CandidateList = () => {
     }
   };
 
+  const handleDeny = (candidate) => {
+    confirm({
+      title: `Bạn có thật sự muốn từ chối ${candidate.user.firstName} ${candidate.user.lastName} không?`,
+      content: `${candidate.user.firstName} ${candidate.user.lastName}`,
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: async () => {
+        const candidateId = candidate.user._id;
+        setActionLoading(prev => ({ ...prev, [candidateId]: true }));
+        try {
+          const postid = postId
+          const response = await jobstatusServices.denyWithUserId({ postid }, candidate.user._id);
+          if (response.isSuccess) {
+            message.success('Đã từ chối.');
+          } else {
+            message.error(response.message || 'Từ chối thất bại.');
+          }
+        } catch (error) {
+          console.error('Từ chối thất bại:', error);
+          message.error('Có lỗi xảy ra khi từ chối.');
+        } finally {
+          setActionLoading(prev => ({ ...prev, [candidateId]: false }));
+        }
+      },
+    });
+  };
+
   return (
     <div className="main-section mt-[20px]">
       <div className="container">
@@ -70,23 +99,24 @@ const CandidateList = () => {
                   const items = [
                     {
                       label: (
-                        <button
-                          className="!p-1 !px-6 text-md font-medium w-full"
+                        <Button
+                          className="!p-1 !px-6 text-md font-medium w-full !border-none text-black"
                           onClick={() => scheduleInterview(candidate.user._id)} // Send interview confirmation request
                         >
                           Gửi yêu cầu xác nhận
-                        </button>
+                        </Button>
                       ),
                       key: "0",
                     },
                     {
                       label: (
-                        <button
-                          className="!p-1 !px-6 text-md !text-black font-medium w-full"
-                          onClick={() => denied(candidate.user._id)}
+                        <Button
+                          className="!p-1 !px-6 text-md !text-black font-medium w-full !border-none"
+                          loading={actionLoading[candidate.user._id]}
+                          onClick={() => handleDeny(candidate)}
                         >
                           Từ chối
-                        </button>
+                        </Button>
                       ),
                       key: "1",
                     },

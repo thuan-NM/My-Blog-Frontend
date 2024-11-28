@@ -78,7 +78,7 @@ const Suggestions = () => {
                             </Link>
                             <Link to={`/userprofile/${suggestion._id}`} className="sgt-text">
                                 <h4>{suggestion.firstName} {suggestion.lastName}</h4>
-                                <span>Graphic Designer</span>
+                                <p className="!w-10/12 truncate">{suggestion.position[0] || "Freelancer"}</p>
                             </Link>
                         </div>
                         <span

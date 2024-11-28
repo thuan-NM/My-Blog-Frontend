@@ -37,7 +37,13 @@ function JobDetail() {
                         postid: postId,
                         userid: user._id,
                     });
-                    setHasApplied(applicationResponse.data !== null); // If a result is returned, user has applied
+                    if (applicationResponse.data != null) {
+                        setHasApplied(applicationResponse.data.status)
+                    }
+                    else {
+                        setHasApplied(null)
+                    }
+
                 }
 
                 setIsLoading(false);
@@ -82,11 +88,11 @@ function JobDetail() {
                                             {/* Conditionally render the Apply button only if the user is not a company */}
                                             {role !== "company" && (
                                                 <Link
-                                                    className={`apply_job w-full text-center ${hasApplied ? "disabled !bg-neutral-300 !text-black" : ""}`}
-                                                    to={hasApplied ? "#" : `/jobapplication/${job._id}`}
-                                                    onClick={hasApplied ? (e) => e.preventDefault() : undefined}
+                                                    className={`apply_job w-full text-center ${(hasApplied == 'Denied' || hasApplied == null) ? "" : "disabled !bg-neutral-300 !text-black"}`}
+                                                    to={(hasApplied == 'Denied' || hasApplied == null) ? `/jobapplication/${job._id}` : "#"}
+                                                    onClick={(hasApplied == 'Denied' || hasApplied == null) ? undefined : (e) => e.preventDefault()}
                                                 >
-                                                    {hasApplied ? "Đã Nộp Đơn" : "Ứng Tuyển Ngay"}
+                                                    {(hasApplied == 'Denied' || hasApplied == null) ? "Ứng Tuyển Ngay" : "Đã Nộp Đơn"}
                                                 </Link>
                                             )}
                                         </div>

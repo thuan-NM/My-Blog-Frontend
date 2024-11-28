@@ -71,15 +71,15 @@ function MyCompanyProfile() {
   return (
     <div
       className={`${isOverviewModalOpen ||
-          isKeySkillModalOpen ||
-          isModalPicOpen ||
-          isExpModalOpen ||
-          isExpEditOpen ||
-          isEduModalOpen ||
-          isEduEditOpen ||
+        isKeySkillModalOpen ||
+        isModalPicOpen ||
+        isExpModalOpen ||
+        isExpEditOpen ||
+        isEduModalOpen ||
+        isEduEditOpen ||
         isSettingsModalOpen
-          ? "overlay animate__animated fadeIn"
-          : ""
+        ? "overlay animate__animated fadeIn"
+        : ""
         }`}
     >
       <CoverPicture user={user} isAuthor={isAuthor} />
@@ -109,7 +109,7 @@ function MyCompanyProfile() {
                       </h3>
                       <hr></hr>
                       <div className="star-descp">
-                        <span>Graphic Designer at Self Employed</span>
+                        <span>{user.field}</span>
                         <hr></hr>
                       </div>
                       <div className="tab-feed st2 settingjb">
@@ -117,8 +117,8 @@ function MyCompanyProfile() {
                           <li
                             data-tab="feed-dd"
                             className={`${activeButton == "feed"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : "animate__animated animate__faster slideIn"
+                              ? "active animate__animated animate__faster zoomIn"
+                              : "animate__animated animate__faster slideIn"
                               }`}
                           >
                             <Link onClick={() => setActiveButton("feed")}>
@@ -129,8 +129,8 @@ function MyCompanyProfile() {
                           <li
                             data-tab="info-dd"
                             className={`${activeButton == "info"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
+                              ? "active animate__animated animate__faster zoomIn"
+                              : ""
                               }`}
                           >
                             <Link onClick={() => setActiveButton("info")}>
@@ -141,8 +141,8 @@ function MyCompanyProfile() {
                           <li
                             data-tab="saved-jobs"
                             className={`${activeButton == "jobs"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
+                              ? "active animate__animated animate__faster zoomIn"
+                              : ""
                               }`}
                           >
                             <Link onClick={() => setActiveButton("jobs")}>
@@ -153,8 +153,8 @@ function MyCompanyProfile() {
                           <li
                             data-tab="my-bids"
                             className={`${activeButton == "my-bids"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
+                              ? "active animate__animated animate__faster zoomIn"
+                              : ""
                               }`}
                           >
                             <Link onClick={() => setActiveButton("my-bids")}>
@@ -165,8 +165,8 @@ function MyCompanyProfile() {
                           <li
                             data-tab="portfolio-dd"
                             className={`${activeButton == "portfolio"
-                                ? "active animate__animated animate__faster zoomIn"
-                                : ""
+                              ? "active animate__animated animate__faster zoomIn"
+                              : ""
                               }`}
                           >
                             <Link onClick={() => setActiveButton("portfolio")}>
@@ -266,11 +266,17 @@ function MyCompanyProfile() {
                       id="feed-dd"
                     >
                       <div className="posts-section">
-                        {posts.map(
-                          (post) =>
-                            post.author.id == decodedToken.companyId && (
-                              <PostItem key={post._id} post={post} />
-                            )
+                        {posts.length !== 0 ? (
+                          posts.map(
+                            (post) =>
+                              post.author.id == decodedToken.companyId && (
+                                <PostItem key={post._id} post={post} />
+                              )
+                          )
+                        ) : (
+                          <div className="bg-white rounded shadow-md p-6 text-center">
+                            <p>Chưa có công việc nào được đăng</p>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -280,7 +286,7 @@ function MyCompanyProfile() {
                       }`}
                       id="my-bids"
                     >
-                      <ManageInterview/>
+                      <ManageInterview />
                     </div>
                     <div className={`product-feed-tab ${activeButton == "info" ? "current" : ""}`} >
                       <Overview
@@ -345,8 +351,8 @@ function MyCompanyProfile() {
                   <div className="right-sidebar">
                     <div className="message-btn">
                       <button onClick={() => setIsSettingsModalOpen(!isSettingsModalOpen)}>
-												<i className="fas fa-cog"></i>Cài đặt
-											</button>
+                        <i className="fas fa-cog"></i>Cài đặt
+                      </button>
                     </div>
                     <div className="widget widget-portfolio">
                       <div className="wd-heady">
@@ -360,7 +366,7 @@ function MyCompanyProfile() {
             </div>
           </div>
         </div>
-        <CompanySettings isSettingsModalOpen={isSettingsModalOpen} setIsSettingsModalOpen={setIsSettingsModalOpen}/>
+        <CompanySettings isSettingsModalOpen={isSettingsModalOpen} setIsSettingsModalOpen={setIsSettingsModalOpen} />
       </main>
     </div>
   );

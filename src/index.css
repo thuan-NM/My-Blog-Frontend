@@ -1706,10 +1706,10 @@
         padding: 7px 15px;
         font-weight: 500;
     }
-
+/* 
     .skill-tags li a:hover {
-        background-color: #8b8a8a;
-    }
+        background-color: #f2f2f2;
+    } */
 
     .skill-tags li a.worktype {
         display: inline-block;
@@ -9503,7 +9503,7 @@
     /* index.css */
     /* Scrollbar tùy chỉnh cho chat history */
 
-    ::-webkit-scrollbar {
+    /* ::-webkit-scrollbar {
         width: 6px;
     }
 
@@ -9515,4 +9515,4 @@
         background-color: #e44d3a;
         border-radius: 10px;
         border: 3px solid #f1f1f1;
-    }
+    } */

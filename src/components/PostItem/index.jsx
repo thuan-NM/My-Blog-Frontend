@@ -108,11 +108,11 @@ const PostItem = ({ post }) => {
           <ul className="skill-tags">
             {post.skills.map((item) => (
               <li key={item}>
-                <a>{item}</a>
+                <a className='hover:!bg-neutral-400 hover:!text-white'>{item}</a>
               </li>
             ))}
             <li>
-              <a className="worktype">{post.workType}</a>
+              <a className="worktype hover:!bg-[#35A355] hover:!!text-white">{post.workType}</a>
             </li>
           </ul>
         </div>

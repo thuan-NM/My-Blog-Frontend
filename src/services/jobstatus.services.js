@@ -83,8 +83,8 @@ class JobstatusServices {
         return (await this.api.post(`/schedule`, data, { headers })).data;
     }
 
-    async acceptInterview(jobStatusId,data) {
-        return (await this.api.post(`/interview/accept/${jobStatusId}`,{data})).data;
+    async acceptInterview(jobStatusId, data) {
+        return (await this.api.post(`/interview/accept/${jobStatusId}`, { data })).data;
     }
 
     async rescheduleInterview(jobStatusId, data) {
@@ -99,10 +99,12 @@ class JobstatusServices {
     async getInterviewConfirmedCandidates(companyId) {
         return (await this.api.get(`/interview-confirmed/${companyId}`));
     };
-    async getCandidatesWithStatus(companyId,data) {
+    async getCandidatesWithStatus(companyId, data) {
         return (await this.api.get(`/status/${companyId}/${data}`)).data;
     };
-
+    async searchJobStatus(searchTerm, companyId) {
+        return (await this.api.get(`/search?searchTerm=${searchTerm}&companyId=${companyId}`)).data;
+    }
 }
 
 export default new JobstatusServices();
